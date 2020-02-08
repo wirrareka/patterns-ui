@@ -1,4 +1,5 @@
 /// <reference types="react" />
+import './data-table.scss';
 declare const _default: {
     title: string;
 };
