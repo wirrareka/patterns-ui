@@ -5766,9 +5766,12 @@ function NumberFilter(_a) {
 
 var FilterRenderer = /** @class */ (function (_super) {
     __extends(FilterRenderer, _super);
-    function FilterRenderer() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    function FilterRenderer(props) {
+        var _this = _super.call(this, props) || this;
         _this.state = {};
+        _this.setFilterValue = _this.setFilterValue.bind(_this);
+        _this.setFilterComparator = _this.setFilterComparator.bind(_this);
+        _this.setFilterValue = _this.setFilterValue.bind(_this);
         return _this;
     }
     FilterRenderer.prototype.setFilterValue = function (column, value, secondary) {

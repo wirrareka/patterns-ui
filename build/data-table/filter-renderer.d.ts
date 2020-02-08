@@ -7,6 +7,7 @@ interface Props<T> {
 }
 export default class FilterRenderer<T> extends React.Component<Props<T>> {
     state: {};
+    constructor(props: Props<T>);
     setFilterValue(column: Column<T>, value?: FilterValue, secondary?: boolean): void;
     setFilterComparator(column: Column<T>, comparator: FilterComparator): void;
     setFilterActive(column: Column<T>, value: boolean): Promise<void>;

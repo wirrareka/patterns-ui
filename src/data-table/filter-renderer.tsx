@@ -15,6 +15,14 @@ interface Props<T> {
 export default class FilterRenderer<T> extends React.Component<Props<T>> {
   state = {}
 
+  constructor(props: Props<T>) {
+    super(props)
+
+    this.setFilterValue = this.setFilterValue.bind(this)
+    this.setFilterComparator = this.setFilterComparator.bind(this)
+    this.setFilterValue = this.setFilterValue.bind(this)
+  }
+
   setFilterValue(column: Column<T>, value?: FilterValue, secondary: boolean = false) {
     const filterStates = produce(this.props.filterState, (state) => {
       if (state.comparator === 'range') {
