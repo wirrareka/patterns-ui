@@ -3702,7 +3702,27 @@ function Pagination(_a) {
 }
 var templateObject_1;
 
-var Container$1 = styled.div(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  padding: 6px 12px;\n"], ["\n  padding: 6px 12px;\n"])));
+var ROW_HEIGHT = 28;
+var Container$1 = styled.div(templateObject_1$1 || (templateObject_1$1 = __makeTemplateObject(["\n  flex: 1;\n  height: calc(100vh - 44px);\n  display: flex;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  height: calc(100vh - 44px);\n  display: flex;\n  flex-direction: column;\n"])));
+var FlexColumn = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n\n  ",
+    "\n"])), function (props) { return props.flex && css(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    flex: ", ";\n  "], ["\n    flex: ", ";\n  "])), props.flex); });
+var FlexRow = styled.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: row;\n\n  ",
+    "\n"])), function (props) { return props.flex && css(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    flex: ", ";\n  "], ["\n    flex: ", ";\n  "])), props.flex); });
+var Toolbar = styled.div(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  height: 30px;\n  display: flex;\n  flex-direction: row;\n  font-size: 12px;\n  padding: 0 10px;\n  border-top: 1px solid ", ";\n  button {\n    font-size: 12px;\n    font-weight: bold;\n    color: ", ";\n  }\n"], ["\n  height: 30px;\n  display: flex;\n  flex-direction: row;\n  font-size: 12px;\n  padding: 0 10px;\n  border-top: 1px solid ", ";\n  button {\n    font-size: 12px;\n    font-weight: bold;\n    color: ", ";\n  }\n"])), Colors.LIGHT_GRAY1, Colors.DARK_GRAY3);
+var Header = styled.div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  height: ", "px;\n  font-weight: bold;\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid ", ";\n  background-color: ", ";\n  cursor: pointer;\n  font-size: 12px;\n"], ["\n  height: ", "px;\n  font-weight: bold;\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid ", ";\n  background-color: ", ";\n  cursor: pointer;\n  font-size: 12px;\n"])), ROW_HEIGHT, Colors.LIGHT_GRAY1, Colors.LIGHT_GRAY5);
+var Content = styled.div(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  flex: 1;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n"], ["\n  flex: 1;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n"])));
+var ItemRow = styled.div(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  height: ", "px;\n  border-bottom: 1px solid ", ";\n  &:nth-child(even) {\n    background-color: ", ";\n  }\n  &:hover {\n    background-color: ", ";\n  }\n"], ["\n  display: flex;\n  flex-direction: row;\n  height: ", "px;\n  border-bottom: 1px solid ", ";\n  &:nth-child(even) {\n    background-color: ", ";\n  }\n  &:hover {\n    background-color: ", ";\n  }\n"])), ROW_HEIGHT, Colors.LIGHT_GRAY3, Colors.LIGHT_GRAY5, Colors.LIGHT_GRAY4);
+var ExpandedItemRow = styled.div(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid ", ";\n  height: 320px;\n"], ["\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid ", ";\n  height: 320px;\n"])), Colors.LIGHT_GRAY3);
+var SelectionCount = styled.div(templateObject_11 || (templateObject_11 = __makeTemplateObject(["\n  margin-left: 12px;\n"], ["\n  margin-left: 12px;\n"])));
+var Cell = styled.div(templateObject_16 || (templateObject_16 = __makeTemplateObject(["\n  padding-left: 6px;\n  padding-right: 6px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  line-height: ", "px;\n\n  ", "\n\n  ", "\n\n  ", "\n\n  ", "\n\n  border-left: 1px solid ", ";\n\n  &:first-child {\n    border-left: none;\n  }\n\n  label.bp3-checkbox {\n    max-width: 40px;\n  }\n"], ["\n  padding-left: 6px;\n  padding-right: 6px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  line-height: ", "px;\n\n  ",
+    "\n\n  ",
+    "\n\n  ",
+    "\n\n  ",
+    "\n\n  border-left: 1px solid ", ";\n\n  &:first-child {\n    border-left: none;\n  }\n\n  label.bp3-checkbox {\n    max-width: 40px;\n  }\n"])), ROW_HEIGHT, function (props) { return props.width && css(templateObject_12 || (templateObject_12 = __makeTemplateObject(["\n    width: ", "px;\n  "], ["\n    width: ", "px;\n  "])), props.width); }, function (props) { return props.flex && css(templateObject_13 || (templateObject_13 = __makeTemplateObject(["\n    flex: ", ";\n  "], ["\n    flex: ", ";\n  "])), props.flex); }, function (props) { return (!props.width && !props.flex) && css(templateObject_14 || (templateObject_14 = __makeTemplateObject(["\n    flex: 1;\n  "], ["\n    flex: 1;\n  "]))); }, function (props) { return props.head && css(templateObject_15 || (templateObject_15 = __makeTemplateObject(["\n    &:hover {\n      background-color: ", "\n    };\n  "], ["\n    &:hover {\n      background-color: ", "\n    };\n  "])), Colors.LIGHT_GRAY3); }, Colors.LIGHT_GRAY3);
+var Filter = styled.div(templateObject_17 || (templateObject_17 = __makeTemplateObject(["\n  padding: 6px;\n  display: flex;\n  flex-directon: row;\n"], ["\n  padding: 6px;\n  display: flex;\n  flex-directon: row;\n"])));
+var templateObject_1$1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12, templateObject_13, templateObject_14, templateObject_15, templateObject_16, templateObject_17;
+
+var Container$2 = styled.div(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n  padding: 6px 12px;\n"], ["\n  padding: 6px 12px;\n"])));
 var ColumnPicker = /** @class */ (function (_super) {
     __extends(ColumnPicker, _super);
     function ColumnPicker() {
@@ -3720,14 +3740,14 @@ var ColumnPicker = /** @class */ (function (_super) {
     ColumnPicker.prototype.render = function () {
         return createElement(Popover, { interactionKind: PopoverInteractionKind.CLICK, position: PopoverPosition.BOTTOM_RIGHT },
             createElement(Button, { minimal: true, icon: createElement(Icon, { icon: "settings" }) }),
-            createElement(Container$1, null,
+            createElement(Container$2, null,
                 createElement(FlexColumn, { style: { padding: 6, paddingRight: 12 } },
                     createElement("strong", { style: { marginBottom: 12 } }, "V\u00FDber st\u013Apcov"),
                     this.renderColumns())));
     };
     return ColumnPicker;
 }(Component));
-var templateObject_1$1;
+var templateObject_1$2;
 
 var moment = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
@@ -8334,25 +8354,14 @@ var formatDate = function (date) {
     return moment(date).format(DateFormat);
 };
 
-var ROW_HEIGHT = 28;
-var Container$2 = styled.div(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n  flex: 1;\n  height: calc(100vh - 44px);\n  display: flex;\n  flex-direction: column;\n"], ["\n  flex: 1;\n  height: calc(100vh - 44px);\n  display: flex;\n  flex-direction: column;\n"])));
-var FlexColumn = styled.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: column;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: column;\n\n  ",
-    "\n"])), function (props) { return props.flex && css(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    flex: ", ";\n  "], ["\n    flex: ", ";\n  "])), props.flex); });
-var FlexRow = styled.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n\n  ", "\n"], ["\n  display: flex;\n  flex-direction: row;\n\n  ",
-    "\n"])), function (props) { return props.flex && css(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n    flex: ", ";\n  "], ["\n    flex: ", ";\n  "])), props.flex); });
-var Toolbar = styled.div(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  height: 30px;\n  display: flex;\n  flex-direction: row;\n  font-size: 12px;\n  padding: 0 10px;\n  border-top: 1px solid ", ";\n  button {\n    font-size: 12px;\n    font-weight: bold;\n    color: ", ";\n  }\n"], ["\n  height: 30px;\n  display: flex;\n  flex-direction: row;\n  font-size: 12px;\n  padding: 0 10px;\n  border-top: 1px solid ", ";\n  button {\n    font-size: 12px;\n    font-weight: bold;\n    color: ", ";\n  }\n"])), Colors.LIGHT_GRAY1, Colors.DARK_GRAY3);
-var Header = styled.div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  height: ", "px;\n  font-weight: bold;\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid ", ";\n  background-color: ", ";\n  cursor: pointer;\n  font-size: 12px;\n"], ["\n  height: ", "px;\n  font-weight: bold;\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid ", ";\n  background-color: ", ";\n  cursor: pointer;\n  font-size: 12px;\n"])), ROW_HEIGHT, Colors.LIGHT_GRAY1, Colors.LIGHT_GRAY5);
-var Content = styled.div(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  flex: 1;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n"], ["\n  flex: 1;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n"])));
-var ItemRow = styled.div(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  height: ", "px;\n  border-bottom: 1px solid ", ";\n  &:nth-child(even) {\n    background-color: ", ";\n  }\n  &:hover {\n    background-color: ", ";\n  }\n"], ["\n  display: flex;\n  flex-direction: row;\n  height: ", "px;\n  border-bottom: 1px solid ", ";\n  &:nth-child(even) {\n    background-color: ", ";\n  }\n  &:hover {\n    background-color: ", ";\n  }\n"])), ROW_HEIGHT, Colors.LIGHT_GRAY3, Colors.LIGHT_GRAY5, Colors.LIGHT_GRAY4);
-var ExpandedItemRow = styled.div(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid ", ";\n  height: 320px;\n"], ["\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid ", ";\n  height: 320px;\n"])), Colors.LIGHT_GRAY3);
-var SelectionCount = styled.div(templateObject_11 || (templateObject_11 = __makeTemplateObject(["\n  margin-left: 12px;\n"], ["\n  margin-left: 12px;\n"])));
-var Cell = styled.div(templateObject_16 || (templateObject_16 = __makeTemplateObject(["\n  padding-left: 6px;\n  padding-right: 6px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  line-height: ", "px;\n\n  ", "\n\n  ", "\n\n  ", "\n\n  ", "\n\n  border-left: 1px solid ", ";\n\n  &:first-child {\n    border-left: none;\n  }\n\n  label.bp3-checkbox {\n    max-width: 40px;\n  }\n"], ["\n  padding-left: 6px;\n  padding-right: 6px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  line-height: ", "px;\n\n  ",
-    "\n\n  ",
-    "\n\n  ",
-    "\n\n  ",
-    "\n\n  border-left: 1px solid ", ";\n\n  &:first-child {\n    border-left: none;\n  }\n\n  label.bp3-checkbox {\n    max-width: 40px;\n  }\n"])), ROW_HEIGHT, function (props) { return props.width && css(templateObject_12 || (templateObject_12 = __makeTemplateObject(["\n    width: ", "px;\n  "], ["\n    width: ", "px;\n  "])), props.width); }, function (props) { return props.flex && css(templateObject_13 || (templateObject_13 = __makeTemplateObject(["\n    flex: ", ";\n  "], ["\n    flex: ", ";\n  "])), props.flex); }, function (props) { return (!props.width && !props.flex) && css(templateObject_14 || (templateObject_14 = __makeTemplateObject(["\n    flex: 1;\n  "], ["\n    flex: 1;\n  "]))); }, function (props) { return props.head && css(templateObject_15 || (templateObject_15 = __makeTemplateObject(["\n    &:hover {\n      background-color: ", "\n    };\n  "], ["\n    &:hover {\n      background-color: ", "\n    };\n  "])), Colors.LIGHT_GRAY3); }, Colors.LIGHT_GRAY3);
-var Filter = styled.div(templateObject_17 || (templateObject_17 = __makeTemplateObject(["\n  padding: 6px;\n  display: flex;\n  flex-directon: row;\n"], ["\n  padding: 6px;\n  display: flex;\n  flex-directon: row;\n"])));
-var templateObject_1$2, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12, templateObject_13, templateObject_14, templateObject_15, templateObject_16, templateObject_17;
+var ColumnType;
+(function (ColumnType) {
+    ColumnType[ColumnType["Text"] = 0] = "Text";
+    ColumnType[ColumnType["Number"] = 1] = "Number";
+    ColumnType[ColumnType["Date"] = 2] = "Date";
+    ColumnType[ColumnType["DateTime"] = 3] = "DateTime";
+    ColumnType[ColumnType["Custom"] = 4] = "Custom";
+})(ColumnType || (ColumnType = {}));
 
 function TextFilter(_a) {
     var column = _a.column, setFilterValue = _a.setFilterValue, setFilterActive = _a.setFilterActive, setFilterComparator = _a.setFilterComparator;
@@ -8506,14 +8515,6 @@ var FilterRenderer = /** @class */ (function (_super) {
     return FilterRenderer;
 }(React__default.Component));
 
-var ColumnType;
-(function (ColumnType) {
-    ColumnType[ColumnType["Text"] = 0] = "Text";
-    ColumnType[ColumnType["Number"] = 1] = "Number";
-    ColumnType[ColumnType["Date"] = 2] = "Date";
-    ColumnType[ColumnType["DateTime"] = 3] = "DateTime";
-    ColumnType[ColumnType["Custom"] = 4] = "Custom";
-})(ColumnType || (ColumnType = {}));
 var DataTable = /** @class */ (function (_super) {
     __extends(DataTable, _super);
     function DataTable(props) {
@@ -8834,7 +8835,7 @@ var DataTable = /** @class */ (function (_super) {
     };
     DataTable.prototype.render = function () {
         var _this = this;
-        return React__default.createElement(Container$2, null,
+        return React__default.createElement(Container$1, null,
             this.renderHeader(),
             React__default.createElement(Content, null,
                 this.state.loading && this.renderEmpty(),
@@ -8849,5 +8850,5 @@ var DataTable = /** @class */ (function (_super) {
     return DataTable;
 }(Component));
 
-export { Container$2 as Container, DataTable, FlexColumn, FlexRow, Toolbar };
+export { ColumnType, Container$1 as Container, DataTable, FlexColumn, FlexRow, Toolbar };
 //# sourceMappingURL=index.es.js.map

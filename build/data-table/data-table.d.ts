@@ -1,34 +1,5 @@
 import React, { Component } from 'react';
-import { FilterState } from './filter-renderer';
-export { FlexColumn } from './components';
-export declare type Selection = {
-    [id: string]: boolean;
-};
-export declare type FetchResponse<T> = {
-    items: T[];
-    total: number;
-};
-export declare type FilterStates = {
-    [id: string]: FilterState;
-};
-export declare enum ColumnType {
-    Text = 0,
-    Number = 1,
-    Date = 2,
-    DateTime = 3,
-    Custom = 4
-}
-export interface Column<T> {
-    id: string;
-    title: string;
-    type: ColumnType;
-    format?: (item: T) => React.ReactElement;
-    flex?: number;
-    width?: number;
-    sortable?: boolean;
-    filterable?: boolean;
-    visible?: boolean;
-}
+import { Column, FilterStates, FetchResponse, Selection } from './types';
 interface Props<T> {
     columns: Column<T>[];
     expandable: boolean;
@@ -37,8 +8,11 @@ interface Props<T> {
     sortDir: 'asc' | 'desc';
     multiple: boolean;
     onItemSelect: (item: T) => void;
-    onSelectionChange: (items: T[]) => void;
-    detailRenderer: (item: T) => React.ReactElement;
+    onSelectionChange?: (items: T[]) => void;
+    detailRenderer?: (item: T) => React.ReactElement;
+    formatDate?: (date: Date) => string;
+    parseDate?: (date: Date) => string;
+    locale?: string;
 }
 interface State<T> {
     query: string;
@@ -76,3 +50,4 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
     renderPagination(): JSX.Element;
     render(): JSX.Element;
 }
+export {};

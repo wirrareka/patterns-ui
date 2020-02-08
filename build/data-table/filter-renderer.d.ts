@@ -1,14 +1,5 @@
 import React from 'react';
-import { Column, ColumnType } from './data-table';
-export declare type FilterComparator = 'contains' | 'starts_with' | 'ends_with' | 'eq' | 'lt' | 'gt' | 'lte' | 'gte' | 'range';
-export declare type FilterValue = string | number | [number, number] | Date | [Date, Date] | undefined;
-export declare type FilterState = {
-    column: string;
-    active: boolean;
-    value?: FilterValue;
-    comparator: FilterComparator;
-    type: ColumnType;
-};
+import { Column, FilterComparator, FilterState, FilterValue } from './types';
 interface Props<T> {
     column: Column<T>;
     filterState: FilterState;

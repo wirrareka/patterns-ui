@@ -1,6 +1,5 @@
 import { ReactElement } from 'react';
-import { Column } from '../data-table';
-import { FilterComparator, FilterState } from '../filter-renderer';
+import { Column, FilterComparator, FilterState } from '../types';
 interface Props<T> {
     column: Column<T>;
     state: FilterState;
