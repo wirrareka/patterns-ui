@@ -18,23 +18,23 @@ export const FlexRow = ({ children, flex, style  }: React.PropsWithChildren<Flex
 export const FlexColumn = ({ children, flex, style }: React.PropsWithChildren<FlexProps>) =>
   React.createElement('div', { className: 'patterns-flex-column', style: { ...style, flex } }, children)
 
-export const Toolbar = ({ children }: React.PropsWithChildren<Props>) =>
-  React.createElement('div', { className: 'patterns-toolbar' }, children)
+export const Toolbar = ({ children, style }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-toolbar', style }, children)
 
-export const Header = ({ children }: React.PropsWithChildren<Props>) =>
-  React.createElement('div', { className: 'patterns-data-table-header' }, children)
+export const Header = ({ children, style }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-header', style }, children)
 
-export const Content = ({ children }: React.PropsWithChildren<Props>) =>
-  React.createElement('div', { className: 'patterns-data-table-content' }, children)
+export const Content = ({ children, style }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-content', style }, children)
 
-export const ItemRow = ({ children }: React.PropsWithChildren<Props>) =>
-  React.createElement('div', { className: 'patterns-data-table-item-row' }, children)
+export const ItemRow = ({ children, style }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-item-row', style }, children)
 
-export const ExpandedItemRow = ({ children }: React.PropsWithChildren<Props>) =>
-  React.createElement('div', { className: 'patterns-data-table-item-row-expanded' }, children)
+export const ExpandedItemRow = ({ children, style }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-item-row-expanded', style }, children)
 
-export const SelectionCount = ({ children }: React.PropsWithChildren<Props>) =>
-  React.createElement('div', { className: 'patterns-data-table-selection-count' }, children)
+export const SelectionCount = ({ children, style }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-selection-count', style }, children)
 
 
 interface CellProps {
