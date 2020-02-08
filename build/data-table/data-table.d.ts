@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Column, FilterStates, FetchResponse, Selection } from './types';
+import './data-table.scss';
 interface Props<T> {
     columns: Column<T>[];
     expandable: boolean;
