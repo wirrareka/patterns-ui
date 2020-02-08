@@ -5779,7 +5779,7 @@ var FilterRenderer = /** @class */ (function (_super) {
         _this.state = {};
         _this.setFilterValue = _this.setFilterValue.bind(_this);
         _this.setFilterComparator = _this.setFilterComparator.bind(_this);
-        _this.setFilterValue = _this.setFilterValue.bind(_this);
+        _this.setFilterActive = _this.setFilterActive.bind(_this);
         return _this;
     }
     FilterRenderer.prototype.setFilterValue = function (column, value, secondary) {

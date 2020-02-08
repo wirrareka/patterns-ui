@@ -20,7 +20,7 @@ export default class FilterRenderer<T> extends React.Component<Props<T>> {
 
     this.setFilterValue = this.setFilterValue.bind(this)
     this.setFilterComparator = this.setFilterComparator.bind(this)
-    this.setFilterValue = this.setFilterValue.bind(this)
+    this.setFilterActive = this.setFilterActive.bind(this)
   }
 
   setFilterValue(column: Column<T>, value?: FilterValue, secondary: boolean = false) {
