@@ -1,1 +1,0 @@
-{"version":3,"file":"test-component.js","sourceRoot":"","sources":["../../src/test-component/test-component.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAE1B,OAAO,uBAAuB,CAAC;AAM/B,IAAM,aAAa,GAAqB,UAAC,EAAS;QAAP,gBAAK;IAAO,OAAA,CACrD,6BAAK,SAAS,EAAE,mCAAiC,KAAO;QACtD,4BAAI,SAAS,EAAC,SAAS,6BAA4B;QACnD,2DAAiC,CAC7B,CACP;AALsD,CAKtD,CAAC;AAEF,eAAe,aAAa,CAAC"}

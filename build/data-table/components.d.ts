@@ -1531,23 +1531,29 @@ export declare const FlexColumn: ({ children, flex, style }: React.PropsWithChil
         vectorEffect?: import("csstype").VectorEffectProperty;
     };
 }, HTMLElement>;
-export declare const Toolbar: ({ children }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
+export declare const Toolbar: ({ children, style }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
     className: string;
+    style: React.CSSProperties;
 }, HTMLElement>;
-export declare const Header: ({ children }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
+export declare const Header: ({ children, style }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
     className: string;
+    style: React.CSSProperties;
 }, HTMLElement>;
-export declare const Content: ({ children }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
+export declare const Content: ({ children, style }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
     className: string;
+    style: React.CSSProperties;
 }, HTMLElement>;
-export declare const ItemRow: ({ children }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
+export declare const ItemRow: ({ children, style }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
     className: string;
+    style: React.CSSProperties;
 }, HTMLElement>;
-export declare const ExpandedItemRow: ({ children }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
+export declare const ExpandedItemRow: ({ children, style }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
     className: string;
+    style: React.CSSProperties;
 }, HTMLElement>;
-export declare const SelectionCount: ({ children }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
+export declare const SelectionCount: ({ children, style }: React.PropsWithChildren<Props>) => React.DetailedReactHTMLElement<{
     className: string;
+    style: React.CSSProperties;
 }, HTMLElement>;
 interface CellProps {
     className?: string;
