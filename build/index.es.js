@@ -5710,39 +5710,39 @@ var ColumnType;
 })(ColumnType || (ColumnType = {}));
 
 function TextFilter(_a) {
-    var column = _a.column, setFilterValue = _a.setFilterValue, setFilterActive = _a.setFilterActive, setFilterComparator = _a.setFilterComparator;
+    var column = _a.column, filterState = _a.filterState, setFilterValue = _a.setFilterValue, setFilterActive = _a.setFilterActive, setFilterComparator = _a.setFilterComparator;
     return React__default.createElement(Filter, null,
         React__default.createElement(FlexColumn, { flex: 1 },
             React__default.createElement(FlexRow, { style: { height: 30, justifyContent: 'center' } },
                 React__default.createElement(FormGroup, { style: { marginRight: 12 } },
-                    React__default.createElement(InputGroup, { placeholder: "Filter...", value: this.state.filterStates[column.id].value || '', onChange: function (evt) { return setFilterValue(column, evt.currentTarget.value); } })),
+                    React__default.createElement(InputGroup, { placeholder: "Filter...", value: filterState.value || '', onChange: function (evt) { return setFilterValue(column, evt.currentTarget.value); } })),
                 React__default.createElement(Button, { minimal: true, intent: Intent.DANGER, className: Classes.POPOVER_DISMISS, onClick: function (evt) { return setFilterActive(column, false); }, icon: "cross" }),
                 React__default.createElement(Button, { minimal: true, intent: Intent.SUCCESS, className: Classes.POPOVER_DISMISS, onClick: function (evt) { return setFilterActive(column, true); }, icon: "tick" })),
             React__default.createElement(FlexRow, { style: { fontSize: 12, justifyContent: 'start', paddingTop: 6, paddingLeft: 6, marginTop: 6 } },
-                React__default.createElement(RadioGroup, { selectedValue: this.state.filterStates[column.id].comparator, onChange: function (evt) { return setFilterComparator(column, evt.currentTarget.value); } },
+                React__default.createElement(RadioGroup, { selectedValue: filterState.comparator, onChange: function (evt) { return setFilterComparator(column, evt.currentTarget.value); } },
                     React__default.createElement(Radio, { label: "Obsahuje", value: "contains" }),
                     React__default.createElement(Radio, { label: "Za\u010D\u00EDna na", value: "starts_with" }),
                     React__default.createElement(Radio, { label: "Kon\u010D\u00ED na", value: "ends_with" })))));
 }
 
 function NumberFilter(_a) {
-    var column = _a.column, state = _a.state, setFilterValue = _a.setFilterValue, setFilterActive = _a.setFilterActive, setFilterComparator = _a.setFilterComparator;
+    var column = _a.column, filterState = _a.filterState, setFilterValue = _a.setFilterValue, setFilterActive = _a.setFilterActive, setFilterComparator = _a.setFilterComparator;
     var getValue = function (secondary) {
-        if (state.comparator === 'range') {
-            if (Array.isArray(state.value)) {
-                return state.value[secondary ? 1 : 0].toString();
+        if (filterState.comparator === 'range') {
+            if (Array.isArray(filterState.value)) {
+                return filterState.value[secondary ? 1 : 0].toString();
             }
             else {
                 if (secondary) {
                     return '0';
                 }
                 else {
-                    return state.value.toString();
+                    return filterState.value.toString();
                 }
             }
         }
         else {
-            return state.value.toString() || '0';
+            return filterState.value.toString() || '0';
         }
     };
     return React__default.createElement(Filter, null,
@@ -5750,14 +5750,14 @@ function NumberFilter(_a) {
             React__default.createElement(FlexRow, { style: { height: 30, justifyContent: 'center' } },
                 React__default.createElement(ControlGroup, null,
                     React__default.createElement(FormGroup, { style: { marginRight: 12 } },
-                        React__default.createElement(InputGroup, { placeholder: this.state.filterStates[column.id].comparator === 'range' ? 'Od...' : 'Hodnota', value: getValue(false), onChange: function (evt) { return setFilterValue(column, parseFloat(evt.currentTarget.value)); } })),
-                    this.state.filterStates[column.id].comparator === 'range' &&
+                        React__default.createElement(InputGroup, { placeholder: filterState.comparator === 'range' ? 'Od...' : 'Hodnota', value: getValue(false), onChange: function (evt) { return setFilterValue(column, parseFloat(evt.currentTarget.value)); } })),
+                    filterState.comparator === 'range' &&
                         React__default.createElement(FormGroup, null,
                             React__default.createElement(InputGroup, { placeholder: "Do...", value: getValue(true), onChange: function (evt) { return setFilterValue(column, parseFloat(evt.currentTarget.value), true); } }))),
                 React__default.createElement(Button, { minimal: true, intent: Intent.DANGER, className: Classes.POPOVER_DISMISS, onClick: function (evt) { return setFilterActive(column, false); }, icon: "cross" }),
                 React__default.createElement(Button, { minimal: true, intent: Intent.SUCCESS, className: Classes.POPOVER_DISMISS, onClick: function (evt) { return setFilterActive(column, true); }, icon: "tick" })),
             React__default.createElement(FlexRow, { style: { fontSize: 12, justifyContent: 'start', paddingTop: 6, paddingLeft: 6, marginTop: 6 } },
-                React__default.createElement(RadioGroup, { selectedValue: this.state.filterStates[column.id].comparator, onChange: function (evt) { return setFilterComparator(column, evt.currentTarget.value); } },
+                React__default.createElement(RadioGroup, { selectedValue: filterState.comparator, onChange: function (evt) { return setFilterComparator(column, evt.currentTarget.value); } },
                     React__default.createElement(Radio, { label: "Rovn\u00E9", value: "eq" }),
                     React__default.createElement(Radio, { label: "Men\u0161ie ako", value: "lte" }),
                     React__default.createElement(Radio, { label: "V\u00E4\u010D\u0161ie ako", value: "gte" }),
@@ -5843,6 +5843,7 @@ var FilterRenderer = /** @class */ (function (_super) {
     FilterRenderer.prototype.render = function () {
         var filterProps = {
             column: this.props.column,
+            filterState: this.props.filterState,
             setFilterActive: this.setFilterActive,
             setFilterComparator: this.setFilterComparator,
             setFilterValue: this.setFilterValue
@@ -5851,17 +5852,17 @@ var FilterRenderer = /** @class */ (function (_super) {
             return React__default.createElement(TextFilter, __assign({}, filterProps));
         }
         if (this.props.column.type === ColumnType.Number) {
-            return React__default.createElement(NumberFilter, __assign({}, filterProps, { state: this.props.filterState }));
+            return React__default.createElement(NumberFilter, __assign({}, filterProps));
         }
         if (this.props.column.type === ColumnType.Date) {
-            return React__default.createElement(NumberFilter, __assign({}, filterProps, { state: this.props.filterState }));
+            return React__default.createElement(NumberFilter, __assign({}, filterProps));
         }
         return React__default.createElement("div", null, "unknown filter");
     };
     return FilterRenderer;
 }(React__default.Component));
 
-___$insertStyle("/*\n * Copyright 2017 Palantir Technologies, Inc. All rights reserved.\n */\n.patterns-data-table {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.patterns-data-table .patterns-data-table-header {\n  font-weight: bold;\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #ced9e0;\n  background-color: #f5f8fa;\n  font-size: 12px;\n  cursor: pointer;\n  height: 32px;\n}\n.patterns-data-table .patterns-data-table-content {\n  flex: 1;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n  flex-shrink: 1 0 auto;\n}\n.patterns-data-table .patterns-data-table-item-row {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-item-row:nth-child(even) {\n  background-color: #f5f8fa;\n}\n.patterns-data-table .patterns-data-table-item-row:hover {\n  background-color: #ebf1f5;\n}\n.patterns-data-table .patterns-data-table-item-row-expanded {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-selection-count {\n  margin-left: 12px;\n}\n.patterns-data-table .patterns-data-table-cell {\n  padding-left: 6px;\n  padding-right: 6px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  line-height: 32px;\n  border-left: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-cell:first-child {\n  border-left: none;\n}\n.patterns-data-table .patterns-data-table-cell label.bp3-checkbox {\n  max-width: 40px;\n}\n.patterns-data-table .patterns-data-table-cell.header:hover {\n  background-color: #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-filter {\n  padding: 6px;\n  display: flex;\n  flex-direction: row;\n}\n.patterns-data-table .patterns-data-table-column-picker {\n  padding: 6px 12px;\n}\n.patterns-data-table .patterns-data-table-pagination {\n  text-align: center;\n  height: 100%;\n}\n\n.patterns-flex-column {\n  display: flex;\n  flex-direction: column;\n}\n\n.patterns-flex-row {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n}\n\n.patterns-toolbar {\n  height: 38px;\n  display: flex;\n  flex-direction: row;\n  font-size: 12px;\n  flex-shrink: 0;\n  padding: 0 10px;\n  border-top: 1px solid #ced9e0;\n}\n.patterns-toolbar button {\n  font-size: 12px;\n  font-weight: bold;\n  color: #293742;\n}");
+___$insertStyle("/*\n * Copyright 2017 Palantir Technologies, Inc. All rights reserved.\n */\n.patterns-data-table {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.patterns-data-table .patterns-data-table-header {\n  font-weight: bold;\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #ced9e0;\n  background-color: #f5f8fa;\n  font-size: 12px;\n  cursor: pointer;\n  height: 32px;\n  flex-shrink: 0;\n}\n.patterns-data-table .patterns-data-table-content {\n  flex: 1;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n  flex-shrink: 1 0 auto;\n}\n.patterns-data-table .patterns-data-table-item-row {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-item-row:nth-child(even) {\n  background-color: #f5f8fa;\n}\n.patterns-data-table .patterns-data-table-item-row:hover {\n  background-color: #ebf1f5;\n}\n.patterns-data-table .patterns-data-table-item-row-expanded {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-selection-count {\n  margin-left: 12px;\n}\n.patterns-data-table .patterns-data-table-cell {\n  padding-left: 6px;\n  padding-right: 6px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  line-height: 32px;\n  border-left: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-cell:first-child {\n  border-left: none;\n}\n.patterns-data-table .patterns-data-table-cell label.bp3-checkbox {\n  max-width: 40px;\n}\n.patterns-data-table .patterns-data-table-cell.header:hover {\n  background-color: #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-filter {\n  padding: 6px;\n  display: flex;\n  flex-direction: row;\n}\n\n.patterns-data-table-column-picker {\n  padding: 6px 12px;\n}\n\n.patterns-data-table-pagination {\n  text-align: center;\n  height: 100%;\n}\n\n.patterns-flex-column {\n  display: flex;\n  flex-direction: column;\n}\n\n.patterns-flex-row {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n}\n\n.patterns-toolbar {\n  height: 38px;\n  display: flex;\n  flex-direction: row;\n  font-size: 12px;\n  flex-shrink: 0;\n  padding: 0 10px;\n  border-top: 1px solid #ced9e0;\n}\n.patterns-toolbar button {\n  font-size: 12px;\n  font-weight: bold;\n  color: #293742;\n}");
 
 var DataTable = /** @class */ (function (_super) {
     __extends(DataTable, _super);

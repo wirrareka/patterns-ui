@@ -7,29 +7,29 @@ import { formatDate, parseDate } from '../../common'
 
 interface Props<T> {
   column: Column<T>
-  state: FilterState
+  filterState: FilterState
   setFilterValue: (column: Column<T>, value: Date, secondary?: boolean) => void
   setFilterActive: (column: Column<T>, active: boolean) => void
   setFilterComparator: (column: Column<T>, value: FilterComparator) => void
 }
 
 export default function DateFilter<T>({
-  column, state, setFilterValue, setFilterActive, setFilterComparator
+  column, filterState, setFilterValue, setFilterActive, setFilterComparator
 }: Props<T>): ReactElement<T> {
 
   const getValue = (secondary: boolean) => {
-    if (state.comparator === 'range') {
-      if (Array.isArray(state.value)) {
-        return (state.value as [Date, Date])[secondary ? 1 : 0]
+    if (filterState.comparator === 'range') {
+      if (Array.isArray(filterState.value)) {
+        return (filterState.value as [Date, Date])[secondary ? 1 : 0]
       } else {
-        return state.value as Date
+        return filterState.value as Date
       }
     } else {
-      return (state.value as Date) || new Date()
+      return (filterState.value as Date) || new Date()
     }
   }
 
-  const comparator = state.comparator
+  const comparator = filterState.comparator
 
   return <Filter>
     <FlexColumn flex={1}>

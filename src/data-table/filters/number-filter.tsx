@@ -5,29 +5,29 @@ import { Column, FilterComparator, FilterState } from '../types'
 
 interface Props<T> {
   column: Column<T>
-  state: FilterState
+  filterState: FilterState
   setFilterValue: (column: Column<T>, value: number, secondary?: boolean) => void
   setFilterActive: (column: Column<T>, active: boolean) => void
   setFilterComparator: (column: Column<T>, value: FilterComparator) => void
 }
 
 export default function NumberFilter<T>({
-  column, state, setFilterValue, setFilterActive, setFilterComparator
+  column, filterState, setFilterValue, setFilterActive, setFilterComparator
 }: Props<T>): ReactElement<T> {
 
   const getValue = (secondary: boolean) => {
-    if (state.comparator === 'range') {
-      if (Array.isArray(state.value)) {
-        return (state.value as [number, number])[secondary ? 1 : 0].toString()
+    if (filterState.comparator === 'range') {
+      if (Array.isArray(filterState.value)) {
+        return (filterState.value as [number, number])[secondary ? 1 : 0].toString()
       } else {
         if (secondary) {
           return '0'
         } else {
-          return (state.value as number).toString()
+          return (filterState.value as number).toString()
         }
       }
     } else {
-      return (state.value as number).toString() || '0'
+      return (filterState.value as number).toString() || '0'
     }
   }
 
@@ -37,13 +37,13 @@ export default function NumberFilter<T>({
         <ControlGroup>
           <FormGroup style={{ marginRight: 12 }}>
             <InputGroup
-              placeholder={this.state.filterStates[column.id].comparator === 'range' ? 'Od...' : 'Hodnota'}
+              placeholder={filterState.comparator === 'range' ? 'Od...' : 'Hodnota'}
               value={getValue(false)}
               onChange={(evt: React.FormEvent<HTMLInputElement>) => setFilterValue(column, parseFloat(evt.currentTarget.value))}
             />
           </FormGroup>
 
-          { this.state.filterStates[column.id].comparator === 'range' &&
+          { filterState.comparator === 'range' &&
             <FormGroup>
               <InputGroup
                 placeholder="Do..."
@@ -72,7 +72,7 @@ export default function NumberFilter<T>({
 
       <FlexRow style={{ fontSize: 12, justifyContent: 'start', paddingTop: 6, paddingLeft: 6, marginTop: 6 }}>
         <RadioGroup
-          selectedValue={this.state.filterStates[column.id].comparator}
+          selectedValue={filterState.comparator}
           onChange={evt => setFilterComparator(column, evt.currentTarget.value as FilterComparator)}
         >
           <Radio label="Rovné" value="eq" />

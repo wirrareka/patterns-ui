@@ -1,17 +1,18 @@
 import React, { ReactElement } from 'react'
 import { Button, Classes, FormGroup, InputGroup, Intent, Radio, RadioGroup } from '@blueprintjs/core'
 import { Filter, FlexColumn, FlexRow } from '../components'
-import { Column, FilterComparator } from '../types'
+import { Column, FilterComparator, FilterState } from '../types'
 
 interface Props<T> {
   column: Column<T>
+  filterState: FilterState
   setFilterValue: (column: Column<T>, value: string) => void
   setFilterActive: (column: Column<T>, active: boolean) => void
   setFilterComparator: (column: Column<T>, value: FilterComparator) => void
 }
 
 export default function TextFilter<T>({
-  column, setFilterValue, setFilterActive, setFilterComparator
+  column, filterState, setFilterValue, setFilterActive, setFilterComparator
 }: Props<T>): ReactElement<T> {
   return <Filter>
     <FlexColumn flex={1}>
@@ -19,7 +20,7 @@ export default function TextFilter<T>({
         <FormGroup style={{ marginRight: 12 }}>
           <InputGroup
             placeholder="Filter..."
-            value={this.state.filterStates[column.id].value as string || ''}
+            value={filterState.value as string || ''}
             onChange={(evt: React.FormEvent<HTMLInputElement>) => setFilterValue(column, evt.currentTarget.value)}
           />
         </FormGroup>
@@ -42,7 +43,7 @@ export default function TextFilter<T>({
       </FlexRow>
       <FlexRow style={{ fontSize: 12, justifyContent: 'start', paddingTop: 6, paddingLeft: 6, marginTop: 6 }}>
         <RadioGroup
-          selectedValue={this.state.filterStates[column.id].comparator}
+          selectedValue={filterState.comparator}
           onChange={evt => setFilterComparator(column, evt.currentTarget.value as FilterComparator)}>
           <Radio label="Obsahuje" value="contains" />
           <Radio label="Začína na" value="starts_with" />

@@ -14,6 +14,7 @@
     font-size: 12px;
     cursor: pointer;
     height: 32px;
+    flex-shrink: 0;
   }
 
   .patterns-data-table-content {
@@ -80,15 +81,15 @@
     display: flex;
     flex-direction: row;
   }
+}
 
-  .patterns-data-table-column-picker {
-    padding: 6px 12px;
-  }
+.patterns-data-table-column-picker {
+  padding: 6px 12px;
+}
 
-  .patterns-data-table-pagination {
-    text-align: center;
-    height: 100%;
-  }
+.patterns-data-table-pagination {
+  text-align: center;
+  height: 100%;
 }
 
 .patterns-flex-column {

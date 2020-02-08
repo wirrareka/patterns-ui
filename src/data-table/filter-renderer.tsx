@@ -78,6 +78,7 @@ export default class FilterRenderer<T> extends React.Component<Props<T>> {
   render() {
     const filterProps = {
       column: this.props.column,
+      filterState: this.props.filterState,
       setFilterActive: this.setFilterActive,
       setFilterComparator: this.setFilterComparator,
       setFilterValue: this.setFilterValue
@@ -88,11 +89,11 @@ export default class FilterRenderer<T> extends React.Component<Props<T>> {
     }
 
     if (this.props.column.type === ColumnType.Number) {
-      return <NumberFilter { ...filterProps } state={this.props.filterState} />
+      return <NumberFilter { ...filterProps } />
     }
 
     if (this.props.column.type === ColumnType.Date) {
-      return <DateFilter { ...filterProps } state={this.props.filterState} />
+      return <DateFilter { ...filterProps } />
     }
 
     return <div>unknown filter</div>

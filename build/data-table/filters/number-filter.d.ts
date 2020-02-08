@@ -2,10 +2,10 @@ import { ReactElement } from 'react';
 import { Column, FilterComparator, FilterState } from '../types';
 interface Props<T> {
     column: Column<T>;
-    state: FilterState;
+    filterState: FilterState;
     setFilterValue: (column: Column<T>, value: number, secondary?: boolean) => void;
     setFilterActive: (column: Column<T>, active: boolean) => void;
     setFilterComparator: (column: Column<T>, value: FilterComparator) => void;
 }
-export default function NumberFilter<T>({ column, state, setFilterValue, setFilterActive, setFilterComparator }: Props<T>): ReactElement<T>;
+export default function NumberFilter<T>({ column, filterState, setFilterValue, setFilterActive, setFilterComparator }: Props<T>): ReactElement<T>;
 export {};
