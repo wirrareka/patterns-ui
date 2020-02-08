@@ -1,0 +1,632 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataTable Snapshots should match snapshots as primary themed 1`] = `
+<styled.div>
+  <styled.div>
+    <styled.div
+      className="datatable-cell"
+      head={true}
+      key="datatable-header-name"
+    >
+      <div
+        onClick={[Function]}
+        style={
+          Object {
+            "flex": 3,
+          }
+        }
+      >
+        <span>
+          Meno
+        </span>
+      </div>
+      <div
+        style={
+          Object {
+            "alignItems": "flex-end",
+            "display": "flex",
+            "flex": 1,
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+          }
+        }
+      >
+        <Blueprint3.Button
+          className=""
+          icon="chevron-up"
+          intent="primary"
+          minimal={true}
+          onClick={[Function]}
+        />
+        <Blueprint3.Popover
+          boundary="scrollParent"
+          captureDismiss={false}
+          defaultIsOpen={false}
+          disabled={false}
+          fill={false}
+          hasBackdrop={false}
+          hoverCloseDelay={300}
+          hoverOpenDelay={150}
+          inheritDarkTheme={true}
+          interactionKind="click"
+          minimal={false}
+          modifiers={Object {}}
+          openOnTargetFocus={true}
+          position="bottom"
+          targetTagName="span"
+          transitionDuration={300}
+          usePortal={true}
+          wrapperTagName="span"
+        >
+          <Blueprint3.Button
+            icon={
+              <Blueprint3.Icon
+                color="#A7B6C2"
+                icon="filter"
+              />
+            }
+            minimal={true}
+            style={
+              Object {
+                "alignSelf": "center",
+                "justifySelf": "center",
+                "marginBottom": 0,
+              }
+            }
+          />
+          <FilterRenderer
+            column={
+              Object {
+                "filterable": true,
+                "format": [Function],
+                "id": "name",
+                "sortable": true,
+                "title": "Meno",
+                "type": 0,
+                "visible": true,
+              }
+            }
+            filterState={
+              Object {
+                "active": false,
+                "column": "name",
+                "comparator": "contains",
+                "type": 0,
+                "value": "",
+              }
+            }
+            onFilterStateChange={[Function]}
+          />
+        </Blueprint3.Popover>
+      </div>
+    </styled.div>
+  </styled.div>
+  <styled.div>
+    <styled.div
+      key="data-table-empty-row-1"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-1"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-2"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-2"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-3"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-3"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-4"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-4"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-5"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-5"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-6"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-6"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-7"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-7"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-8"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-8"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-9"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-9"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-10"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-10"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-11"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-11"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-12"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-12"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-13"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-13"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-14"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-14"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-15"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-15"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-16"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-16"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-17"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-17"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-18"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-18"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-19"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-19"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-20"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-20"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-21"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-21"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-22"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-22"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-23"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-23"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-24"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-24"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-25"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-25"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-26"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-26"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-27"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-27"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-28"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-28"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-29"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-29"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-30"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-30"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-31"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-31"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-32"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-32"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-33"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-33"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-34"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-34"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-35"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-35"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-36"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-36"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-37"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-37"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-38"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-38"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-39"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-39"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-40"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-40"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-41"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-41"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-42"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-42"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-43"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-43"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-44"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-44"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-45"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-45"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-46"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-46"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-47"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-47"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-48"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-48"
+      >
+         
+      </styled.div>
+    </styled.div>
+    <styled.div
+      key="data-table-empty-row-49"
+    >
+      <styled.div
+        className="bp3-skeleton"
+        key="data-table-item-empty-cell-name-49"
+      >
+         
+      </styled.div>
+    </styled.div>
+  </styled.div>
+  <styled.div>
+    <styled.div
+      flex={1}
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "start",
+        }
+      }
+    >
+      <Blueprint3.Button
+        icon="refresh"
+        minimal={true}
+        onClick={[Function]}
+      />
+      <styled.div>
+        žiadny výber
+      </styled.div>
+    </styled.div>
+    <styled.div
+      flex={4}
+    >
+      <Pagination
+        onChange={[Function]}
+        page={1}
+        size={50}
+        total={0}
+      />
+    </styled.div>
+    <styled.div
+      flex={1}
+    >
+       
+    </styled.div>
+  </styled.div>
+</styled.div>
+`;
