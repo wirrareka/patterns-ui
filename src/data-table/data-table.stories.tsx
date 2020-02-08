@@ -1,5 +1,7 @@
 import React from "react"
-import DataTable, { Column, ColumnType, FetchResponse } from './data-table'
+import DataTable from './data-table'
+import { ColumnType, FetchResponse } from './types'
+import './data-table.scss'
 
 class TestModel {
   id: string
@@ -17,11 +19,23 @@ export default {
   title: "DataTable"
 }
 
-const items = [
-  new TestModel("yolo1", "yolo 1"),
-  new TestModel("yolo2", "yolo 2"),
-  new TestModel("yolo3", "yolo 3"),
-]
+const items = []
+for (let i = 0; i< 100; i++) { items.push(new TestModel(`${i}`, `Item #${i}`)) }
+
+const fetch = async (page, pageSize, sort, sortDir, _filters) => {
+  if (sortDir === 'asc') {
+    items.sort((a: TestModel,b: TestModel) => (a[sort] > b[sort]) ? 1 : ((b[sort] > a[sort]) ? -1 : 0))
+  } else {
+    items.sort((a: TestModel,b: TestModel) => (a[sort] > b[sort]) ? -1 : ((b[sort] > a[sort]) ? 1 : 0))
+  }
+
+  //const filters = JSON.stringify(Object.keys(_filters).map(key => _filters[key]).filter(filter => filter.active))
+
+  return {
+    items: items.slice((page -1) * pageSize, page * pageSize),
+    total: items.length
+  } as FetchResponse<TestModel>
+}
 
 const baseProps = {
   expandable: false,
@@ -31,9 +45,7 @@ const baseProps = {
   onItemSelect: (item) => {},
   onSelectionChange: (selection) => {},
   detailRenderer: () => <div/>,
-  fetch: async (page, pageSize, sort, sortDir, filters) => {
-    return { items, total: items.length } as FetchResponse<TestModel>
-  },
+  fetch,
   columns: [
     {
       id: 'id',
@@ -53,6 +65,7 @@ const baseProps = {
 }
 
 export const SimpleTable = () => <TestTable { ...baseProps } />
+
 export const Sortable = () => <TestTable { ...baseProps }
   columns={[
     {
@@ -72,15 +85,5 @@ export const Sortable = () => <TestTable { ...baseProps }
       sortable: true
     }
   ]}
-  fetch={async (page, pageSize, sort, sortDir, filters) => {
-    console.log('before sort', items)
-    if (sortDir === 'asc') {
-      items.sort((a: TestModel,b: TestModel) => (a[sort] > b[sort]) ? 1 : ((b[sort] > a[sort]) ? -1 : 0))
-    } else {
-      items.sort((a: TestModel,b: TestModel) => (a[sort] > b[sort]) ? -1 : ((b[sort] > a[sort]) ? 1 : 0))
-    }
-    console.log('after sort', items)
-
-    return { items, total: items.length } as FetchResponse<TestModel>
-  }}
+  fetch={fetch}
 />

@@ -1,9 +1,8 @@
 import React, { ReactElement } from 'react'
-import { Button, ButtonGroup, Colors, MenuItem } from '@blueprintjs/core';
-import styled from 'styled-components'
+import { Button, ButtonGroup, Colors, MenuItem } from '@blueprintjs/core'
 import { Select } from '@blueprintjs/select'
+import { PageSizeItem } from './types'
 
-type PageSizeItem = { title: string, value: number }
 const PageSizeSelect = Select.ofType<PageSizeItem>()
 
 const PageSizes = [
@@ -13,11 +12,6 @@ const PageSizes = [
   { title: '500 na stranu', value: 500 } as PageSizeItem,
   { title: '1000 na stranu', value: 1000 } as PageSizeItem
 ] as PageSizeItem[]
-
-const Container = styled.div`
-  text-align: center;
-  height: 100%;
-`
 
 interface Props {
   page: number
@@ -55,7 +49,7 @@ export default function Pagination({ page, size, total, onChange }: Props): Reac
     (_, i) => startPage + i
   )
 
-  return <Container>
+  return <div className="patterns-data-table-pagination">
     <ButtonGroup>
       <Button
         disabled={page === 1}
@@ -106,5 +100,5 @@ export default function Pagination({ page, size, total, onChange }: Props): Reac
         <Button minimal={true} rightIcon="chevron-down" text={`${size} na stranu`} style={{ margin: 0 }} className="low-button"/>
       </PageSizeSelect>
     </ButtonGroup>
-  </Container>
+  </div>
 }

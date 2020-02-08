@@ -43,8 +43,7 @@ export default function TextFilter<T>({
       <FlexRow style={{ fontSize: 12, justifyContent: 'start', paddingTop: 6, paddingLeft: 6, marginTop: 6 }}>
         <RadioGroup
           selectedValue={this.state.filterStates[column.id].comparator}
-          onChange={evt => setFilterComparator(column, evt.currentTarget.value as FilterComparator)}
-        >
+          onChange={evt => setFilterComparator(column, evt.currentTarget.value as FilterComparator)}>
           <Radio label="Obsahuje" value="contains" />
           <Radio label="Začína na" value="starts_with" />
           <Radio label="Končí na" value="ends_with" />

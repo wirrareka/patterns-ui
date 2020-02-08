@@ -39,3 +39,5 @@ export interface Column<T> {
   filterable?: boolean
   visible?: boolean
 }
+
+export type PageSizeItem = { title: string, value: number }

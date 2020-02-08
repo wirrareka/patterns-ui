@@ -1,142 +1,75 @@
-import { Colors } from '@blueprintjs/core'
-import styled, { css } from 'styled-components'
+import React from 'react'
 
-const ROW_HEIGHT = 28
+interface Props {
+  style?: React.CSSProperties
+}
+
+interface FlexProps extends Props {
+  flex?: number
+}
+
+// export const Container = <div className="patterns-data-table"/>
+export const Container = ({ children, style }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table', style }, children)
+
+export const FlexRow = ({ children, flex, style  }: React.PropsWithChildren<FlexProps>) =>
+  React.createElement('div', { className: 'patterns-flex-row', style: { ...style, flex } }, children)
+
+export const FlexColumn = ({ children, flex, style }: React.PropsWithChildren<FlexProps>) =>
+  React.createElement('div', { className: 'patterns-flex-column', style: { ...style, flex } }, children)
+
+export const Toolbar = ({ children }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-toolbar' }, children)
+
+export const Header = ({ children }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-header' }, children)
+
+export const Content = ({ children }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-content' }, children)
+
+export const ItemRow = ({ children }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-item-row' }, children)
+
+export const ExpandedItemRow = ({ children }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-item-row-expanded' }, children)
+
+export const SelectionCount = ({ children }: React.PropsWithChildren<Props>) =>
+  React.createElement('div', { className: 'patterns-data-table-selection-count' }, children)
+
 
 interface CellProps {
+  className?: string
   flex?: number
   width?: number
   head?: boolean
+  onClick?: () => void
 }
 
-interface FlexProps {
-  flex?: number
+export const Cell = ({ children, width, flex, head, onClick, className }: React.PropsWithChildren<CellProps>) => {
+  const style = {} as React.CSSProperties
+
+  if (flex) {
+    style.flex = `${flex}`
+  }
+
+  if (width) {
+    style.width = `${width}px`
+  }
+
+  if (!flex && !width) {
+    style.flex = '1'
+  }
+
+  const _className = [
+    head ? 'patterns-data-table-cell header' : 'patterns-data-table-cell'
+  ]
+
+  if (className) {
+    _className.push(className)
+  }
+
+  return React.createElement('div', { className: _className.join(' '), style, onClick }, children)
 }
 
-export const Container = styled.div`
-  flex: 1;
-  height: calc(100vh - 44px);
-  display: flex;
-  flex-direction: column;
-`
-
-export const FlexColumn = styled.div<FlexProps>`
-  display: flex;
-  flex-direction: column;
-
-  ${props => props.flex && css`
-    flex: ${props.flex};
-  `}
-`
-
-export const FlexRow = styled.div<FlexProps>`
-  display: flex;
-  flex-direction: row;
-
-  ${props => props.flex && css`
-    flex: ${props.flex};
-  `}
-`
-
-export const Toolbar = styled.div`
-  height: 30px;
-  display: flex;
-  flex-direction: row;
-  font-size: 12px;
-  padding: 0 10px;
-  border-top: 1px solid ${Colors.LIGHT_GRAY1};
-  button {
-    font-size: 12px;
-    font-weight: bold;
-    color: ${Colors.DARK_GRAY3};
-  }
-`
-
-export const Header = styled.div`
-  height: ${ROW_HEIGHT}px;
-  font-weight: bold;
-  display: flex;
-  flex-direction: row;
-  border-bottom: 1px solid ${Colors.LIGHT_GRAY1};
-  background-color: ${Colors.LIGHT_GRAY5};
-  cursor: pointer;
-  font-size: 12px;
-`
-
-export const Content = styled.div`
-  flex: 1;
-  display: block;
-  overflow-y: scroll;
-  overflow-x: hidden;
-`
-
-export const ItemRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: ${ROW_HEIGHT}px;
-  border-bottom: 1px solid ${Colors.LIGHT_GRAY3};
-  &:nth-child(even) {
-    background-color: ${Colors.LIGHT_GRAY5};
-  }
-  &:hover {
-    background-color: ${Colors.LIGHT_GRAY4};
-  }
-`
-
-export const ExpandedItemRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  border-bottom: 1px solid ${Colors.LIGHT_GRAY3};
-  height: 320px;
-`
-
-export const SelectionCount = styled.div`
-  margin-left: 12px;
-`
-
-export const Cell = styled.div<CellProps>`
-  padding-left: 6px;
-  padding-right: 6px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  cursor: pointer;
-  line-height: ${ROW_HEIGHT}px;
-
-  ${props => props.width && css`
-    width: ${props.width}px;
-  `}
-
-  ${props => props.flex && css`
-    flex: ${props.flex};
-  `}
-
-  ${props => (!props.width && !props.flex) && css`
-    flex: 1;
-  `}
-
-  ${props => props.head && css`
-    &:hover {
-      background-color: ${Colors.LIGHT_GRAY3}
-    };
-  `}
-
-  border-left: 1px solid ${Colors.LIGHT_GRAY3};
-
-  &:first-child {
-    border-left: none;
-  }
-
-  label.bp3-checkbox {
-    max-width: 40px;
-  }
-`
-
-export const Filter = styled.div`
-  padding: 6px;
-  display: flex;
-  flex-directon: row;
-`
+export const Filter = ({ children }) =>
+  React.createElement('div', { className: 'patterns-data-table-filter' }, children)

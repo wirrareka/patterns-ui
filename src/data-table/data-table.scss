@@ -1,0 +1,117 @@
+@import "~@blueprintjs/core/lib/scss/variables.scss";
+
+.patterns-data-table {
+  flex: 1;
+  height: calc(100vh - 44px);
+  display: flex;
+  flex-direction: column;
+
+  .patterns-data-table-header {
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid $light-gray1;
+    background-color: $light-gray5;
+    font-size: 12px;
+    cursor: pointer;
+    height: 28px;
+  }
+
+  .patterns-data-table-content {
+    flex: 1;
+    display: block;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  .patterns-data-table-item-row {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid $light-gray3;
+    &:nth-child(even) {
+      background-color: $light-gray5;
+    }
+    &:hover {
+      background-color: $light-gray4;
+    }
+  }
+
+  .patterns-data-table-item-row-expanded {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid $light-gray3;
+  }
+
+  .patterns-data-table-selection-count {
+    margin-left: 12px;
+  }
+
+  .patterns-data-table-cell {
+    padding-left: 6px;
+    padding-right: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    line-height: 28px;
+
+    border-left: 1px solid $light-gray3;
+
+    &:first-child {
+      border-left: none;
+    }
+
+    label.bp3-checkbox {
+      max-width: 40px;
+    }
+  }
+
+  .patterns-data-table-cell.header {
+    &:hover {
+      background-color: $light-gray3;
+    };
+  }
+
+  .patterns-data-table-filter {
+    padding: 6px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .patterns-data-table-column-picker {
+    padding: 6px 12px;
+  }
+
+  .patterns-data-table-pagination {
+    text-align: center;
+    height: 100%;
+  }
+}
+
+.patterns-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.patterns-flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.patterns-toolbar {
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  padding: 0 10px;
+  border-top: 1px solid $light-gray1;
+  button {
+    font-size: 12px;
+    font-weight: bold;
+    color: $dark-gray3;
+  }
+}

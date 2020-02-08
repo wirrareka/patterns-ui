@@ -2,11 +2,6 @@ import * as React from 'react'
 import { Button, Checkbox, Icon, Popover, PopoverInteractionKind, PopoverPosition } from '@blueprintjs/core'
 import { Column } from './types'
 import { FlexColumn } from './components'
-import styled from 'styled-components'
-
-const Container = styled.div`
-  padding: 6px 12px;
-`
 
 export interface Props<T> {
   columns: Column<T>[]
@@ -32,12 +27,12 @@ export default class ColumnPicker<T> extends React.Component<Props<T>> {
   render() {
     return <Popover interactionKind={PopoverInteractionKind.CLICK} position={PopoverPosition.BOTTOM_RIGHT}>
       <Button minimal icon={<Icon icon="settings"/>} />
-      <Container>
+      <div className="patterns-data-table-column-picker">
         <FlexColumn style={{ padding: 6, paddingRight: 12 }}>
           <strong style={{ marginBottom: 12 }}>Výber stĺpcov</strong>
           { this.renderColumns() }
         </FlexColumn>
-      </Container>
+      </div>
     </Popover>
   }
 }

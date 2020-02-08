@@ -1,7 +1,8 @@
 import React from "react"
 import { shallow } from "enzyme"
 
-import DataTable, { Column, ColumnType, FilterStates } from "./data-table"
+import DataTable from "./data-table"
+import { Column, ColumnType, FilterStates } from './types'
 
 class TestModel {
   id: string
