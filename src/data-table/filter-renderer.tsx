@@ -1,21 +1,10 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import produce from 'immer'
-import { Column, ColumnType } from './data-table'
+import { Column, ColumnType, FilterComparator, FilterState, FilterValue } from './types'
 
 import TextFilter from './filters/text-filter'
 import NumberFilter from './filters/number-filter'
 import DateFilter from './filters/number-filter'
-
-export type FilterComparator = 'contains' | 'starts_with' | 'ends_with' | 'eq' | 'lt' | 'gt' | 'lte' | 'gte' | 'range'
-export type FilterValue = string | number | [number, number] | Date | [Date, Date] | undefined
-
-export type FilterState = {
-  column: string
-  active: boolean
-  value?: FilterValue
-  comparator: FilterComparator
-  type: ColumnType
-}
 
 interface Props<T> {
   column: Column<T>

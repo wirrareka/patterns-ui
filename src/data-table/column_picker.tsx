@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Button, Checkbox, Icon, Popover, PopoverInteractionKind, PopoverPosition } from '@blueprintjs/core'
-import { Column, FlexColumn } from './data-table'
+import { Column } from './types'
+import { FlexColumn } from './components'
 import styled from 'styled-components'
 
 const Container = styled.div`

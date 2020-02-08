@@ -6,46 +6,18 @@ import {
 
 import Pagination from './pagination'
 import ColumnPicker from './column_picker'
+
 import { formatDate } from '../common'
 
 import {
   Container, FlexColumn, FlexRow, Toolbar, Header, Content, ItemRow, ExpandedItemRow, SelectionCount, Cell
 } from './components'
 
-import FilterRenderer, { FilterState, FilterComparator } from './filter-renderer'
+import {
+  Column, ColumnType, FilterComparator, FilterState, FilterStates, FetchResponse, Selection
+} from './types'
 
-export { FlexColumn } from './components'
-
-export type Selection = { [id: string]: boolean }
-
-export type FetchResponse<T> = {
-  items: T[],
-  total: number
-}
-
-export type FilterStates = {
-  [id: string]: FilterState
-}
-
-export enum ColumnType {
-  Text,
-  Number,
-  Date,
-  DateTime,
-  Custom
-}
-export interface Column<T> {
-  id: string
-  title: string
-  type: ColumnType
-  format?: (item: T) => React.ReactElement
-  flex?: number
-  width?: number
-  sortable?: boolean
-  filterable?: boolean
-  visible?: boolean
-}
-
+import FilterRenderer from './filter-renderer'
 
 interface Props<T> {
   columns: Column<T>[]
@@ -55,8 +27,11 @@ interface Props<T> {
   sortDir: 'asc' | 'desc'
   multiple: boolean
   onItemSelect: (item: T) => void
-  onSelectionChange: (items: T[]) => void
-  detailRenderer: (item: T) => React.ReactElement
+  onSelectionChange?: (items: T[]) => void
+  detailRenderer?: (item: T) => React.ReactElement
+  formatDate?: (date: Date) => string
+  parseDate?: (date: Date) => string
+  locale?: string
 }
 
 interface State<T> {

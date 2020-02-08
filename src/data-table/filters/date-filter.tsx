@@ -2,8 +2,7 @@ import React, { ReactElement } from 'react'
 import { Button, Classes, ControlGroup, FormGroup, Intent, Radio, RadioGroup } from '@blueprintjs/core'
 import { DateInput } from '@blueprintjs/datetime'
 import { Filter, FlexColumn, FlexRow } from '../components'
-import { Column } from '../data-table'
-import { FilterComparator, FilterState } from '../filter-renderer'
+import { Column, FilterComparator, FilterState } from '../types'
 import { formatDate, parseDate } from '../../common'
 
 interface Props<T> {

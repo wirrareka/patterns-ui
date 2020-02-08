@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react'
 import { Button, Classes, ControlGroup, FormGroup, InputGroup, Intent, Radio, RadioGroup } from '@blueprintjs/core'
 import { Filter, FlexColumn, FlexRow } from '../components'
-import { Column } from '../data-table'
-import { FilterComparator, FilterState } from '../filter-renderer'
+import { Column, FilterComparator, FilterState } from '../types'
 
 interface Props<T> {
   column: Column<T>
