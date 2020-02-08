@@ -24,7 +24,7 @@ export default class FilterRenderer<T> extends React.Component<Props<T>> {
   }
 
   setFilterValue(column: Column<T>, value?: FilterValue, secondary: boolean = false) {
-    const filterStates = produce(this.props.filterState, (state) => {
+    const filterState = produce(this.props.filterState, (state) => {
       if (state.comparator === 'range') {
         // range
         if (column.type === ColumnType.Number) {
@@ -56,18 +56,18 @@ export default class FilterRenderer<T> extends React.Component<Props<T>> {
         state.value = value
       }
     })
-    this.props.onFilterStateChange(filterStates, false)
+    this.props.onFilterStateChange(filterState, false)
   }
 
   setFilterComparator(column: Column<T>, comparator: FilterComparator) {
-    const filterStates = produce(this.props.filterState, (states) => {
-      states[column.id].comparator = comparator
+    const filterState = produce(this.props.filterState, (state) => {
+      state.comparator = comparator
     })
 
-    this.props.onFilterStateChange(filterStates, false)
+    this.props.onFilterStateChange(filterState, false)
   }
 
-  async setFilterActive (column: Column<T>, value: boolean) {
+  setFilterActive (column: Column<T>, value: boolean) {
     const filterState = produce(this.props.filterState, (state) => {
       state.active = value
       if (!value) {

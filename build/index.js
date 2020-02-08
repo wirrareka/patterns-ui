@@ -5784,7 +5784,7 @@ var FilterRenderer = /** @class */ (function (_super) {
     }
     FilterRenderer.prototype.setFilterValue = function (column, value, secondary) {
         if (secondary === void 0) { secondary = false; }
-        var filterStates = produce(this.props.filterState, function (state) {
+        var filterState = produce(this.props.filterState, function (state) {
             if (state.comparator === 'range') {
                 // range
                 if (column.type === exports.ColumnType.Number) {
@@ -5820,36 +5820,30 @@ var FilterRenderer = /** @class */ (function (_super) {
                 state.value = value;
             }
         });
-        this.props.onFilterStateChange(filterStates, false);
+        this.props.onFilterStateChange(filterState, false);
     };
     FilterRenderer.prototype.setFilterComparator = function (column, comparator) {
-        var filterStates = produce(this.props.filterState, function (states) {
-            states[column.id].comparator = comparator;
+        var filterState = produce(this.props.filterState, function (state) {
+            state.comparator = comparator;
         });
-        this.props.onFilterStateChange(filterStates, false);
+        this.props.onFilterStateChange(filterState, false);
     };
     FilterRenderer.prototype.setFilterActive = function (column, value) {
-        return __awaiter(this, void 0, void 0, function () {
-            var filterState;
-            return __generator(this, function (_a) {
-                filterState = produce(this.props.filterState, function (state) {
-                    state.active = value;
-                    if (!value) {
-                        if (column.type === exports.ColumnType.Text) {
-                            state.value = '';
-                        }
-                        else if (column.type === exports.ColumnType.Number) {
-                            state.value = 0;
-                        }
-                        else if (column.type === exports.ColumnType.Date) {
-                            state.value = new Date();
-                        }
-                    }
-                });
-                this.props.onFilterStateChange(filterState, true);
-                return [2 /*return*/];
-            });
+        var filterState = produce(this.props.filterState, function (state) {
+            state.active = value;
+            if (!value) {
+                if (column.type === exports.ColumnType.Text) {
+                    state.value = '';
+                }
+                else if (column.type === exports.ColumnType.Number) {
+                    state.value = 0;
+                }
+                else if (column.type === exports.ColumnType.Date) {
+                    state.value = new Date();
+                }
+            }
         });
+        this.props.onFilterStateChange(filterState, true);
     };
     FilterRenderer.prototype.render = function () {
         var filterProps = {
