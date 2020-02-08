@@ -19,6 +19,8 @@ import {
 
 import FilterRenderer from './filter-renderer'
 
+import './data-table.scss'
+
 interface Props<T> {
   columns: Column<T>[]
   expandable: boolean
