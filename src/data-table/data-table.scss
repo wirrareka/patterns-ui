@@ -13,7 +13,7 @@
     background-color: $light-gray5;
     font-size: 12px;
     cursor: pointer;
-    height: 28px;
+    height: 32px;
   }
 
   .patterns-data-table-content {
@@ -21,6 +21,7 @@
     display: block;
     overflow-y: scroll;
     overflow-x: hidden;
+    flex-shrink: 1 0 auto;
   }
 
   .patterns-data-table-item-row {
@@ -55,7 +56,7 @@
     flex-direction: row;
     align-items: center;
     cursor: pointer;
-    line-height: 28px;
+    line-height: 32px;
 
     border-left: 1px solid $light-gray3;
 
@@ -106,6 +107,7 @@
   display: flex;
   flex-direction: row;
   font-size: 12px;
+  flex-shrink: 0;
   padding: 0 10px;
   border-top: 1px solid $light-gray1;
   button {
