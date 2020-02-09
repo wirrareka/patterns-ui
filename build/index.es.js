@@ -948,16 +948,89 @@ var produce = immer.produce;
  */
 var applyPatches$1 = produce(applyPatches);
 
+var en = {
+    code: 'en',
+    range_from: 'Since',
+    range_to: 'Till',
+    day: 'Day',
+    at_day: 'At given date',
+    older_than: 'Older than',
+    newer_than: 'Newer than',
+    range: 'Range',
+    value: 'Value',
+    equal: 'Equal',
+    less_than: 'Less than',
+    greater_than: 'Greater than',
+    contains: 'Contains',
+    starts_with: 'Starts with',
+    ends_with: 'Ends with',
+    per_page: 'per page'
+};
+
+var sk = {
+    code: 'sk',
+    range_from: 'Od',
+    range_to: 'Do',
+    day: 'Deň',
+    at_day: 'V daný deň',
+    older_than: 'Staršie ako',
+    newer_than: 'Novšie ako',
+    range: 'Rozsah',
+    value: 'Hodnota',
+    equal: 'Rovné',
+    less_than: 'Menšie ako',
+    greater_than: 'Väčšie ako',
+    contains: 'Obsahuje',
+    starts_with: 'Začína na',
+    ends_with: 'Končí na',
+    per_page: 'na stranu'
+};
+
+var LocaleManager = /** @class */ (function () {
+    function LocaleManager() {
+        var _this = this;
+        this.t = function (key) {
+            return _this.locales[_this.locale][key];
+        };
+        this.tc = function (key, count) {
+            var suffix = 'none';
+            if (count === 1) {
+                suffix = 'one';
+            }
+            else if (count > 1 && count < 5) {
+                suffix = 'few';
+            }
+            else if (count >= 5) {
+                suffix = 'many';
+            }
+            return _this.t(key + "." + suffix);
+        };
+        this.locale = 'en';
+        this.locales = { en: en, sk: sk };
+        this.t = this.t.bind(this);
+        this.tc = this.tc.bind(this);
+        this.setLocale = this.setLocale.bind(this);
+    }
+    LocaleManager.prototype.setLocale = function (code, locale) {
+        if (this.locales[code]) {
+            if (locale) {
+                this.locales[code] = locale;
+            }
+            else {
+                throw new Error('Patterns LocaleManager: setLocale called with code for unknown Locale object');
+            }
+        }
+        this.locale = code;
+    };
+    return LocaleManager;
+}());
+var localeManager = new LocaleManager();
+var t = localeManager.t;
+
 var PageSizeSelect = Select.ofType();
-var PageSizes = [
-    { title: '25 na stranu', value: 25 },
-    { title: '50 na stranu', value: 50 },
-    { title: '100 na stranu', value: 100 },
-    { title: '500 na stranu', value: 500 },
-    { title: '1000 na stranu', value: 1000 }
-];
 function Pagination(_a) {
     var page = _a.page, size = _a.size, total = _a.total, onChange = _a.onChange;
+    var pageSizes = [25, 50, 100, 500].map(function (size) { return ({ title: size + " " + t('per_page'), value: size }); });
     var totalPages = Math.ceil(total / size);
     var startPage = 0;
     var endPage = 0;
@@ -994,8 +1067,8 @@ function Pagination(_a) {
                     return onChange(Math.min(page + 1, totalPages), size);
                 } }),
             React__default.createElement(Button, { disabled: page === totalPages, minimal: true, onClick: function () { return onChange(totalPages, size); } }, "Posledn\u00E1"),
-            React__default.createElement(PageSizeSelect, { items: PageSizes, itemRenderer: function (item, options) { return React__default.createElement(MenuItem, { key: "pagination-item-" + item.value, text: item.title, onClick: options.handleClick }); }, onItemSelect: function (item) { return onChange(page, item.value); } },
-                React__default.createElement(Button, { minimal: true, rightIcon: "chevron-down", text: size + " na stranu", style: { margin: 0 }, className: "low-button" }))));
+            React__default.createElement(PageSizeSelect, { items: pageSizes, itemRenderer: function (item, options) { return React__default.createElement(MenuItem, { key: "pagination-item-" + item.value, text: item.title, onClick: options.handleClick }); }, onItemSelect: function (item) { return onChange(page, item.value); } },
+                React__default.createElement(Button, { minimal: true, rightIcon: "chevron-down", text: size + " " + t('per_page'), style: { margin: 0 }, className: "low-button" }))));
 }
 
 // export const Container = <div className="patterns-data-table"/>
@@ -5720,9 +5793,9 @@ function TextFilter(_a) {
                 React__default.createElement(Button, { minimal: true, intent: Intent.SUCCESS, className: Classes.POPOVER_DISMISS, onClick: function (evt) { return setFilterActive(column, true); }, icon: "tick" })),
             React__default.createElement(FlexRow, { style: { fontSize: 12, justifyContent: 'start', paddingTop: 6, paddingLeft: 6, marginTop: 6 } },
                 React__default.createElement(RadioGroup, { selectedValue: filterState.comparator, onChange: function (evt) { return setFilterComparator(column, evt.currentTarget.value); } },
-                    React__default.createElement(Radio, { label: "Obsahuje", value: "contains" }),
-                    React__default.createElement(Radio, { label: "Za\u010D\u00EDna na", value: "starts_with" }),
-                    React__default.createElement(Radio, { label: "Kon\u010D\u00ED na", value: "ends_with" })))));
+                    React__default.createElement(Radio, { label: t('contains'), value: "contains" }),
+                    React__default.createElement(Radio, { label: t('starts_with'), value: "starts_with" }),
+                    React__default.createElement(Radio, { label: t('ends_with'), value: "ends_with" })))));
 }
 
 function NumberFilter(_a) {
@@ -5750,18 +5823,18 @@ function NumberFilter(_a) {
             React__default.createElement(FlexRow, { style: { height: 30, justifyContent: 'center' } },
                 React__default.createElement(ControlGroup, null,
                     React__default.createElement(FormGroup, { style: { marginRight: 12 } },
-                        React__default.createElement(InputGroup, { placeholder: filterState.comparator === 'range' ? 'Od...' : 'Hodnota', value: getValue(false), onChange: function (evt) { return setFilterValue(column, parseFloat(evt.currentTarget.value)); } })),
+                        React__default.createElement(InputGroup, { placeholder: filterState.comparator === 'range' ? t('range_from') : t('value'), value: getValue(false), onChange: function (evt) { return setFilterValue(column, parseFloat(evt.currentTarget.value)); } })),
                     filterState.comparator === 'range' &&
                         React__default.createElement(FormGroup, null,
-                            React__default.createElement(InputGroup, { placeholder: "Do...", value: getValue(true), onChange: function (evt) { return setFilterValue(column, parseFloat(evt.currentTarget.value), true); } }))),
+                            React__default.createElement(InputGroup, { placeholder: t('range_to'), value: getValue(true), onChange: function (evt) { return setFilterValue(column, parseFloat(evt.currentTarget.value), true); } }))),
                 React__default.createElement(Button, { minimal: true, intent: Intent.DANGER, className: Classes.POPOVER_DISMISS, onClick: function (evt) { return setFilterActive(column, false); }, icon: "cross" }),
                 React__default.createElement(Button, { minimal: true, intent: Intent.SUCCESS, className: Classes.POPOVER_DISMISS, onClick: function (evt) { return setFilterActive(column, true); }, icon: "tick" })),
             React__default.createElement(FlexRow, { style: { fontSize: 12, justifyContent: 'start', paddingTop: 6, paddingLeft: 6, marginTop: 6 } },
                 React__default.createElement(RadioGroup, { selectedValue: filterState.comparator, onChange: function (evt) { return setFilterComparator(column, evt.currentTarget.value); } },
-                    React__default.createElement(Radio, { label: "Rovn\u00E9", value: "eq" }),
-                    React__default.createElement(Radio, { label: "Men\u0161ie ako", value: "lte" }),
-                    React__default.createElement(Radio, { label: "V\u00E4\u010D\u0161ie ako", value: "gte" }),
-                    React__default.createElement(Radio, { label: "Rozsah", value: "range" })))));
+                    React__default.createElement(Radio, { label: t('equal'), value: "eq" }),
+                    React__default.createElement(Radio, { label: t('less_than'), value: "lte" }),
+                    React__default.createElement(Radio, { label: t('greater_than'), value: "gte" }),
+                    React__default.createElement(Radio, { label: t('range'), value: "range" })))));
 }
 
 var FilterRenderer = /** @class */ (function (_super) {

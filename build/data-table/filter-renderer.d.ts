@@ -1,5 +1,5 @@
 import React from 'react';
-import { Column, FilterComparator, FilterState, FilterValue } from './types';
+import { Column, FilterComparator, FilterState, FilterValue } from '../types';
 interface Props<T> {
     column: Column<T>;
     filterState: FilterState;

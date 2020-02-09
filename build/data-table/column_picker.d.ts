@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Column } from './types';
+import { Column } from '../types';
 export interface Props<T> {
     columns: Column<T>[];
     onChange: (column: Column<T>, visible: boolean) => void;
