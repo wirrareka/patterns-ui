@@ -2,8 +2,9 @@ import React, { ReactElement } from 'react'
 import { Button, Classes, ControlGroup, FormGroup, Intent, Radio, RadioGroup } from '@blueprintjs/core'
 import { DateInput } from '@blueprintjs/datetime'
 import { Filter, FlexColumn, FlexRow } from '../components'
-import { Column, FilterComparator, FilterState } from '../types'
+import { Column, FilterComparator, FilterState } from '../../types'
 import { formatDate, parseDate } from '../../common'
+import { t } from '../../locale-manager'
 
 interface Props<T> {
   column: Column<T>
@@ -39,7 +40,7 @@ export default function DateFilter<T>({
             <DateInput
               formatDate={formatDate}
               parseDate={parseDate}
-              placeholder={comparator === 'range' ? 'Od...' : 'Deň'}
+              placeholder={comparator === 'range' ? t('range_from') : t('day')}
               value={getValue(false)}
               onChange={(date: Date, isUserChange: boolean) => setFilterValue(column, date)}
             />
@@ -50,7 +51,7 @@ export default function DateFilter<T>({
               <DateInput
                 formatDate={formatDate}
                 parseDate={parseDate}
-                placeholder="Do"
+                placeholder={t('range_to')}
                 value={getValue(true)}
                 onChange={(date: Date, isUserChange: boolean) => setFilterValue(column, date, true)}
               />
@@ -78,12 +79,11 @@ export default function DateFilter<T>({
 
         <RadioGroup
           selectedValue={comparator}
-          onChange={evt => setFilterComparator(column, evt.currentTarget.value as FilterComparator)}
-        >
-          <Radio label="V daný deň" value="eq" />
-          <Radio label="Staršie ako" value="lte" />
-          <Radio label="Novšie ako" value="gte" />
-          <Radio label="Rozsah" value="range" />
+          onChange={evt => setFilterComparator(column, evt.currentTarget.value as FilterComparator)}>
+          <Radio label={t('at_day')} value="eq" />
+          <Radio label={t('older_than')} value="lte" />
+          <Radio label={t('newer_than')} value="gte" />
+          <Radio label={t('range')} value="range" />
         </RadioGroup>
       </FlexRow>
     </FlexColumn>

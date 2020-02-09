@@ -41,3 +41,22 @@ export interface Column<T> {
 }
 
 export type PageSizeItem = { title: string, value: number }
+
+export type Locale = {
+  code: string
+  range_from: string
+  range_to: string
+  day: string
+  at_day: string
+  older_than: string
+  newer_than: string
+  range: string
+  value: string
+  equal: string
+  less_than: string
+  greater_than: string
+  contains: string
+  starts_with: string
+  ends_with: string
+  per_page: string
+}

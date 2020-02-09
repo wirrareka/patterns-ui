@@ -1,17 +1,10 @@
 import React, { ReactElement } from 'react'
 import { Button, ButtonGroup, Colors, MenuItem } from '@blueprintjs/core'
 import { Select } from '@blueprintjs/select'
-import { PageSizeItem } from './types'
+import { PageSizeItem } from '../types'
+import { t } from '../locale-manager'
 
 const PageSizeSelect = Select.ofType<PageSizeItem>()
-
-const PageSizes = [
-  { title: '25 na stranu', value: 25 } as PageSizeItem,
-  { title: '50 na stranu', value: 50 } as PageSizeItem,
-  { title: '100 na stranu', value: 100 } as PageSizeItem,
-  { title: '500 na stranu', value: 500 } as PageSizeItem,
-  { title: '1000 na stranu', value: 1000 } as PageSizeItem
-] as PageSizeItem[]
 
 interface Props {
   page: number
@@ -21,6 +14,7 @@ interface Props {
 }
 
 export default function Pagination({ page, size, total, onChange }: Props): ReactElement {
+  const pageSizes = [ 25, 50, 100, 500 ].map(size => ({ title: `${size} ${t('per_page')}`, value: size } as PageSizeItem))
   const totalPages = Math.ceil(total / size);
 
   let startPage = 0
@@ -93,11 +87,11 @@ export default function Pagination({ page, size, total, onChange }: Props): Reac
         Posledná
       </Button>
       <PageSizeSelect
-        items={PageSizes}
+        items={pageSizes}
         itemRenderer={(item, options) => <MenuItem key={`pagination-item-${item.value}`} text={item.title} onClick={options.handleClick}/>}
         onItemSelect={item => onChange(page, item.value)}
       >
-        <Button minimal={true} rightIcon="chevron-down" text={`${size} na stranu`} style={{ margin: 0 }} className="low-button"/>
+        <Button minimal={true} rightIcon="chevron-down" text={`${size} ${t('per_page')}`} style={{ margin: 0 }} className="low-button"/>
       </PageSizeSelect>
     </ButtonGroup>
   </div>

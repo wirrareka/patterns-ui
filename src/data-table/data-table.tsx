@@ -15,7 +15,7 @@ import {
 
 import {
   Column, ColumnType, FilterComparator, FilterState, FilterStates, FetchResponse, Selection
-} from './types'
+} from '../types'
 
 import FilterRenderer from './filter-renderer'
 
@@ -231,9 +231,9 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
   renderEmpty() {
     const rows = []
     for (let i = 1; i < this.state.pageSize; i++) {
-      rows.push(
-        <ItemRow key={`data-table-empty-row-${i}`}>{ this.state.columns.map((column) => this.renderEmptyCell(column, i)) }</ItemRow>
-      )
+      rows.push(<ItemRow key={`data-table-empty-row-${i}`}>
+        { this.state.columns.map((column) => this.renderEmptyCell(column, i)) }
+      </ItemRow>)
     }
 
     return rows

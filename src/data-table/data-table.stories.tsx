@@ -1,6 +1,6 @@
 import React from "react"
 import DataTable from './data-table'
-import { ColumnType, FetchResponse } from './types'
+import { ColumnType, FetchResponse } from '../types'
 
 class TestModel {
   id: string

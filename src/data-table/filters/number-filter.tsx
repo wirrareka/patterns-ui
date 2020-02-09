@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react'
 import { Button, Classes, ControlGroup, FormGroup, InputGroup, Intent, Radio, RadioGroup } from '@blueprintjs/core'
 import { Filter, FlexColumn, FlexRow } from '../components'
-import { Column, FilterComparator, FilterState } from '../types'
+import { Column, FilterComparator, FilterState } from '../../types'
+import { t } from '../../locale-manager'
 
 interface Props<T> {
   column: Column<T>
@@ -37,7 +38,7 @@ export default function NumberFilter<T>({
         <ControlGroup>
           <FormGroup style={{ marginRight: 12 }}>
             <InputGroup
-              placeholder={filterState.comparator === 'range' ? 'Od...' : 'Hodnota'}
+              placeholder={filterState.comparator === 'range' ? t('range_from') : t('value')}
               value={getValue(false)}
               onChange={(evt: React.FormEvent<HTMLInputElement>) => setFilterValue(column, parseFloat(evt.currentTarget.value))}
             />
@@ -46,7 +47,7 @@ export default function NumberFilter<T>({
           { filterState.comparator === 'range' &&
             <FormGroup>
               <InputGroup
-                placeholder="Do..."
+                placeholder={t('range_to')}
                 value={getValue(true)}
                 onChange={(evt: React.FormEvent<HTMLInputElement>) => setFilterValue(column, parseFloat(evt.currentTarget.value), true)}
               />
@@ -75,10 +76,10 @@ export default function NumberFilter<T>({
           selectedValue={filterState.comparator}
           onChange={evt => setFilterComparator(column, evt.currentTarget.value as FilterComparator)}
         >
-          <Radio label="Rovné" value="eq" />
-          <Radio label="Menšie ako" value="lte" />
-          <Radio label="Väčšie ako" value="gte" />
-          <Radio label="Rozsah" value="range" />
+          <Radio label={t('equal')} value="eq" />
+          <Radio label={t('less_than')} value="lte" />
+          <Radio label={t('greater_than')} value="gte" />
+          <Radio label={t('range')} value="range" />
         </RadioGroup>
       </FlexRow>
     </FlexColumn>

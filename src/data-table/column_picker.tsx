@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button, Checkbox, Icon, Popover, PopoverInteractionKind, PopoverPosition } from '@blueprintjs/core'
-import { Column } from './types'
+import { Column } from '../types'
 import { FlexColumn } from './components'
 
 export interface Props<T> {

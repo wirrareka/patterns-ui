@@ -1,7 +1,8 @@
 import React, { ReactElement } from 'react'
 import { Button, Classes, FormGroup, InputGroup, Intent, Radio, RadioGroup } from '@blueprintjs/core'
 import { Filter, FlexColumn, FlexRow } from '../components'
-import { Column, FilterComparator, FilterState } from '../types'
+import { Column, FilterComparator, FilterState } from '../../types'
+import { t } from '../../locale-manager'
 
 interface Props<T> {
   column: Column<T>
@@ -45,9 +46,9 @@ export default function TextFilter<T>({
         <RadioGroup
           selectedValue={filterState.comparator}
           onChange={evt => setFilterComparator(column, evt.currentTarget.value as FilterComparator)}>
-          <Radio label="Obsahuje" value="contains" />
-          <Radio label="Začína na" value="starts_with" />
-          <Radio label="Končí na" value="ends_with" />
+          <Radio label={t('contains')} value="contains" />
+          <Radio label={t('starts_with')} value="starts_with" />
+          <Radio label={t('ends_with')} value="ends_with" />
         </RadioGroup>
       </FlexRow>
     </FlexColumn>

@@ -1,6 +1,6 @@
 import React from 'react'
 import produce from 'immer'
-import { Column, ColumnType, FilterComparator, FilterState, FilterValue } from './types'
+import { Column, ColumnType, FilterComparator, FilterState, FilterValue } from '../types'
 
 import TextFilter from './filters/text-filter'
 import NumberFilter from './filters/number-filter'
