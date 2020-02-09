@@ -14,7 +14,7 @@ import {
 } from './components'
 
 import {
-  Column, ColumnType, FilterComparator, FilterState, FilterStates, FetchResponse, Selection
+  Alignment, Column, ColumnType, FilterComparator, FilterState, FilterStates, FetchResponse, Selection
 } from '../types'
 
 import { t } from '../locale-manager'
@@ -224,6 +224,7 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
       width={column.width}
       key={key}
       onClick={() => this.props.onItemSelect(item)}
+      alignment={column.alignment}
     >
       { this.formatValue(item, column) }
     </Cell>
@@ -326,6 +327,7 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
         head={true}
         flex={column.flex}
         width={column.width}
+        alignment={column.alignment}
         key={`datatable-header-${column.id}`}>
         <div style={{ flex: 3 }} onClick={() => {
           if (column.sortable) {
@@ -335,24 +337,26 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
           <span>{ column.title }</span>
         </div>
 
-        <div style={{ flex: 1, alignItems: 'flex-end', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-          { column.sortable && <Button
-            className={this.state.sort === column.id ? '' : 'visible-on-hover'}
-            intent={this.state.sort === column.id ? 'primary' : 'none'}
-            minimal={true}
-            onClick={() => setSort(column)}
-            icon={this.state.sort === column.id ? this.state.sortDir === 'asc' ? "chevron-up" : 'chevron-down' : 'chevron-up' }
-          /> }
+        { (column.sortable || column.filterable) &&
+          <div style={{ flex: 1, alignItems: 'flex-end', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+            { column.sortable && <Button
+              className={this.state.sort === column.id ? '' : 'visible-on-hover'}
+              intent={this.state.sort === column.id ? 'primary' : 'none'}
+              minimal={true}
+              onClick={() => setSort(column)}
+              icon={this.state.sort === column.id ? this.state.sortDir === 'asc' ? "chevron-up" : 'chevron-down' : 'chevron-up' }
+            /> }
 
-          { column.filterable && <Popover interactionKind={PopoverInteractionKind.CLICK} position={PopoverPosition.BOTTOM}>
-            <Button
-              minimal
-              icon={<Icon color={this.state.filterStates[column.id].active ? Colors.RED1 : Colors.GRAY4} icon="filter" />}
-              style={{ justifySelf: 'center', alignSelf: 'center', marginBottom: 0 }}
-            />
-            { this.renderFilter(column) }
-            </Popover>}
-        </div>
+            { column.filterable && <Popover interactionKind={PopoverInteractionKind.CLICK} position={PopoverPosition.BOTTOM}>
+              <Button
+                minimal
+                icon={<Icon color={this.state.filterStates[column.id].active ? Colors.RED1 : Colors.GRAY4} icon="filter" />}
+                style={{ justifySelf: 'center', alignSelf: 'center', marginBottom: 0 }}
+              />
+              { this.renderFilter(column) }
+              </Popover>}
+          </div>
+        }
       </Cell>
     })
 

@@ -24,5 +24,7 @@ export default {
   items_none: 'Item',
   items_one: 'Item',
   items_few: 'Items',
-  items_many: 'Items'
+  items_many: 'Items',
+  first: 'First',
+  last: 'Last'
 } as Locale

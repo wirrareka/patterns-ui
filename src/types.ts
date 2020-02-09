@@ -28,6 +28,13 @@ export enum ColumnType {
   DateTime,
   Custom
 }
+
+export enum Alignment {
+  Center = 'center',
+  Left = 'left',
+  Right = 'right'
+}
+
 export interface Column<T> {
   id: string
   title: string
@@ -38,6 +45,7 @@ export interface Column<T> {
   sortable?: boolean
   filterable?: boolean
   visible?: boolean
+  alignment?: Alignment
 }
 
 export type PageSizeItem = { title: string, value: number }
@@ -67,4 +75,6 @@ export type Locale = {
   items_one: string
   items_few: string
   items_many: string
+  first: string
+  last: string
 }

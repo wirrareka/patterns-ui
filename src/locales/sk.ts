@@ -24,5 +24,7 @@ export default {
   items_none: 'položka',
   items_one: 'položka',
   items_few: 'položky',
-  items_many: 'položiek'
+  items_many: 'položiek',
+  first: 'Prvá',
+  last: 'Posledná'
 } as Locale

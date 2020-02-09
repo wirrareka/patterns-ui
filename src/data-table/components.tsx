@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Alignment } from '../types'
+
 interface Props {
   style?: React.CSSProperties
 }
@@ -28,7 +30,7 @@ export const Content = ({ children, style }: React.PropsWithChildren<Props>) =>
   React.createElement('div', { className: 'patterns-data-table-content', style }, children)
 
 export const ItemRow = ({ children, style }: React.PropsWithChildren<Props>) =>
-  React.createElement('div', { className: 'patterns-data-table-item-row', style }, children)
+  React.createElement('div', { className: 'patterns-data-table-item-row', style: { ...style } }, children)
 
 export const ExpandedItemRow = ({ children, style }: React.PropsWithChildren<Props>) =>
   React.createElement('div', { className: 'patterns-data-table-item-row-expanded', style }, children)
@@ -43,9 +45,10 @@ interface CellProps {
   width?: number
   head?: boolean
   onClick?: () => void
+  alignment?: Alignment
 }
 
-export const Cell = ({ children, width, flex, head, onClick, className }: React.PropsWithChildren<CellProps>) => {
+export const Cell = ({ children, width, flex, head, onClick, className, alignment }: React.PropsWithChildren<CellProps>) => {
   const style = {} as React.CSSProperties
 
   if (flex) {
@@ -68,6 +71,17 @@ export const Cell = ({ children, width, flex, head, onClick, className }: React.
     _className.push(className)
   }
 
+  if (alignment) {
+    if (width) {
+      style.textAlign = alignment
+    }
+
+    if (alignment === Alignment.Center) {
+      style.justifyContent = 'center'
+    } else {
+      style.justifyContent = alignment === Alignment.Left ? 'flex-start' : 'flex-end'
+    }
+  }
   return React.createElement('div', { className: _className.join(' '), style, onClick }, children)
 }
 

@@ -50,7 +50,7 @@ export default function Pagination({ page, size, total, onChange }: Props): Reac
         minimal={true}
         onClick={() => onChange(1, size)}
       >
-        Prvá
+        { t('first')}
       </Button>
       <Button
         icon="chevron-left"
@@ -84,7 +84,7 @@ export default function Pagination({ page, size, total, onChange }: Props): Reac
         minimal={true}
         onClick={() => onChange(totalPages, size)}
       >
-        Posledná
+        { t('last')}
       </Button>
       <PageSizeSelect
         items={pageSizes}
