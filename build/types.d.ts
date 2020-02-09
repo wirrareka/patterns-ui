@@ -57,4 +57,12 @@ export declare type Locale = {
     starts_with: string;
     ends_with: string;
     per_page: string;
+    selection_none: string;
+    selection_one: string;
+    selection_few: string;
+    selection_many: string;
+    items_none: string;
+    items_one: string;
+    items_few: string;
+    items_many: string;
 };

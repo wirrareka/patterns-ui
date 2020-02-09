@@ -973,7 +973,15 @@ var en = {
     contains: 'Contains',
     starts_with: 'Starts with',
     ends_with: 'Ends with',
-    per_page: 'per page'
+    per_page: 'per page',
+    selection_none: 'No selection',
+    selection_one: 'Selected',
+    selection_few: 'Selected',
+    selection_many: 'Selected',
+    items_none: 'Item',
+    items_one: 'Item',
+    items_few: 'Items',
+    items_many: 'Items'
 };
 
 var sk = {
@@ -992,7 +1000,15 @@ var sk = {
     contains: 'Obsahuje',
     starts_with: 'Začína na',
     ends_with: 'Končí na',
-    per_page: 'na stranu'
+    per_page: 'na stranu',
+    selection_none: 'žiadny výber',
+    selection_one: 'vybraná',
+    selection_few: 'vybrané',
+    selection_many: 'vybraných',
+    items_none: 'položka',
+    items_one: 'položka',
+    items_few: 'položky',
+    items_many: 'položiek'
 };
 
 var LocaleManager = /** @class */ (function () {
@@ -6017,28 +6033,34 @@ var DataTable = /** @class */ (function (_super) {
     DataTable.prototype.formatSelection = function () {
         var count = this.getSelectedIds().length;
         if (count === 0) {
-            return React__default.createElement(SelectionCount, null, "\u017Eiadny v\u00FDber");
+            return React__default.createElement(SelectionCount, null, t('selection_none'));
         }
         else if (count === 1) {
             return React__default.createElement(SelectionCount, null,
-                "vybran\u00E1 ",
+                t('selection_one'),
+                " ",
                 React__default.createElement(core.Tag, { round: true, minimal: true, intent: "primary" },
                     React__default.createElement("strong", null, count)),
-                " polo\u017Eka");
+                " ",
+                t('items_one'));
         }
         else if (count > 1 && count < 5) {
             return React__default.createElement(SelectionCount, null,
-                "vybran\u00E9 ",
+                t('selection_few'),
+                " ",
                 React__default.createElement(core.Tag, { round: true, minimal: true, intent: "primary" },
                     React__default.createElement("strong", null, count)),
-                " polo\u017Eky");
+                " ",
+                t('items_few'));
         }
         else {
             return React__default.createElement(SelectionCount, null,
-                "vybran\u00FDch ",
+                t('selection_many'),
+                " ",
                 React__default.createElement(core.Tag, { round: true, minimal: true, intent: "primary" },
                     React__default.createElement("strong", null, count)),
-                " polo\u017Eiek");
+                " ",
+                t('items_many'));
         }
     };
     DataTable.prototype.formatValue = function (item, column) {
@@ -6282,4 +6304,5 @@ exports.DataTable = DataTable;
 exports.FlexColumn = FlexColumn;
 exports.FlexRow = FlexRow;
 exports.Toolbar = Toolbar;
+exports.localeManager = localeManager;
 //# sourceMappingURL=index.js.map

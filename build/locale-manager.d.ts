@@ -11,3 +11,4 @@ export declare class LocaleManager {
 }
 export declare const localeManager: LocaleManager;
 export declare const t: (key: string) => any;
+export declare const tc: (key: string, count: number) => any;
