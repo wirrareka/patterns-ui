@@ -972,7 +972,9 @@ var en = {
     items_none: 'Item',
     items_one: 'Item',
     items_few: 'Items',
-    items_many: 'Items'
+    items_many: 'Items',
+    first: 'First',
+    last: 'Last'
 };
 
 var sk = {
@@ -999,7 +1001,9 @@ var sk = {
     items_none: 'položka',
     items_one: 'položka',
     items_few: 'položky',
-    items_many: 'položiek'
+    items_many: 'položiek',
+    first: 'Prvá',
+    last: 'Posledná'
 };
 
 var LocaleManager = /** @class */ (function () {
@@ -1073,7 +1077,7 @@ function Pagination(_a) {
     var pages = Array.from({ length: endPage + 1 - startPage }, function (_, i) { return startPage + i; });
     return React__default.createElement("div", { className: "patterns-data-table-pagination" },
         React__default.createElement(ButtonGroup, null,
-            React__default.createElement(Button, { disabled: page === 1, minimal: true, onClick: function () { return onChange(1, size); } }, "Prv\u00E1"),
+            React__default.createElement(Button, { disabled: page === 1, minimal: true, onClick: function () { return onChange(1, size); } }, t('first')),
             React__default.createElement(Button, { icon: "chevron-left", disabled: page === 1, minimal: true, onClick: function () { return onChange(page, Math.max(1, page - 1)); } }),
             pages.map(function (_page) { return (React__default.createElement(Button, { key: _page, style: {
                     color: page === _page ? Colors.BLUE1 : Colors.GRAY1,
@@ -1082,10 +1086,25 @@ function Pagination(_a) {
             React__default.createElement(Button, { icon: "chevron-right", disabled: page === totalPages, minimal: true, onClick: function () {
                     return onChange(Math.min(page + 1, totalPages), size);
                 } }),
-            React__default.createElement(Button, { disabled: page === totalPages, minimal: true, onClick: function () { return onChange(totalPages, size); } }, "Posledn\u00E1"),
+            React__default.createElement(Button, { disabled: page === totalPages, minimal: true, onClick: function () { return onChange(totalPages, size); } }, t('last')),
             React__default.createElement(PageSizeSelect, { items: pageSizes, itemRenderer: function (item, options) { return React__default.createElement(MenuItem, { key: "pagination-item-" + item.value, text: item.title, onClick: options.handleClick }); }, onItemSelect: function (item) { return onChange(page, item.value); } },
                 React__default.createElement(Button, { minimal: true, rightIcon: "chevron-down", text: size + " " + t('per_page'), style: { margin: 0 }, className: "low-button" }))));
 }
+
+var ColumnType;
+(function (ColumnType) {
+    ColumnType[ColumnType["Text"] = 0] = "Text";
+    ColumnType[ColumnType["Number"] = 1] = "Number";
+    ColumnType[ColumnType["Date"] = 2] = "Date";
+    ColumnType[ColumnType["DateTime"] = 3] = "DateTime";
+    ColumnType[ColumnType["Custom"] = 4] = "Custom";
+})(ColumnType || (ColumnType = {}));
+var Alignment;
+(function (Alignment) {
+    Alignment["Center"] = "center";
+    Alignment["Left"] = "left";
+    Alignment["Right"] = "right";
+})(Alignment || (Alignment = {}));
 
 // export const Container = <div className="patterns-data-table"/>
 var Container = function (_a) {
@@ -1114,7 +1133,7 @@ var Content = function (_a) {
 };
 var ItemRow = function (_a) {
     var children = _a.children, style = _a.style;
-    return React__default.createElement('div', { className: 'patterns-data-table-item-row', style: style }, children);
+    return React__default.createElement('div', { className: 'patterns-data-table-item-row', style: __assign({}, style) }, children);
 };
 var ExpandedItemRow = function (_a) {
     var children = _a.children, style = _a.style;
@@ -1125,7 +1144,7 @@ var SelectionCount = function (_a) {
     return React__default.createElement('div', { className: 'patterns-data-table-selection-count', style: style }, children);
 };
 var Cell = function (_a) {
-    var children = _a.children, width = _a.width, flex = _a.flex, head = _a.head, onClick = _a.onClick, className = _a.className;
+    var children = _a.children, width = _a.width, flex = _a.flex, head = _a.head, onClick = _a.onClick, className = _a.className, alignment = _a.alignment;
     var style = {};
     if (flex) {
         style.flex = "" + flex;
@@ -1141,6 +1160,17 @@ var Cell = function (_a) {
     ];
     if (className) {
         _className.push(className);
+    }
+    if (alignment) {
+        if (width) {
+            style.textAlign = alignment;
+        }
+        if (alignment === Alignment.Center) {
+            style.justifyContent = 'center';
+        }
+        else {
+            style.justifyContent = alignment === Alignment.Left ? 'flex-start' : 'flex-end';
+        }
     }
     return React__default.createElement('div', { className: _className.join(' '), style: style, onClick: onClick }, children);
 };
@@ -5789,15 +5819,6 @@ var formatDate = function (date) {
     return moment(date).format(DateFormat);
 };
 
-var ColumnType;
-(function (ColumnType) {
-    ColumnType[ColumnType["Text"] = 0] = "Text";
-    ColumnType[ColumnType["Number"] = 1] = "Number";
-    ColumnType[ColumnType["Date"] = 2] = "Date";
-    ColumnType[ColumnType["DateTime"] = 3] = "DateTime";
-    ColumnType[ColumnType["Custom"] = 4] = "Custom";
-})(ColumnType || (ColumnType = {}));
-
 function TextFilter(_a) {
     var column = _a.column, filterState = _a.filterState, setFilterValue = _a.setFilterValue, setFilterActive = _a.setFilterActive, setFilterComparator = _a.setFilterComparator;
     return React__default.createElement(Filter, null,
@@ -5948,7 +5969,7 @@ var FilterRenderer = /** @class */ (function (_super) {
     return FilterRenderer;
 }(React__default.Component));
 
-___$insertStyle("/*\n * Copyright 2017 Palantir Technologies, Inc. All rights reserved.\n */\n.patterns-data-table {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.patterns-data-table .patterns-data-table-header {\n  font-weight: bold;\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #ced9e0;\n  background-color: #f5f8fa;\n  font-size: 12px;\n  cursor: pointer;\n  height: 32px;\n  flex-shrink: 0;\n}\n.patterns-data-table .patterns-data-table-content {\n  flex: 1;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n  flex-shrink: 1 0 auto;\n}\n.patterns-data-table .patterns-data-table-item-row {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-item-row:nth-child(even) {\n  background-color: #f5f8fa;\n}\n.patterns-data-table .patterns-data-table-item-row:hover {\n  background-color: #ebf1f5;\n}\n.patterns-data-table .patterns-data-table-item-row-expanded {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-selection-count {\n  margin-left: 12px;\n}\n.patterns-data-table .patterns-data-table-cell {\n  padding-left: 6px;\n  padding-right: 6px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  line-height: 32px;\n  border-left: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-cell:first-child {\n  border-left: none;\n}\n.patterns-data-table .patterns-data-table-cell label.bp3-checkbox {\n  max-width: 40px;\n}\n.patterns-data-table .patterns-data-table-cell.header:hover {\n  background-color: #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-filter {\n  padding: 6px;\n  display: flex;\n  flex-direction: row;\n}\n\n.patterns-data-table-column-picker {\n  padding: 6px 12px;\n}\n\n.patterns-data-table-pagination {\n  text-align: center;\n  height: 100%;\n}\n\n.patterns-flex-column {\n  display: flex;\n  flex-direction: column;\n}\n\n.patterns-flex-row {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n}\n\n.patterns-toolbar {\n  height: 38px;\n  display: flex;\n  flex-direction: row;\n  font-size: 12px;\n  flex-shrink: 0;\n  padding: 0 10px;\n  border-top: 1px solid #ced9e0;\n}\n.patterns-toolbar button {\n  font-size: 12px;\n  font-weight: bold;\n  color: #293742;\n}");
+___$insertStyle("/*\n * Copyright 2017 Palantir Technologies, Inc. All rights reserved.\n */\n.patterns-data-table {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n}\n.patterns-data-table .patterns-data-table-header {\n  font-weight: bold;\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #ced9e0;\n  background-color: #f5f8fa;\n  font-size: 12px;\n  cursor: pointer;\n  height: 32px;\n  flex-shrink: 0;\n}\n.patterns-data-table .patterns-data-table-content {\n  flex: 1;\n  display: block;\n  overflow-y: scroll;\n  overflow-x: hidden;\n  flex-shrink: 1 0 auto;\n}\n.patterns-data-table .patterns-data-table-item-row {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-item-row:nth-child(even) {\n  background-color: #f5f8fa;\n}\n.patterns-data-table .patterns-data-table-item-row:hover {\n  background-color: #ebf1f5;\n}\n.patterns-data-table .patterns-data-table-item-row-expanded {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-selection-count {\n  margin-left: 12px;\n}\n.patterns-data-table .patterns-data-table-cell {\n  padding-left: 6px;\n  padding-right: 6px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  cursor: pointer;\n  line-height: 32px;\n  border-left: 1px solid #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-cell:first-child {\n  border-left: none;\n}\n.patterns-data-table .patterns-data-table-cell label.bp3-checkbox {\n  max-width: 40px;\n}\n.patterns-data-table .patterns-data-table-cell.header:hover {\n  background-color: #e1e8ed;\n}\n.patterns-data-table .patterns-data-table-filter {\n  padding: 6px;\n  display: flex;\n  flex-direction: row;\n}\n\n.patterns-data-table-column-picker {\n  padding: 6px 12px;\n}\n\n.patterns-data-table-pagination {\n  text-align: center;\n  height: 100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  justify-items: center;\n}\n\n.patterns-flex-column {\n  display: flex;\n  flex-direction: column;\n}\n\n.patterns-flex-row {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n}\n\n.patterns-toolbar {\n  height: 38px;\n  display: flex;\n  flex-direction: row;\n  font-size: 12px;\n  flex-shrink: 0;\n  padding: 0 10px;\n  border-top: 1px solid #ced9e0;\n}\n.patterns-toolbar button {\n  font-size: 12px;\n  font-weight: bold;\n  color: #293742;\n}");
 
 var DataTable = /** @class */ (function (_super) {
     __extends(DataTable, _super);
@@ -6137,7 +6158,7 @@ var DataTable = /** @class */ (function (_super) {
             return null;
         }
         var key = "data-table-item-cell-" + column.id + "-" + index;
-        return React__default.createElement(Cell, { flex: column.flex, width: column.width, key: key, onClick: function () { return _this.props.onItemSelect(item); } }, this.formatValue(item, column));
+        return React__default.createElement(Cell, { flex: column.flex, width: column.width, key: key, onClick: function () { return _this.props.onItemSelect(item); }, alignment: column.alignment }, this.formatValue(item, column));
     };
     DataTable.prototype.renderEmpty = function () {
         var _this = this;
@@ -6225,18 +6246,19 @@ var DataTable = /** @class */ (function (_super) {
             if (!column.visible) {
                 return null;
             }
-            return React__default.createElement(Cell, { head: true, flex: column.flex, width: column.width, key: "datatable-header-" + column.id },
+            return React__default.createElement(Cell, { head: true, flex: column.flex, width: column.width, alignment: column.alignment, key: "datatable-header-" + column.id },
                 React__default.createElement("div", { style: { flex: 3 }, onClick: function () {
                         if (column.sortable) {
                             setSort(column);
                         }
                     } },
                     React__default.createElement("span", null, column.title)),
-                React__default.createElement("div", { style: { flex: 1, alignItems: 'flex-end', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' } },
-                    column.sortable && React__default.createElement(Button, { className: _this.state.sort === column.id ? '' : 'visible-on-hover', intent: _this.state.sort === column.id ? 'primary' : 'none', minimal: true, onClick: function () { return setSort(column); }, icon: _this.state.sort === column.id ? _this.state.sortDir === 'asc' ? "chevron-up" : 'chevron-down' : 'chevron-up' }),
-                    column.filterable && React__default.createElement(Popover, { interactionKind: PopoverInteractionKind.CLICK, position: PopoverPosition.BOTTOM },
-                        React__default.createElement(Button, { minimal: true, icon: React__default.createElement(Icon, { color: _this.state.filterStates[column.id].active ? Colors.RED1 : Colors.GRAY4, icon: "filter" }), style: { justifySelf: 'center', alignSelf: 'center', marginBottom: 0 } }),
-                        _this.renderFilter(column))));
+                (column.sortable || column.filterable) &&
+                    React__default.createElement("div", { style: { flex: 1, alignItems: 'flex-end', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' } },
+                        column.sortable && React__default.createElement(Button, { className: _this.state.sort === column.id ? '' : 'visible-on-hover', intent: _this.state.sort === column.id ? 'primary' : 'none', minimal: true, onClick: function () { return setSort(column); }, icon: _this.state.sort === column.id ? _this.state.sortDir === 'asc' ? "chevron-up" : 'chevron-down' : 'chevron-up' }),
+                        column.filterable && React__default.createElement(Popover, { interactionKind: PopoverInteractionKind.CLICK, position: PopoverPosition.BOTTOM },
+                            React__default.createElement(Button, { minimal: true, icon: React__default.createElement(Icon, { color: _this.state.filterStates[column.id].active ? Colors.RED1 : Colors.GRAY4, icon: "filter" }), style: { justifySelf: 'center', alignSelf: 'center', marginBottom: 0 } }),
+                            _this.renderFilter(column))));
         });
         if (this.props.multiple) {
             cells.splice(0, 0, React__default.createElement(Cell, { width: 30, key: "datatable-header-selection" },
@@ -6291,5 +6313,5 @@ var DataTable = /** @class */ (function (_super) {
     return DataTable;
 }(Component));
 
-export { ColumnType, Container, DataTable, FlexColumn, FlexRow, Toolbar, localeManager };
+export { Alignment, ColumnType, Container, DataTable, FlexColumn, FlexRow, Toolbar, localeManager };
 //# sourceMappingURL=index.es.js.map
