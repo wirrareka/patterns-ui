@@ -17,6 +17,7 @@ import {
   Column, ColumnType, FilterComparator, FilterState, FilterStates, FetchResponse, Selection
 } from '../types'
 
+import { t } from '../locale-manager'
 import FilterRenderer from './filter-renderer'
 
 import './data-table.scss'
@@ -125,19 +126,19 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
 
     if (count === 0) {
       return <SelectionCount>
-        žiadny výber
+        { t('selection_none') }
       </SelectionCount>
     } else if  (count === 1) {
       return <SelectionCount>
-        vybraná <Tag round minimal intent="primary"><strong>{count}</strong></Tag> položka
+        { t('selection_one') } <Tag round minimal intent="primary"><strong>{count}</strong></Tag> { t('items_one') }
       </SelectionCount>
     } else if (count > 1 && count < 5) {
       return <SelectionCount>
-        vybrané <Tag round minimal intent="primary"><strong>{count}</strong></Tag> položky
+        { t('selection_few') } <Tag round minimal intent="primary"><strong>{count}</strong></Tag> { t('items_few') }
       </SelectionCount>
     } else {
       return <SelectionCount>
-        vybraných <Tag round minimal intent="primary"><strong>{count}</strong></Tag> položiek
+        { t('selection_many') } <Tag round minimal intent="primary"><strong>{count}</strong></Tag> { t('items_many') }
       </SelectionCount>
     }
   }

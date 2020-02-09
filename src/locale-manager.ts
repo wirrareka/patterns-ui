@@ -45,3 +45,4 @@ export class LocaleManager {
 
 export const localeManager = new LocaleManager()
 export const t = localeManager.t
+export const tc = localeManager.tc

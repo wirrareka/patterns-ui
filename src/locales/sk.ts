@@ -16,5 +16,13 @@ export default {
   contains: 'Obsahuje',
   starts_with: 'Začína na',
   ends_with: 'Končí na',
-  per_page: 'na stranu'
+  per_page: 'na stranu',
+  selection_none: 'žiadny výber',
+  selection_one: 'vybraná',
+  selection_few: 'vybrané',
+  selection_many: 'vybraných',
+  items_none: 'položka',
+  items_one: 'položka',
+  items_few: 'položky',
+  items_many: 'položiek'
 } as Locale
