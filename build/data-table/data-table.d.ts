@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Column, FilterStates, FetchResponse, Selection } from '../types';
+import { Column, FilterStates, FetchResponse, Selection, FormatDateType, ParseDateType } from '../types';
 import './data-table.scss';
 interface Props<T> {
     columns: Column<T>[];
@@ -11,8 +11,8 @@ interface Props<T> {
     onItemSelect: (item: T) => void;
     onSelectionChange?: (items: T[]) => void;
     detailRenderer?: (item: T) => React.ReactElement;
-    formatDate?: (date: Date) => string;
-    parseDate?: (date: Date) => string;
+    formatDate: FormatDateType;
+    parseDate: ParseDateType;
     locale?: string;
 }
 interface State<T> {

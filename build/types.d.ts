@@ -1,4 +1,8 @@
 /// <reference types="react" />
+import Currency from './models/currency';
+export declare type FormatDateType = (date: Date) => string;
+export declare type ParseDateType = (date: string) => Date;
+export declare type FormatPriceType = (price: Number, currency?: Currency) => string;
 export declare type Selection = {
     [id: string]: boolean;
 };
@@ -73,4 +77,19 @@ export declare type Locale = {
     items_many: string;
     first: string;
     last: string;
+    datePosted: string;
+    dateDelivered: string;
+    dateDue: string;
+    paymentMethod: string;
+    bank: string;
+    bankAccount: string;
+    variableSymbol: string;
+    constantSymbol: string;
+    invoices: {
+        new: string;
+    };
 };
+export interface PaymentMethod {
+    id: string;
+    title: string;
+}

@@ -1,9 +1,11 @@
 import React from 'react';
-import { Column, FilterComparator, FilterState, FilterValue } from '../types';
+import { Column, FilterComparator, FilterState, FilterValue, FormatDateType, ParseDateType } from '../types';
 interface Props<T> {
     column: Column<T>;
     filterState: FilterState;
     onFilterStateChange: (state: FilterState, fetch: boolean) => void;
+    formatDate: FormatDateType;
+    parseDate: ParseDateType;
 }
 export default class FilterRenderer<T> extends React.Component<Props<T>> {
     state: {};
