@@ -1,4 +1,5 @@
 import moment from 'moment'
+import Currency from './models/currency'
 
 export const DEFAULT_HOUR = 3
 export const DAY_MS = 1000 * 3600 * 24
@@ -44,8 +45,8 @@ export const formatDateTime = (date: string | Date) => {
   return moment(date).format(DateTimeFormat)
 }
 
-export const formatPrice = (price: number, currency: string = 'EUR') => {
-  return `${(price || 0).toFixed(2)} ${currency}`
+export const formatPrice = (price: number, currency: Currency) => {
+  return `${(price || 0).toFixed(2)} ${currency.symbol}`
 }
 
 export const hasString = (string: string, minLength: number = 1) => {

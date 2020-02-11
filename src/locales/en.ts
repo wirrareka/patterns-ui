@@ -26,5 +26,19 @@ export default {
   items_few: 'Items',
   items_many: 'Items',
   first: 'First',
-  last: 'Last'
+  last: 'Last',
+  datePosted: 'Date Posted',
+  dateDelivered: 'Delivery Date',
+  dateDue: 'Due Date',
+
+  paymentMethod: 'Payment Method',
+  bank: 'Bank',
+  bankAccount: 'Bank Account',
+  variableSymbol: 'Variable Symbol',
+  constantSymbol: 'Constant Symbol',
+  newItem: 'New Item',
+  invoices: {
+    new: 'New Invoice',
+    type: 'INVOICE / TAX DOCUMENT'
+  }
 } as Locale

@@ -1,3 +1,9 @@
+import Currency from './models/currency'
+
+export type FormatDateType = (date: Date) => string
+export type ParseDateType = (date: string) => Date
+export type FormatPriceType = (price: Number, currency?: Currency) => string
+
 export type Selection = { [id: string]: boolean }
 
 export type FetchResponse<T> = {
@@ -76,5 +82,21 @@ export type Locale = {
   items_few: string
   items_many: string
   first: string
-  last: string
+  last: string,
+  datePosted: string,
+  dateDelivered: string,
+  dateDue: string,
+  paymentMethod: string,
+  bank: string,
+  bankAccount: string,
+  variableSymbol: string,
+  constantSymbol: string,
+  invoices: {
+    new: string
+  }
+}
+
+export interface PaymentMethod {
+  id: string
+  title: string
 }

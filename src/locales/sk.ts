@@ -26,5 +26,18 @@ export default {
   items_few: 'položky',
   items_many: 'položiek',
   first: 'Prvá',
-  last: 'Posledná'
+  last: 'Posledná',
+  datePosted: 'Dátum vystavenia',
+  dateDelivered: 'Dátum dodania',
+  dateDue: 'Dátum splatnosti',
+  paymentMethod: 'Spôsob úhrady',
+  bank: 'Banka',
+  bankAccount: 'Číslo účtu',
+  variableSymbol: 'Variabilný symbol',
+  constantSymbol: 'Konštantný symbol',
+  newItem: 'Nová položka',
+  invoices: {
+    new: 'Nová faktúra',
+    type: 'FAKTŮRA / DAŇOVÝ DOKLAD'
+  }
 } as Locale
