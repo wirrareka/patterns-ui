@@ -2,27 +2,9 @@ import React from 'react'
 
 import { Alignment } from '../types'
 
-interface Props {
-  style?: React.CSSProperties
-}
-
-interface FlexProps extends Props {
-  flex?: number
-}
+import { FlexProps, Props } from '../components'
 
 // export const Container = <div className="patterns-data-table"/>
-export const Container = ({ children, style }: React.PropsWithChildren<Props>) =>
-  React.createElement('div', { className: 'patterns-data-table', style }, children)
-
-export const FlexRow = ({ children, flex, style  }: React.PropsWithChildren<FlexProps>) =>
-  React.createElement('div', { className: 'patterns-flex-row', style: { ...style, flex } }, children)
-
-export const FlexColumn = ({ children, flex, style }: React.PropsWithChildren<FlexProps>) =>
-  React.createElement('div', { className: 'patterns-flex-column', style: { ...style, flex } }, children)
-
-export const Toolbar = ({ children, style }: React.PropsWithChildren<Props>) =>
-  React.createElement('div', { className: 'patterns-toolbar', style }, children)
-
 export const Header = ({ children, style }: React.PropsWithChildren<Props>) =>
   React.createElement('div', { className: 'patterns-data-table-header', style }, children)
 

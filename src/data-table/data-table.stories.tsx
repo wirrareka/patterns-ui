@@ -3,6 +3,7 @@ import DataTable from './data-table'
 import { Alignment, ColumnType, FetchResponse } from '../types'
 import faker from 'faker'
 import _ from 'lodash'
+import { formatDate, parseDate } from '../common'
 
 class TestModel {
   id: string
@@ -56,11 +57,12 @@ const fetch = async (page, pageSize, sort, sortDir, _filters) => {
 }
 
 const baseProps = {
-  expandable: false,
   sort: 'name',
   sortDir: 'asc' as 'asc' | 'desc',
   multiple: true,
   expandable: true,
+  formatDate,
+  parseDate,
   onItemSelect: (item) => {},
   onSelectionChange: (selection) => {},
   detailRenderer: () => <div style={{ padding: 12 }}>Custom React Component to show item details</div>,

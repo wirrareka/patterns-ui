@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import { Button, Classes, FormGroup, InputGroup, Intent, Radio, RadioGroup } from '@blueprintjs/core'
-import { Filter, FlexColumn, FlexRow } from '../components'
+import { FlexColumn, FlexRow } from '../../components'
+import { Filter } from '../components'
 import { Column, FilterComparator, FilterState } from '../../types'
 import { t } from '../../locale-manager'
 

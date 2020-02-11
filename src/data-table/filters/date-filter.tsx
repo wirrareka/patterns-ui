@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react'
 import { Button, Classes, ControlGroup, FormGroup, Intent, Radio, RadioGroup } from '@blueprintjs/core'
 import { DateInput } from '@blueprintjs/datetime'
-import { Filter, FlexColumn, FlexRow } from '../components'
-import { Column, FilterComparator, FilterState } from '../../types'
-import { formatDate, parseDate } from '../../common'
+import { FlexColumn, FlexRow } from '../../components'
+import { Filter } from '../components'
+import { Column, FilterComparator, FilterState, FormatDateType, ParseDateType } from '../../types'
 import { t } from '../../locale-manager'
 
 interface Props<T> {
@@ -12,6 +12,8 @@ interface Props<T> {
   setFilterValue: (column: Column<T>, value: Date, secondary?: boolean) => void
   setFilterActive: (column: Column<T>, active: boolean) => void
   setFilterComparator: (column: Column<T>, value: FilterComparator) => void
+  formatDate: FormatDateType
+  parseDate: ParseDateType
 }
 
 export default function DateFilter<T>({
@@ -38,8 +40,8 @@ export default function DateFilter<T>({
         <ControlGroup>
           <FormGroup style={{ marginRight: 12 }}>
             <DateInput
-              formatDate={formatDate}
-              parseDate={parseDate}
+              formatDate={this.props.formatDate}
+              parseDate={this.props.parseDate}
               placeholder={comparator === 'range' ? t('range_from') : t('day')}
               value={getValue(false)}
               onChange={(date: Date, isUserChange: boolean) => setFilterValue(column, date)}
@@ -49,8 +51,8 @@ export default function DateFilter<T>({
           { comparator === 'range' &&
             <FormGroup style={{ marginRight: 12 }}>
               <DateInput
-                formatDate={formatDate}
-                parseDate={parseDate}
+                formatDate={this.props.formatDate}
+                parseDate={this.props.parseDate}
                 placeholder={t('range_to')}
                 value={getValue(true)}
                 onChange={(date: Date, isUserChange: boolean) => setFilterValue(column, date, true)}

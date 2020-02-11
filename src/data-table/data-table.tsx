@@ -7,14 +7,16 @@ import {
 import Pagination from './pagination'
 import ColumnPicker from './column_picker'
 
-import { formatDate } from '../common'
+import {
+  Container, FlexColumn, FlexRow, Toolbar
+} from '../components'
 
 import {
-  Container, FlexColumn, FlexRow, Toolbar, Header, Content, ItemRow, ExpandedItemRow, SelectionCount, Cell
+  Header, Content, ItemRow, ExpandedItemRow, SelectionCount, Cell
 } from './components'
 
 import {
-  Alignment, Column, ColumnType, FilterComparator, FilterState, FilterStates, FetchResponse, Selection
+  Column, ColumnType, FilterComparator, FilterState, FilterStates, FetchResponse, Selection, FormatDateType, ParseDateType
 } from '../types'
 
 import { t } from '../locale-manager'
@@ -32,8 +34,8 @@ interface Props<T> {
   onItemSelect: (item: T) => void
   onSelectionChange?: (items: T[]) => void
   detailRenderer?: (item: T) => React.ReactElement
-  formatDate?: (date: Date) => string
-  parseDate?: (date: Date) => string
+  formatDate: FormatDateType
+  parseDate: ParseDateType
   locale?: string
 }
 
@@ -152,11 +154,11 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
     let value = _item[column.id]
 
     if (column.type === ColumnType.Date) {
-      return formatDate(value)
+      return this.props.formatDate(value)
     }
 
     if (column.type === ColumnType.DateTime) {
-      return formatDate(value)
+      return this.props.formatDate(value)
     }
 
     return value
@@ -203,6 +205,8 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
           await this.fetch()
         }
       }}
+      formatDate={this.props.formatDate}
+      parseDate={this.props.parseDate}
     />
   }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import produce from 'immer'
-import { Column, ColumnType, FilterComparator, FilterState, FilterValue } from '../types'
+import { Column, ColumnType, FilterComparator, FilterState, FilterValue, FormatDateType, ParseDateType } from '../types'
 
 import TextFilter from './filters/text-filter'
 import NumberFilter from './filters/number-filter'
@@ -10,6 +10,8 @@ interface Props<T> {
   column: Column<T>
   filterState: FilterState
   onFilterStateChange: (state: FilterState, fetch: boolean) => void
+  formatDate: FormatDateType
+  parseDate: ParseDateType
 }
 
 export default class FilterRenderer<T> extends React.Component<Props<T>> {
