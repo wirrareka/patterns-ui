@@ -4116,5 +4116,5 @@ var index = {
     PaymentMethod: PaymentMethod
 };
 
-export { Alignment, ColumnType, Container, DataTable, FlexColumn, FlexRow, InvoiceDocument as Invoice, index as Models, OfferDocument as Offer, Toolbar, localeManager };
+export { Alignment, ColumnType, Container, DataTable, DefaultPaymentMethods, FlexColumn, FlexRow, InvoiceDocument as Invoice, index as Models, OfferDocument as Offer, Toolbar, localeManager };
 //# sourceMappingURL=index.es.js.map

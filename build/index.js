@@ -4125,6 +4125,7 @@ var index = {
 
 exports.Container = Container;
 exports.DataTable = DataTable;
+exports.DefaultPaymentMethods = DefaultPaymentMethods;
 exports.FlexColumn = FlexColumn;
 exports.FlexRow = FlexRow;
 exports.Invoice = InvoiceDocument;
