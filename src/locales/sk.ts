@@ -36,8 +36,8 @@ export default {
   variableSymbol: 'Variabilný symbol',
   constantSymbol: 'Konštantný symbol',
   newItem: 'Nová položka',
-  invoices: {
-    new: 'Nová faktúra',
-    type: 'FAKTŮRA / DAŇOVÝ DOKLAD'
-  }
+  'invoice.new': 'Nová faktúra',
+  'invoice.type': 'FAKTŮRA / DAŇOVÝ DOKLAD',
+  'offer.new': 'Nová cenová ponuka',
+  'offer.type': 'CENOVÁ PONUKA'
 } as Locale

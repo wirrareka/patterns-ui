@@ -37,8 +37,8 @@ export default {
   variableSymbol: 'Variable Symbol',
   constantSymbol: 'Constant Symbol',
   newItem: 'New Item',
-  invoices: {
-    new: 'New Invoice',
-    type: 'INVOICE / TAX DOCUMENT'
-  }
+  'invoice.new': 'New Invoice',
+  'invoice.documentType': 'INVOICE / TAX DOCUMENT',
+  'offer.new': 'New Offer',
+  'offer.documentType': 'PRICE OFFER'
 } as Locale

@@ -2,17 +2,17 @@ import React, { Component } from 'react'
 import { Button, Colors, MenuItem } from '@blueprintjs/core'
 import { DateInput } from '@blueprintjs/datetime'
 import { Select } from '@blueprintjs/select'
-import { Wrapper, Page, Header, Logo, HeaderCode, DocumentType } from './components'
+import { Wrapper, Page, Header, Logo, HeaderCode, DocumentType } from '../invoice/components'
 import { FormatDateType, ParseDateType, FormatPriceType } from '../types'
 import { t } from '../locale-manager'
 import Contact from '../models/contact'
-import Invoice from '../models/invoice'
+import Offer from '../models/offer'
 import PaymentMethod from '../models/payment-method'
 import InvoiceItem from '../models/invoice-item'
 import { FlexColumn as Column, FlexRow as Row } from '../components'
-import InvoiceItems from './items'
-import AddressBox from './address-box'
-import './invoice.scss'
+import InvoiceItems from '../invoice/items'
+import AddressBox from '../invoice/address-box'
+import './offer.scss'
 
 export const DefaultPaymentMethods = [
   new PaymentMethod({id: 'cash', title: 'Hotovosť'}),
@@ -27,25 +27,25 @@ interface Props {
   formatDate: FormatDateType
   parseDate: ParseDateType
   formatPrice: FormatPriceType
-  invoice: Invoice
+  offer: Offer
   logo: string
-  onChange: (invoice: Invoice) => void
+  onChange: (offer: Offer) => void
   paymentMethods: PaymentMethod[]
 }
 
-export default class InvoiceDocument extends Component<Props> {
+export default class OfferDocument extends Component<Props> {
   constructor(props: Props) {
     super(props)
     this.onChange = this.onChange.bind(this)
   }
 
-  onChange(invoice: Invoice) {
-    invoice.recalculate()
-    this.props.onChange(invoice)
+  onChange(offer: Offer) {
+    offer.recalculate()
+    this.props.onChange(offer)
   }
 
   render() {
-    const paymentMethod = this.props.paymentMethods.find(method => method.id === this.props.invoice.paymentMethod) || DefaultPaymentMethods[2]
+    const paymentMethod = this.props.paymentMethods.find(method => method.id === this.props.offer.paymentMethod) || DefaultPaymentMethods[2]
 
     return <Wrapper>
       <Page>
@@ -54,8 +54,8 @@ export default class InvoiceDocument extends Component<Props> {
             <img alt="logo" src={this.props.logo}/>
           </Logo>
           <Column style={{ flex: 1 }}>
-            <HeaderCode>{ this.props.invoice.code || t('invoice.new') }</HeaderCode>
-            <DocumentType>{ t('invoice.documentType') }</DocumentType>
+            <HeaderCode>{ this.props.offer.code || t('offer.new') }</HeaderCode>
+            <DocumentType>{ t('offer.documentType') }</DocumentType>
           </Column>
         </Header>
         <Row style={{ alignItems: 'flex-start' }}>
@@ -66,9 +66,9 @@ export default class InvoiceDocument extends Component<Props> {
             key="address-vendor"
             disabled={true}
             header="DODÁVATEĽ"
-            contact={this.props.invoice.company}
+            contact={this.props.offer.company}
             onChange={(contact: Contact) => {
-              const clone = new Invoice(this.props.invoice.clone)
+              const clone = new Offer(this.props.offer.clone)
               clone.company = contact
               this.onChange(clone)
             }}
@@ -77,9 +77,9 @@ export default class InvoiceDocument extends Component<Props> {
           <AddressBox
             key="address-customer"
             header="ODBERATEĽ"
-            contact={this.props.invoice.customer}
+            contact={this.props.offer.customer}
             onChange={(contact: Contact) => {
-              const clone = new Invoice(this.props.invoice.clone)
+              const clone = new Offer(this.props.offer.clone)
               clone.customer = contact
               this.onChange(clone)
             }}
@@ -100,17 +100,17 @@ export default class InvoiceDocument extends Component<Props> {
               <DateInput
                 formatDate={this.props.formatDate}
                 parseDate={this.props.parseDate}
-                value={this.props.invoice.createdAt}
+                value={this.props.offer.createdAt}
               />
               <DateInput
                 formatDate={this.props.formatDate}
                 parseDate={this.props.parseDate}
-                value={this.props.invoice.createdAt}
+                value={this.props.offer.createdAt}
               />
               <DateInput
                 formatDate={this.props.formatDate}
                 parseDate={this.props.parseDate}
-                value={this.props.invoice.dueAt}
+                value={this.props.offer.dueAt}
               />
             </Column>
           </Row>
@@ -138,7 +138,7 @@ export default class InvoiceDocument extends Component<Props> {
                   items={this.props.paymentMethods}
                   activeItem={paymentMethod}
                   onItemSelect={item => {
-                    const clone = new Invoice(this.props.invoice.clone)
+                    const clone = new Offer(this.props.offer.clone)
                     clone.paymentMethod = item.id
                     this.onChange(clone)
                   }}
@@ -154,7 +154,7 @@ export default class InvoiceDocument extends Component<Props> {
                 2121123456 / 1100
               </Row>
               <Row style={{ height: 24, alignItems: 'center' }}>
-                { this.props.invoice.code }
+                { this.props.offer.code }
               </Row>
               <Row style={{ height: 24, alignItems: 'center' }}>
                 0308
@@ -164,7 +164,7 @@ export default class InvoiceDocument extends Component<Props> {
         </Row>
 
         <InvoiceItems
-          invoice={this.props.invoice}
+          invoice={this.props.offer}
           onChange={this.onChange}
         />
 
@@ -176,9 +176,9 @@ export default class InvoiceDocument extends Component<Props> {
               icon="plus"
               text={t('newItem')}
               onClick={() => {
-                const invoice = new Invoice(this.props.invoice.clone)
-                invoice.items.push(new InvoiceItem({ index: this.props.invoice.items.length }))
-                this.onChange(invoice)
+                const offer = new Offer(this.props.offer.clone)
+                offer.items.push(new InvoiceItem({ index: this.props.offer.items.length }))
+                this.onChange(offer)
               }}
             />
           </Row>
@@ -189,17 +189,17 @@ export default class InvoiceDocument extends Component<Props> {
               <Column style={{ borderBottom: '3px solid black', textAlign: 'right', fontSize: 12 }} flex={1}>BASE</Column>
               <Column style={{ borderBottom: '3px solid black', textAlign: 'right', fontSize: 12 }} flex={1}>VAT</Column>
             </Row>
-            { this.props.invoice.vats.map((vat, index) => <Row key={`invoice-vat-${index}`} flex={1} style={{ height: 24, alignItems: 'center' }}>
+            { this.props.offer.vats.map((vat, index) => <Row key={`invoice-vat-${index}`} flex={1} style={{ height: 24, alignItems: 'center' }}>
 
               <Column flex={1}></Column>
               <Column style={{ textAlign: 'right' }} flex={1}>{ vat.vat }%</Column>
-              <Column style={{ textAlign: 'right' }} flex={1}>{ this.props.formatPrice(vat.base, this.props.invoice.currency) }</Column>
-              <Column style={{ textAlign: 'right' }} flex={1}>{ this.props.formatPrice(vat.price, this.props.invoice.currency) }</Column>
+              <Column style={{ textAlign: 'right' }} flex={1}>{ this.props.formatPrice(vat.base, this.props.offer.currency) }</Column>
+              <Column style={{ textAlign: 'right' }} flex={1}>{ this.props.formatPrice(vat.price, this.props.offer.currency) }</Column>
             </Row> )}
             <Row flex={1} style={{ height: 42, alignItems: 'center' }}>
               <Column flex={1}>Total</Column>
             <Column style={{ borderTop: '3px solid black', textAlign: 'right', height: 32, justifyContent: 'center', fontSize: 18, backgroundColor: Colors.LIGHT_GRAY5 }} flex={3}>
-              { this.props.formatPrice(this.props.invoice.price, this.props.invoice.currency) }
+              { this.props.formatPrice(this.props.offer.price, this.props.offer.currency) }
             </Column>
             </Row>
           </Column>
