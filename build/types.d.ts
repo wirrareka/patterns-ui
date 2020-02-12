@@ -2,7 +2,7 @@
 import Currency from './models/currency';
 export declare type FormatDateType = (date: Date) => string;
 export declare type ParseDateType = (date: string) => Date;
-export declare type FormatPriceType = (price: Number, currency?: Currency) => string;
+export declare type FormatPriceType = (price: number, currency?: Currency) => string;
 export declare type Selection = {
     [id: string]: boolean;
 };
