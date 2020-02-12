@@ -30,7 +30,6 @@ export default {
   datePosted: 'Date Posted',
   dateDelivered: 'Delivery Date',
   dateDue: 'Due Date',
-
   paymentMethod: 'Payment Method',
   bank: 'Bank',
   bankAccount: 'Bank Account',
@@ -38,7 +37,7 @@ export default {
   constantSymbol: 'Constant Symbol',
   newItem: 'New Item',
   'invoice.new': 'New Invoice',
-  'invoice.documentType': 'INVOICE / TAX DOCUMENT',
+  'invoice.type': 'INVOICE / TAX DOCUMENT',
   'offer.new': 'New Offer',
-  'offer.documentType': 'PRICE OFFER'
+  'offer.type': 'PRICE OFFER'
 } as Locale

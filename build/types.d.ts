@@ -85,9 +85,10 @@ export declare type Locale = {
     bankAccount: string;
     variableSymbol: string;
     constantSymbol: string;
-    invoices: {
-        new: string;
-    };
+    'invoice.new': string;
+    'invoice.type': string;
+    'offer.new': string;
+    'offer.type': string;
 };
 export interface PaymentMethod {
     id: string;

@@ -14,9 +14,10 @@ function ___$insertStyle(css) {
   return css;
 }
 
-import React__default, { createElement, Component } from 'react';
-import { ButtonGroup, Button, Colors, MenuItem, Checkbox, Popover, PopoverInteractionKind, PopoverPosition, Icon, FormGroup, InputGroup, Intent, Classes, RadioGroup, Radio, ControlGroup, Tag, Tooltip } from '@blueprintjs/core';
-import { Select } from '@blueprintjs/select';
+import React__default, { createElement, Component, useState, useEffect } from 'react';
+import { ButtonGroup, Button, Colors, MenuItem, Checkbox, Popover, PopoverInteractionKind, PopoverPosition, Icon, FormGroup, InputGroup, Intent, Classes, RadioGroup, Radio, ControlGroup, Tag, Tooltip, NumericInput, EditableText } from '@blueprintjs/core';
+import { Select, Suggest } from '@blueprintjs/select';
+import { DateInput } from '@blueprintjs/datetime';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -984,10 +985,10 @@ var en = {
     variableSymbol: 'Variable Symbol',
     constantSymbol: 'Constant Symbol',
     newItem: 'New Item',
-    invoices: {
-        new: 'New Invoice',
-        type: 'INVOICE / TAX DOCUMENT'
-    }
+    'invoice.new': 'New Invoice',
+    'invoice.type': 'INVOICE / TAX DOCUMENT',
+    'offer.new': 'New Offer',
+    'offer.type': 'PRICE OFFER'
 };
 
 var sk = {
@@ -1026,10 +1027,10 @@ var sk = {
     variableSymbol: 'Variabilný symbol',
     constantSymbol: 'Konštantný symbol',
     newItem: 'Nová položka',
-    invoices: {
-        new: 'Nová faktúra',
-        type: 'FAKTŮRA / DAŇOVÝ DOKLAD'
-    }
+    'invoice.new': 'Nová faktúra',
+    'invoice.type': 'FAKTŮRA / DAŇOVÝ DOKLAD',
+    'offer.new': 'Nová cenová ponuka',
+    'offer.type': 'CENOVÁ PONUKA'
 };
 
 var LocaleManager = /** @class */ (function () {
@@ -1725,5 +1726,2395 @@ var DataTable = /** @class */ (function (_super) {
     return DataTable;
 }(Component));
 
-export { Alignment, ColumnType, Container, DataTable, FlexColumn, FlexRow, Toolbar, localeManager };
+var Wrapper = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-wrapper', style: style }, children);
+};
+var Page = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-page', style: style }, children);
+};
+var Header$1 = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-header', style: style }, children);
+};
+var Logo = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-logo', style: style }, children);
+};
+var HeaderCode = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-header-code', style: style }, children);
+};
+var DocumentType = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-type', style: style }, children);
+};
+var InvoiceItemRow = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-item-row', style: style }, children);
+};
+var InvoiceCurrency = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-currency', style: style }, children);
+};
+var InvoiceTableHeader = function (_a) {
+    var children = _a.children, style = _a.style, align = _a.align;
+    return React__default.createElement('div', { className: 'patterns-invoice-table-header', style: __assign(__assign({}, style), { textAlign: align }) }, children);
+};
+var InvoiceItemsHeaderRow = function (_a) {
+    var children = _a.children, style = _a.style, flex = _a.flex;
+    return React__default.createElement('div', { className: 'patterns-invoice-table-header-row', style: __assign(__assign({}, style), { flex: flex }) }, children);
+};
+var InvoiceItemsContainer = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-items', style: style }, children);
+};
+var AddressBoxContainer = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-address-box', style: style }, children);
+};
+var AddressBoxHeader = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-address-box-header', style: style }, children);
+};
+var AddressBoxName = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-address-box-name', style: style }, children);
+};
+var AddressBoxOther = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-address-box-other', style: style }, children);
+};
+var AddressBoxVatLabel = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-address-box-vat-label', style: style }, children);
+};
+var AddressBoxVatValue = function (_a) {
+    var children = _a.children, style = _a.style;
+    return React__default.createElement('div', { className: 'patterns-invoice-address-box-vat-value', style: style }, children);
+};
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var lodash_clonedeep = createCommonjsModule(function (module, exports) {
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    promiseTag = '[object Promise]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to match `RegExp` flags from their coerced string values. */
+var reFlags = /\w*$/;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used to detect unsigned integer values. */
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+/** Used to identify `toStringTag` values supported by `_.clone`. */
+var cloneableTags = {};
+cloneableTags[argsTag] = cloneableTags[arrayTag] =
+cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
+cloneableTags[boolTag] = cloneableTags[dateTag] =
+cloneableTags[float32Tag] = cloneableTags[float64Tag] =
+cloneableTags[int8Tag] = cloneableTags[int16Tag] =
+cloneableTags[int32Tag] = cloneableTags[mapTag] =
+cloneableTags[numberTag] = cloneableTags[objectTag] =
+cloneableTags[regexpTag] = cloneableTags[setTag] =
+cloneableTags[stringTag] = cloneableTags[symbolTag] =
+cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
+cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+cloneableTags[errorTag] = cloneableTags[funcTag] =
+cloneableTags[weakMapTag] = false;
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+/** Detect free variable `exports`. */
+var freeExports =  exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/**
+ * Adds the key-value `pair` to `map`.
+ *
+ * @private
+ * @param {Object} map The map to modify.
+ * @param {Array} pair The key-value pair to add.
+ * @returns {Object} Returns `map`.
+ */
+function addMapEntry(map, pair) {
+  // Don't return `map.set` because it's not chainable in IE 11.
+  map.set(pair[0], pair[1]);
+  return map;
+}
+
+/**
+ * Adds `value` to `set`.
+ *
+ * @private
+ * @param {Object} set The set to modify.
+ * @param {*} value The value to add.
+ * @returns {Object} Returns `set`.
+ */
+function addSetEntry(set, value) {
+  // Don't return `set.add` because it's not chainable in IE 11.
+  set.add(value);
+  return set;
+}
+
+/**
+ * A specialized version of `_.forEach` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns `array`.
+ */
+function arrayEach(array, iteratee) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
+      break;
+    }
+  }
+  return array;
+}
+
+/**
+ * Appends the elements of `values` to `array`.
+ *
+ * @private
+ * @param {Array} array The array to modify.
+ * @param {Array} values The values to append.
+ * @returns {Array} Returns `array`.
+ */
+function arrayPush(array, values) {
+  var index = -1,
+      length = values.length,
+      offset = array.length;
+
+  while (++index < length) {
+    array[offset + index] = values[index];
+  }
+  return array;
+}
+
+/**
+ * A specialized version of `_.reduce` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @param {*} [accumulator] The initial value.
+ * @param {boolean} [initAccum] Specify using the first element of `array` as
+ *  the initial value.
+ * @returns {*} Returns the accumulated value.
+ */
+function arrayReduce(array, iteratee, accumulator, initAccum) {
+  var index = -1,
+      length = array ? array.length : 0;
+
+  if (initAccum && length) {
+    accumulator = array[++index];
+  }
+  while (++index < length) {
+    accumulator = iteratee(accumulator, array[index], index, array);
+  }
+  return accumulator;
+}
+
+/**
+ * The base implementation of `_.times` without support for iteratee shorthands
+ * or max array length checks.
+ *
+ * @private
+ * @param {number} n The number of times to invoke `iteratee`.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the array of results.
+ */
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
+
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
+}
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+/**
+ * Checks if `value` is a host object in IE < 9.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+ */
+function isHostObject(value) {
+  // Many host objects are `Object` objects that can coerce to strings
+  // despite having improperly defined `toString` methods.
+  var result = false;
+  if (value != null && typeof value.toString != 'function') {
+    try {
+      result = !!(value + '');
+    } catch (e) {}
+  }
+  return result;
+}
+
+/**
+ * Converts `map` to its key-value pairs.
+ *
+ * @private
+ * @param {Object} map The map to convert.
+ * @returns {Array} Returns the key-value pairs.
+ */
+function mapToArray(map) {
+  var index = -1,
+      result = Array(map.size);
+
+  map.forEach(function(value, key) {
+    result[++index] = [key, value];
+  });
+  return result;
+}
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+/**
+ * Converts `set` to an array of its values.
+ *
+ * @private
+ * @param {Object} set The set to convert.
+ * @returns {Array} Returns the values.
+ */
+function setToArray(set) {
+  var index = -1,
+      result = Array(set.size);
+
+  set.forEach(function(value) {
+    result[++index] = value;
+  });
+  return result;
+}
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype,
+    funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var objectToString = objectProto.toString;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined,
+    Symbol = root.Symbol,
+    Uint8Array = root.Uint8Array,
+    getPrototype = overArg(Object.getPrototypeOf, Object),
+    objectCreate = Object.create,
+    propertyIsEnumerable = objectProto.propertyIsEnumerable,
+    splice = arrayProto.splice;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeGetSymbols = Object.getOwnPropertySymbols,
+    nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
+    nativeKeys = overArg(Object.keys, Object);
+
+/* Built-in method references that are verified to be native. */
+var DataView = getNative(root, 'DataView'),
+    Map = getNative(root, 'Map'),
+    Promise = getNative(root, 'Promise'),
+    Set = getNative(root, 'Set'),
+    WeakMap = getNative(root, 'WeakMap'),
+    nativeCreate = getNative(Object, 'create');
+
+/** Used to detect maps, sets, and weakmaps. */
+var dataViewCtorString = toSource(DataView),
+    mapCtorString = toSource(Map),
+    promiseCtorString = toSource(Promise),
+    setCtorString = toSource(Set),
+    weakMapCtorString = toSource(WeakMap);
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+}
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  return this.has(key) && delete this.__data__[key];
+}
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? data[key] !== undefined : hasOwnProperty.call(data, key);
+}
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+}
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  return true;
+}
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries ? entries.length : 0;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  return getMapData(this, key)['delete'](key);
+}
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  getMapData(this, key).set(key, value);
+  return this;
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+/**
+ * Creates a stack cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Stack(entries) {
+  this.__data__ = new ListCache(entries);
+}
+
+/**
+ * Removes all key-value entries from the stack.
+ *
+ * @private
+ * @name clear
+ * @memberOf Stack
+ */
+function stackClear() {
+  this.__data__ = new ListCache;
+}
+
+/**
+ * Removes `key` and its value from the stack.
+ *
+ * @private
+ * @name delete
+ * @memberOf Stack
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function stackDelete(key) {
+  return this.__data__['delete'](key);
+}
+
+/**
+ * Gets the stack value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Stack
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function stackGet(key) {
+  return this.__data__.get(key);
+}
+
+/**
+ * Checks if a stack value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Stack
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function stackHas(key) {
+  return this.__data__.has(key);
+}
+
+/**
+ * Sets the stack `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Stack
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the stack cache instance.
+ */
+function stackSet(key, value) {
+  var cache = this.__data__;
+  if (cache instanceof ListCache) {
+    var pairs = cache.__data__;
+    if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
+      pairs.push([key, value]);
+      return this;
+    }
+    cache = this.__data__ = new MapCache(pairs);
+  }
+  cache.set(key, value);
+  return this;
+}
+
+// Add methods to `Stack`.
+Stack.prototype.clear = stackClear;
+Stack.prototype['delete'] = stackDelete;
+Stack.prototype.get = stackGet;
+Stack.prototype.has = stackHas;
+Stack.prototype.set = stackSet;
+
+/**
+ * Creates an array of the enumerable property names of the array-like `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @param {boolean} inherited Specify returning inherited property names.
+ * @returns {Array} Returns the array of property names.
+ */
+function arrayLikeKeys(value, inherited) {
+  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+  // Safari 9 makes `arguments.length` enumerable in strict mode.
+  var result = (isArray(value) || isArguments(value))
+    ? baseTimes(value.length, String)
+    : [];
+
+  var length = result.length,
+      skipIndexes = !!length;
+
+  for (var key in value) {
+    if ((inherited || hasOwnProperty.call(value, key)) &&
+        !(skipIndexes && (key == 'length' || isIndex(key, length)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * Assigns `value` to `key` of `object` if the existing value is not equivalent
+ * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {string} key The key of the property to assign.
+ * @param {*} value The value to assign.
+ */
+function assignValue(object, key, value) {
+  var objValue = object[key];
+  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+      (value === undefined && !(key in object))) {
+    object[key] = value;
+  }
+}
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+/**
+ * The base implementation of `_.assign` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+function baseAssign(object, source) {
+  return object && copyObject(source, keys(source), object);
+}
+
+/**
+ * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+ * traversed objects.
+ *
+ * @private
+ * @param {*} value The value to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @param {boolean} [isFull] Specify a clone including symbols.
+ * @param {Function} [customizer] The function to customize cloning.
+ * @param {string} [key] The key of `value`.
+ * @param {Object} [object] The parent object of `value`.
+ * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+ * @returns {*} Returns the cloned value.
+ */
+function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
+  var result;
+  if (customizer) {
+    result = object ? customizer(value, key, object, stack) : customizer(value);
+  }
+  if (result !== undefined) {
+    return result;
+  }
+  if (!isObject(value)) {
+    return value;
+  }
+  var isArr = isArray(value);
+  if (isArr) {
+    result = initCloneArray(value);
+    if (!isDeep) {
+      return copyArray(value, result);
+    }
+  } else {
+    var tag = getTag(value),
+        isFunc = tag == funcTag || tag == genTag;
+
+    if (isBuffer(value)) {
+      return cloneBuffer(value, isDeep);
+    }
+    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
+      if (isHostObject(value)) {
+        return object ? value : {};
+      }
+      result = initCloneObject(isFunc ? {} : value);
+      if (!isDeep) {
+        return copySymbols(value, baseAssign(result, value));
+      }
+    } else {
+      if (!cloneableTags[tag]) {
+        return object ? value : {};
+      }
+      result = initCloneByTag(value, tag, baseClone, isDeep);
+    }
+  }
+  // Check for circular references and return its corresponding clone.
+  stack || (stack = new Stack);
+  var stacked = stack.get(value);
+  if (stacked) {
+    return stacked;
+  }
+  stack.set(value, result);
+
+  if (!isArr) {
+    var props = isFull ? getAllKeys(value) : keys(value);
+  }
+  arrayEach(props || value, function(subValue, key) {
+    if (props) {
+      key = subValue;
+      subValue = value[key];
+    }
+    // Recursively populate clone (susceptible to call stack limits).
+    assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
+  });
+  return result;
+}
+
+/**
+ * The base implementation of `_.create` without support for assigning
+ * properties to the created object.
+ *
+ * @private
+ * @param {Object} prototype The object to inherit from.
+ * @returns {Object} Returns the new object.
+ */
+function baseCreate(proto) {
+  return isObject(proto) ? objectCreate(proto) : {};
+}
+
+/**
+ * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+ * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+ * symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Function} keysFunc The function to get the keys of `object`.
+ * @param {Function} symbolsFunc The function to get the symbols of `object`.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+  var result = keysFunc(object);
+  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+}
+
+/**
+ * The base implementation of `getTag`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  return objectToString.call(value);
+}
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = (isFunction(value) || isHostObject(value)) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+/**
+ * Creates a clone of  `buffer`.
+ *
+ * @private
+ * @param {Buffer} buffer The buffer to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Buffer} Returns the cloned buffer.
+ */
+function cloneBuffer(buffer, isDeep) {
+  if (isDeep) {
+    return buffer.slice();
+  }
+  var result = new buffer.constructor(buffer.length);
+  buffer.copy(result);
+  return result;
+}
+
+/**
+ * Creates a clone of `arrayBuffer`.
+ *
+ * @private
+ * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+ * @returns {ArrayBuffer} Returns the cloned array buffer.
+ */
+function cloneArrayBuffer(arrayBuffer) {
+  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+  return result;
+}
+
+/**
+ * Creates a clone of `dataView`.
+ *
+ * @private
+ * @param {Object} dataView The data view to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned data view.
+ */
+function cloneDataView(dataView, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+}
+
+/**
+ * Creates a clone of `map`.
+ *
+ * @private
+ * @param {Object} map The map to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned map.
+ */
+function cloneMap(map, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(mapToArray(map), true) : mapToArray(map);
+  return arrayReduce(array, addMapEntry, new map.constructor);
+}
+
+/**
+ * Creates a clone of `regexp`.
+ *
+ * @private
+ * @param {Object} regexp The regexp to clone.
+ * @returns {Object} Returns the cloned regexp.
+ */
+function cloneRegExp(regexp) {
+  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+  result.lastIndex = regexp.lastIndex;
+  return result;
+}
+
+/**
+ * Creates a clone of `set`.
+ *
+ * @private
+ * @param {Object} set The set to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned set.
+ */
+function cloneSet(set, isDeep, cloneFunc) {
+  var array = isDeep ? cloneFunc(setToArray(set), true) : setToArray(set);
+  return arrayReduce(array, addSetEntry, new set.constructor);
+}
+
+/**
+ * Creates a clone of the `symbol` object.
+ *
+ * @private
+ * @param {Object} symbol The symbol object to clone.
+ * @returns {Object} Returns the cloned symbol object.
+ */
+function cloneSymbol(symbol) {
+  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+}
+
+/**
+ * Creates a clone of `typedArray`.
+ *
+ * @private
+ * @param {Object} typedArray The typed array to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned typed array.
+ */
+function cloneTypedArray(typedArray, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+}
+
+/**
+ * Copies the values of `source` to `array`.
+ *
+ * @private
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
+ * @returns {Array} Returns `array`.
+ */
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
+}
+
+/**
+ * Copies properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy properties from.
+ * @param {Array} props The property identifiers to copy.
+ * @param {Object} [object={}] The object to copy properties to.
+ * @param {Function} [customizer] The function to customize copied values.
+ * @returns {Object} Returns `object`.
+ */
+function copyObject(source, props, object, customizer) {
+  object || (object = {});
+
+  var index = -1,
+      length = props.length;
+
+  while (++index < length) {
+    var key = props[index];
+
+    var newValue = customizer
+      ? customizer(object[key], source[key], key, object, source)
+      : undefined;
+
+    assignValue(object, key, newValue === undefined ? source[key] : newValue);
+  }
+  return object;
+}
+
+/**
+ * Copies own symbol properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+function copySymbols(source, object) {
+  return copyObject(source, getSymbols(source), object);
+}
+
+/**
+ * Creates an array of own enumerable property names and symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function getAllKeys(object) {
+  return baseGetAllKeys(object, keys, getSymbols);
+}
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+/**
+ * Creates an array of the own enumerable symbol properties of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of symbols.
+ */
+var getSymbols = nativeGetSymbols ? overArg(nativeGetSymbols, Object) : stubArray;
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+var getTag = baseGetTag;
+
+// Fallback for data views, maps, sets, and weak maps in IE 11,
+// for data views in Edge < 14, and promises in Node.js.
+if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+    (Map && getTag(new Map) != mapTag) ||
+    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+    (Set && getTag(new Set) != setTag) ||
+    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+  getTag = function(value) {
+    var result = objectToString.call(value),
+        Ctor = result == objectTag ? value.constructor : undefined,
+        ctorString = Ctor ? toSource(Ctor) : undefined;
+
+    if (ctorString) {
+      switch (ctorString) {
+        case dataViewCtorString: return dataViewTag;
+        case mapCtorString: return mapTag;
+        case promiseCtorString: return promiseTag;
+        case setCtorString: return setTag;
+        case weakMapCtorString: return weakMapTag;
+      }
+    }
+    return result;
+  };
+}
+
+/**
+ * Initializes an array clone.
+ *
+ * @private
+ * @param {Array} array The array to clone.
+ * @returns {Array} Returns the initialized clone.
+ */
+function initCloneArray(array) {
+  var length = array.length,
+      result = array.constructor(length);
+
+  // Add properties assigned by `RegExp#exec`.
+  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+    result.index = array.index;
+    result.input = array.input;
+  }
+  return result;
+}
+
+/**
+ * Initializes an object clone.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneObject(object) {
+  return (typeof object.constructor == 'function' && !isPrototype(object))
+    ? baseCreate(getPrototype(object))
+    : {};
+}
+
+/**
+ * Initializes an object clone based on its `toStringTag`.
+ *
+ * **Note:** This function only supports cloning values with tags of
+ * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @param {string} tag The `toStringTag` of the object to clone.
+ * @param {Function} cloneFunc The function to clone values.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneByTag(object, tag, cloneFunc, isDeep) {
+  var Ctor = object.constructor;
+  switch (tag) {
+    case arrayBufferTag:
+      return cloneArrayBuffer(object);
+
+    case boolTag:
+    case dateTag:
+      return new Ctor(+object);
+
+    case dataViewTag:
+      return cloneDataView(object, isDeep);
+
+    case float32Tag: case float64Tag:
+    case int8Tag: case int16Tag: case int32Tag:
+    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
+      return cloneTypedArray(object, isDeep);
+
+    case mapTag:
+      return cloneMap(object, isDeep, cloneFunc);
+
+    case numberTag:
+    case stringTag:
+      return new Ctor(object);
+
+    case regexpTag:
+      return cloneRegExp(object);
+
+    case setTag:
+      return cloneSet(object, isDeep, cloneFunc);
+
+    case symbolTag:
+      return cloneSymbol(object);
+  }
+}
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  length = length == null ? MAX_SAFE_INTEGER : length;
+  return !!length &&
+    (typeof value == 'number' || reIsUint.test(value)) &&
+    (value > -1 && value % 1 == 0 && value < length);
+}
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to process.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+/**
+ * This method is like `_.clone` except that it recursively clones `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 1.0.0
+ * @category Lang
+ * @param {*} value The value to recursively clone.
+ * @returns {*} Returns the deep cloned value.
+ * @see _.clone
+ * @example
+ *
+ * var objects = [{ 'a': 1 }, { 'b': 2 }];
+ *
+ * var deep = _.cloneDeep(objects);
+ * console.log(deep[0] === objects[0]);
+ * // => false
+ */
+function cloneDeep(value) {
+  return baseClone(value, true, true);
+}
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+/**
+ * Checks if `value` is likely an `arguments` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArguments(function() { return arguments; }());
+ * // => true
+ *
+ * _.isArguments([1, 2, 3]);
+ * // => false
+ */
+function isArguments(value) {
+  // Safari 8.1 makes `arguments.callee` enumerable in strict mode.
+  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+}
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
+}
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || stubFalse;
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 8-9 which returns 'object' for typed array and other constructors.
+  var tag = isObject(value) ? objectToString.call(value) : '';
+  return tag == funcTag || tag == genTag;
+}
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return !!value && (type == 'object' || type == 'function');
+}
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return !!value && typeof value == 'object';
+}
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+/**
+ * This method returns a new empty array.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {Array} Returns the new empty array.
+ * @example
+ *
+ * var arrays = _.times(2, _.stubArray);
+ *
+ * console.log(arrays);
+ * // => [[], []]
+ *
+ * console.log(arrays[0] === arrays[1]);
+ * // => false
+ */
+function stubArray() {
+  return [];
+}
+
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+module.exports = cloneDeep;
+});
+
+var BaseModel = /** @class */ (function () {
+    function BaseModel(_data) {
+        this.id = _data.id;
+        this.createdAt = _data.createdAt ? new Date(_data.createdAt) : new Date();
+        this.updatedAt = _data.updatedAt ? new Date(_data.updatedAt) : new Date();
+    }
+    Object.defineProperty(BaseModel.prototype, "exists", {
+        get: function () {
+            return typeof this.id === 'string' && this.id.length > 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(BaseModel.prototype, "clone", {
+        get: function () {
+            return lodash_clonedeep(this);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return BaseModel;
+}());
+
+var Contact = /** @class */ (function (_super) {
+    __extends(Contact, _super);
+    function Contact(data) {
+        var _this = _super.call(this, data) || this;
+        _this.name = data.name || '';
+        _this.street = data.street || '';
+        _this.street2 = data.street2 || '';
+        _this.zip = data.zip || '';
+        _this.city = data.city || '';
+        _this.country = data.country || '';
+        _this.email = data.email || '';
+        _this.phone = data.phone || '';
+        _this.site = data.site || '';
+        _this.business_id = data.business_id || '';
+        _this.vat_id = data.vat_id || '';
+        _this.vat_payer_id = data.vat_payer_id || '';
+        _this.isActive = data.isActive || '';
+        _this.note = data.note || '';
+        _this.firstName = data.firstName || '';
+        _this.lastName = data.lastName || '';
+        _this.fullName = data.fullName || [data.firstName, data.lastName].filter(function (f) { return f && f.length > 0; }).join(' ');
+        return _this;
+    }
+    return Contact;
+}(BaseModel));
+
+var Currency = /** @class */ (function (_super) {
+    __extends(Currency, _super);
+    function Currency(data) {
+        var _this = _super.call(this, data) || this;
+        _this.name = data.name;
+        _this.symbol = data.symbol;
+        return _this;
+    }
+    return Currency;
+}(BaseModel));
+
+var InvoiceItem = /** @class */ (function (_super) {
+    __extends(InvoiceItem, _super);
+    function InvoiceItem(data) {
+        var _this = _super.call(this, data) || this;
+        _this.invoice_id = data.invoice_id || '';
+        _this.index = data.index || 0;
+        _this.item_id = data.item_id || '';
+        _this.item_name = data.item_name || '';
+        _this.item_description = data.item_description || '';
+        _this.unit_id = data.unit_id || '';
+        _this.unit_code = data.unit_code || '';
+        _this.unit_price = data.unit_price || 0;
+        _this.line_price = data.line_price || 0;
+        _this.quantity = data.quantity || 0;
+        _this.vat = data.vat || 0;
+        _this.vat_price = data.vat_price || 0;
+        _this.price_with_vat = data.price_with_vat || 0;
+        _this.note = data.note || '';
+        return _this;
+    }
+    InvoiceItem.prototype.recalculate = function () {
+        this.line_price = this.unit_price * this.quantity;
+        this.vat_price = this.line_price * (this.vat / 100);
+        this.price_with_vat = this.line_price + this.vat_price;
+    };
+    return InvoiceItem;
+}(BaseModel));
+
+var Invoice = /** @class */ (function (_super) {
+    __extends(Invoice, _super);
+    function Invoice(data) {
+        var _this = _super.call(this, data) || this;
+        _this.code = data.code;
+        _this.currency = new Currency(data.currency || {});
+        _this.company = new Contact(data.company || {});
+        _this.customer = new Contact(data.customer || {});
+        _this.price = data.price || 0;
+        _this.price_with_vat = data.price_with_vat || 0;
+        _this.dueAt = data.dueAt ? new Date(data.dueAt) : new Date(_this.createdAt);
+        _this.note = data.note || '';
+        _this.items = (data.items || []).map(function (i) { return new InvoiceItem(i); });
+        _this.paymentMethod = data.paymentMethod;
+        _this.recalculate();
+        return _this;
+    }
+    Invoice.prototype.recalculate = function () {
+        this.price = this.items.reduce(function (prev, next) { return prev += (next.line_price); }, 0) || 0;
+        this.price_with_vat = this.items.reduce(function (prev, next) { return prev += (next.line_price + next.vat_price); }, 0) || 0;
+    };
+    Object.defineProperty(Invoice.prototype, "vats", {
+        get: function () {
+            var vats = {};
+            this.items.forEach(function (item) {
+                if (!vats["" + item.vat]) {
+                    vats["" + item.vat] = { base: item.line_price, price: item.vat_price };
+                }
+                else {
+                    vats["" + item.vat] += { base: item.line_price, price: item.vat_price };
+                }
+            });
+            return Object.keys(vats).map(function (vat) { return ({ vat: vat, base: vats[vat].base, price: vats[vat].price }); });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Invoice;
+}(BaseModel));
+
+var PaymentMethod = /** @class */ (function (_super) {
+    __extends(PaymentMethod, _super);
+    function PaymentMethod(data) {
+        var _this = _super.call(this, data) || this;
+        _this.title = data.title;
+        return _this;
+    }
+    return PaymentMethod;
+}(BaseModel));
+
+var rightAlign = {
+    textAlign: 'right',
+    justifyContent: 'flex-end'
+};
+function InvoiceItemView(_a) {
+    var item = _a.item, onChange = _a.onChange;
+    var onNameChange = function (value) {
+        var clone = new InvoiceItem(item);
+        clone.item_name = value;
+        onChange(clone);
+    };
+    var onPriceChange = function (value) {
+        var clone = new InvoiceItem(item);
+        clone.unit_price = value;
+        clone.recalculate();
+        onChange(clone);
+    };
+    var onLinePriceChange = function (value) {
+        var clone = new InvoiceItem(item);
+        clone.line_price = value;
+        clone.unit_price = value / clone.quantity;
+        clone.recalculate();
+        onChange(clone);
+    };
+    var onQuantityChange = function (value) {
+        var clone = new InvoiceItem(item);
+        clone.quantity = value;
+        clone.recalculate();
+        onChange(clone);
+    };
+    var onVatChange = function (value) {
+        var clone = new InvoiceItem(item);
+        clone.vat = value;
+        clone.recalculate();
+        onChange(clone);
+    };
+    return React__default.createElement(InvoiceItemRow, { key: "invoice-item-" + item.index },
+        React__default.createElement(FlexRow, { flex: 2, style: { textAlign: 'left', fontSize: 14 } },
+            React__default.createElement(InputGroup, { fill: true, placeholder: "Editova\u0165", value: item.item_name, onChange: function (evt) { return onNameChange(evt.currentTarget.value); }, name: "name" })),
+        React__default.createElement(FlexRow, { flex: 1, style: __assign(__assign({}, rightAlign), { alignItems: 'center' }) },
+            React__default.createElement(NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: "Editova\u0165", value: item.unit_price, onValueChange: onPriceChange }),
+            React__default.createElement(InvoiceCurrency, null, "EUR")),
+        React__default.createElement(FlexRow, { flex: 1, style: __assign(__assign({}, rightAlign), { alignItems: 'center' }) },
+            React__default.createElement(NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: "Editova\u0165", value: item.quantity, onValueChange: onQuantityChange }),
+            React__default.createElement(InvoiceCurrency, null, item.unit_code || 'ks')),
+        React__default.createElement(FlexRow, { flex: 1, style: __assign(__assign({}, rightAlign), { alignItems: 'center' }) },
+            React__default.createElement(NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: "Editova\u0165", value: item.line_price, onValueChange: onLinePriceChange }),
+            React__default.createElement(InvoiceCurrency, null, "EUR")),
+        React__default.createElement(FlexRow, { flex: 1, style: __assign(__assign({}, rightAlign), { alignItems: 'center' }) },
+            React__default.createElement(NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: "Editova\u0165", value: item.vat, onValueChange: onVatChange }),
+            React__default.createElement(InvoiceCurrency, null, "%")),
+        React__default.createElement(FlexRow, { flex: 1, style: __assign(__assign({}, rightAlign), { alignItems: 'center' }) },
+            React__default.createElement(EditableText, { className: "align-right", placeholder: "Editova\u0165", value: "" + item.vat_price.toFixed(2) }),
+            React__default.createElement(InvoiceCurrency, null, "EUR")),
+        React__default.createElement(FlexRow, { flex: 1, style: __assign(__assign({}, rightAlign), { alignItems: 'center' }) },
+            React__default.createElement(EditableText, { className: "align-right", placeholder: "Editova\u0165", value: "" + item.price_with_vat.toFixed(2) }),
+            React__default.createElement(InvoiceCurrency, null, "EUR")));
+}
+
+function InvoiceItems(_a) {
+    var invoice = _a.invoice, onChange = _a.onChange;
+    var change = function (item) {
+        var clone = new Invoice(invoice);
+        clone.items.splice(item.index, 1, item);
+        onChange(clone);
+    };
+    var trash = function (item) {
+        var clone = new Invoice(invoice);
+        clone.items.splice(item.index, 1);
+        onChange(clone);
+    };
+    var duplicate = function (item) {
+        var clone = new Invoice(invoice);
+        clone.items.splice(item.index, 0, item.clone);
+        clone.items.forEach(function (item, index) { return item.index = index; });
+        onChange(clone);
+    };
+    return React__default.createElement(InvoiceItemsContainer, null,
+        React__default.createElement(InvoiceItemsHeaderRow, null,
+            React__default.createElement(FlexColumn, { flex: 2 },
+                React__default.createElement(InvoiceTableHeader, null, "N\u00C1ZOV")),
+            React__default.createElement(FlexColumn, { flex: 1 },
+                React__default.createElement(InvoiceTableHeader, { align: "right" }, "JEDN. CENA BEZ DPH")),
+            React__default.createElement(FlexColumn, { flex: 1 },
+                React__default.createElement(InvoiceTableHeader, { align: "right" }, "MNO\u017DSTVO")),
+            React__default.createElement(FlexColumn, { flex: 1 },
+                React__default.createElement(InvoiceTableHeader, { align: "right" }, "CELKOM BEZ DPH")),
+            React__default.createElement(FlexColumn, { flex: 1 },
+                React__default.createElement(InvoiceTableHeader, { align: "right" }, "DPH")),
+            React__default.createElement(FlexColumn, { flex: 1 },
+                React__default.createElement(InvoiceTableHeader, { align: "right" }, "HODNOTA DPH")),
+            React__default.createElement(FlexColumn, { flex: 1 },
+                React__default.createElement(InvoiceTableHeader, { align: "right" }, "HODNOTA S DPH"))),
+        invoice.items.map(function (item, index) { return React__default.createElement("div", { key: "invoice-item-" + index, style: { flex: 1 } },
+            React__default.createElement(Popover, { key: "invoice-item-" + index, interactionKind: PopoverInteractionKind.HOVER, position: PopoverPosition.RIGHT },
+                React__default.createElement(InvoiceItemView, { item: item, onChange: function (item) { return change(item); } }),
+                React__default.createElement(ButtonGroup, null,
+                    React__default.createElement(Button, { minimal: true, intent: "danger", icon: "trash", onClick: function () { return trash(item); } }),
+                    React__default.createElement(Button, { minimal: true, intent: "none", icon: "duplicate", onClick: function () { return duplicate(item); } })))); }));
+}
+
+var ContactSuggest = Suggest.ofType();
+function AddressBox(_a) {
+    var _this = this;
+    var contact = _a.contact, header = _a.header, onChange = _a.onChange, fetch = _a.fetch, _b = _a.disabled, disabled = _b === void 0 ? false : _b;
+    var _c = useState([]), results = _c[0], setResults = _c[1];
+    var _d = useState(''), query = _d[0], setQuery = _d[1];
+    useEffect(function () {
+        setQuery(contact.name.length > 0 ? contact.name : contact.fullName);
+    }, [contact]);
+    var update = function (field, value) { return __awaiter(_this, void 0, void 0, function () {
+        var clone, items;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    clone = new Contact(contact.clone);
+                    clone[field] = value;
+                    if (!(field === 'name')) return [3 /*break*/, 2];
+                    return [4 /*yield*/, fetch(value)];
+                case 1:
+                    items = _a.sent();
+                    setResults(items);
+                    _a.label = 2;
+                case 2:
+                    setQuery(value);
+                    onChange(clone);
+                    return [2 /*return*/];
+            }
+        });
+    }); };
+    var inputUpdate = function (evt) {
+        var clone = new Contact(contact.clone);
+        clone[evt.currentTarget.name] = evt.currentTarget.value;
+        onChange(clone);
+    };
+    var onSelect = function (contact) {
+        var clone = new Contact(contact.clone);
+        onChange(clone);
+    };
+    return React__default.createElement(AddressBoxContainer, null,
+        React__default.createElement(AddressBoxHeader, null, header),
+        React__default.createElement(AddressBoxName, null, !disabled ?
+            React__default.createElement(FlexRow, null,
+                React__default.createElement(ContactSuggest, { fill: true, className: "suggest-minimal", items: results, inputValueRenderer: function (contact) { return contact.name || contact.fullName; }, itemRenderer: function (contact, options) { return React__default.createElement(MenuItem, { key: "contact-" + contact.id, text: contact.name.length > 0 ? contact.name : contact.fullName, onClick: options.handleClick }); }, onItemSelect: function (contact) { return onSelect(contact); }, query: query, selectedItem: contact, onQueryChange: function (query) { return update('name', query); }, noResults: React__default.createElement(MenuItem, { icon: "plus", text: "Nov\u00FD klient" }) }),
+                React__default.createElement(Button, { minimal: true, style: { width: 30 }, icon: "cross", onClick: function () {
+                        setResults([new Contact({})]);
+                        setQuery('');
+                        onChange(new Contact({}));
+                    } }))
+            :
+                React__default.createElement("div", { className: "suggest-minimal" },
+                    React__default.createElement(InputGroup, { fill: true, disabled: disabled, value: contact.name, name: "name", onChange: inputUpdate, placeholder: "Meno" }))),
+        React__default.createElement(AddressBoxOther, null,
+            React__default.createElement(FlexColumn, null,
+                React__default.createElement(FlexRow, { style: { height: 26 } },
+                    React__default.createElement(InputGroup, { fill: true, disabled: disabled, value: contact.street, name: "street", onChange: inputUpdate, placeholder: "Ulica" })),
+                (!disabled || contact.street2.length > 0) &&
+                    React__default.createElement(FlexRow, { style: { height: 26 } },
+                        React__default.createElement(InputGroup, { fill: true, disabled: disabled, value: contact.street2, name: "street2", onChange: inputUpdate, placeholder: "Ulica 2" })),
+                disabled && (contact.street2.length === 0) && React__default.createElement(FlexRow, { style: { height: 26 } })),
+            React__default.createElement(FlexRow, { style: { height: 26 } },
+                React__default.createElement("div", { style: { flex: 1 } },
+                    React__default.createElement(InputGroup, { fill: true, disabled: disabled, value: contact.zip, name: "zip", onChange: inputUpdate, placeholder: "PS\u010C" })),
+                React__default.createElement("div", { style: { flex: 4 } },
+                    React__default.createElement(InputGroup, { fill: true, disabled: disabled, value: contact.city, name: "city", onChange: inputUpdate, placeholder: "Mesto" }))),
+            React__default.createElement(FlexRow, { style: { height: 26 } },
+                React__default.createElement(InputGroup, { fill: true, disabled: disabled, value: contact.country, name: "country", onChange: inputUpdate, placeholder: "Krajina" }))),
+        React__default.createElement(FlexRow, null,
+            React__default.createElement(FlexColumn, { style: { flex: 1, marginTop: 14 } },
+                (!disabled || contact.business_id.length > 0) &&
+                    React__default.createElement(FlexRow, null,
+                        React__default.createElement(AddressBoxVatLabel, null, "I\u010CO:"),
+                        React__default.createElement(AddressBoxVatValue, null,
+                            React__default.createElement(InputGroup, { fill: true, disabled: disabled, value: contact.business_id, name: "business_id", onChange: inputUpdate, placeholder: "I\u010CO" }))),
+                (!disabled || contact.vat_payer_id.length > 0) &&
+                    React__default.createElement(FlexRow, null,
+                        React__default.createElement(AddressBoxVatLabel, null, "DI\u010C:"),
+                        React__default.createElement(AddressBoxVatValue, null,
+                            React__default.createElement(InputGroup, { fill: true, disabled: disabled, value: contact.vat_payer_id, name: "vat_payer_id", onChange: inputUpdate, placeholder: "DI\u010C" }))),
+                (!disabled || contact.vat_id.length > 0) &&
+                    React__default.createElement(FlexRow, null,
+                        React__default.createElement(AddressBoxVatLabel, null, "I\u010C DPH:"),
+                        React__default.createElement(AddressBoxVatValue, null,
+                            React__default.createElement(InputGroup, { fill: true, disabled: disabled, value: contact.vat_payer_id, name: "vat_id", onChange: inputUpdate, placeholder: "I\u010C DPH" }))))));
+}
+
+___$insertStyle("/*\n * Copyright 2017 Palantir Technologies, Inc. All rights reserved.\n */\n.patterns-invoice-wrapper {\n  background-color: #ced9e0;\n  width: 100%;\n  max-height: calc(100vh - 46px);\n  overflow-y: scroll;\n}\n.patterns-invoice-wrapper .patterns-invoice-page {\n  background-color: white;\n  max-width: 90%;\n  min-height: 800px;\n  margin: 40px auto;\n  padding: 50px 50px;\n  box-shadow: 0 15px 15px 5px #ced9e0;\n}\n.patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input:hover, .patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input:disabled, .patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-invoice-wrapper .patterns-invoice-header {\n  height: 100px;\n  display: flex;\n  flex-direction: row;\n}\n.patterns-invoice-wrapper .patterns-invoice-logo {\n  flex: 1;\n}\n.patterns-invoice-wrapper .patterns-invoice-logo img {\n  max-height: 60px;\n}\n.patterns-invoice-wrapper .patterns-invoice-header-code {\n  text-align: right;\n  font-size: 36px;\n  font-weight: bold;\n}\n.patterns-invoice-wrapper .patterns-invoice-type {\n  text-align: right;\n  font-size: 12px;\n  font-weight: bold;\n  color: #8f8f8f;\n}\n.patterns-invoice-wrapper .patterns-invoice-item {\n  flex: 2;\n  border-top: 3px solid #cccccc;\n  padding-top: 10px;\n  margin-left: 5px;\n  flex-direction: column;\n}\n.patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input:hover, .patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input:disabled, .patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-invoice-wrapper .patterns-invoice-items {\n  margin-top: 50px;\n  flex-direction: column;\n  flex: 1;\n}\n.patterns-invoice-wrapper .patterns-invoice-items .bp3-popover-target {\n  width: 100%;\n}\n.patterns-invoice-wrapper .patterns-invoice-items .bp3-popover-target input {\n  text-align: right;\n}\n.patterns-invoice-wrapper .patterns-invoice-items .bp3-popover-target input[name=name] {\n  text-align: left;\n}\n.patterns-invoice-wrapper .patterns-invoice-item-row {\n  flex-direction: row;\n  display: flex;\n  flex: 1;\n  padding-top: 2px;\n  padding-bottom: 2px;\n}\n.patterns-invoice-wrapper .patterns-invoice-table-header {\n  font-size: 12px;\n  font-weight: normal;\n  color: black;\n}\n.patterns-invoice-wrapper .patterns-invoice-table-header-row {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 3px solid black;\n  padding-bottom: 6px;\n  margin-top: 24px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box {\n  flex: 2;\n  border-top: 3px solid #cccccc;\n  padding-top: 10px;\n  margin-left: 5px;\n  flex-direction: column;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input:hover, .patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input:disabled, .patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-header {\n  font-size: 12px;\n  text-transform: uppercase;\n  color: #d0d0d0;\n  font-weight: bold;\n  margin-bottom: 12px;\n  font-size: 14px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-name {\n  font-weight: bold;\n  font-size: 14px;\n  margin-bottom: 4px;\n  height: 36px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-other {\n  font-size: 14px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-vat-label {\n  font-size: 14px;\n  line-height: 24px;\n  flex: 1;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-vat-value {\n  font-size: 14px;\n  line-height: 24px;\n  font-weight: bold;\n  flex: 1;\n}");
+
+var DefaultPaymentMethods = [
+    new PaymentMethod({ id: 'cash', title: 'Hotovosť' }),
+    new PaymentMethod({ id: 'card', title: 'Kartou' }),
+    new PaymentMethod({ id: 'transfer', title: 'Bankový prevod' }),
+    new PaymentMethod({ id: 'paypal', title: 'Paypal' })
+];
+var PaymentMethodSelect = Select.ofType();
+var InvoiceDocument = /** @class */ (function (_super) {
+    __extends(InvoiceDocument, _super);
+    function InvoiceDocument(props) {
+        var _this = _super.call(this, props) || this;
+        _this.onChange = _this.onChange.bind(_this);
+        return _this;
+    }
+    InvoiceDocument.prototype.onChange = function (invoice) {
+        invoice.recalculate();
+        this.props.onChange(invoice);
+    };
+    InvoiceDocument.prototype.render = function () {
+        var _this = this;
+        var paymentMethod = this.props.paymentMethods.find(function (method) { return method.id === _this.props.invoice.paymentMethod; }) || DefaultPaymentMethods[2];
+        return React__default.createElement(Wrapper, null,
+            React__default.createElement(Page, null,
+                React__default.createElement(Header$1, null,
+                    React__default.createElement(Logo, null,
+                        React__default.createElement("img", { alt: "logo", src: this.props.logo })),
+                    React__default.createElement(FlexColumn, { style: { flex: 1 } },
+                        React__default.createElement(HeaderCode, null, this.props.invoice.code || t('invoice.new')),
+                        React__default.createElement(DocumentType, null, t('invoice.documentType')))),
+                React__default.createElement(FlexRow, { style: { alignItems: 'flex-start' } },
+                    React__default.createElement(FlexColumn, { flex: 1, style: { justifyContent: 'flex-end', marginRight: 30 } }, "Obchodny\u0301 register OS Trnava Oddiel Sro, vloz\u030Cka c\u030C. 34375/T"),
+                    React__default.createElement(AddressBox, { key: "address-vendor", disabled: true, header: "DOD\u00C1VATE\u013D", contact: this.props.invoice.company, onChange: function (contact) {
+                            var clone = new Invoice(_this.props.invoice.clone);
+                            clone.company = contact;
+                            _this.onChange(clone);
+                        }, fetch: function (query) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                            return [2 /*return*/, []];
+                        }); }); } }),
+                    React__default.createElement(AddressBox, { key: "address-customer", header: "ODBERATE\u013D", contact: this.props.invoice.customer, onChange: function (contact) {
+                            var clone = new Invoice(_this.props.invoice.clone);
+                            clone.customer = contact;
+                            _this.onChange(clone);
+                        }, fetch: function (query) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                            return [2 /*return*/, []];
+                        }); }); } })),
+                React__default.createElement(FlexRow, { style: { marginTop: 24, paddingTop: 0, fontSize: 14, marginBottom: 24, alignItems: 'flex-start' } },
+                    React__default.createElement(FlexRow, { flex: 1, style: { borderTop: '3px solid #cccccc', paddingTop: 10, marginRight: 30 } },
+                        React__default.createElement(FlexColumn, { flex: 1 },
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('datePosted')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('dateDelivered')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('dateDue')))),
+                    React__default.createElement(FlexRow, { flex: 2, style: { borderTop: '3px solid #cccccc', paddingTop: 10 } },
+                        React__default.createElement(FlexColumn, { style: { marginLeft: 5, fontWeight: 'bold' } },
+                            React__default.createElement(DateInput, { formatDate: this.props.formatDate, parseDate: this.props.parseDate, value: this.props.invoice.createdAt }),
+                            React__default.createElement(DateInput, { formatDate: this.props.formatDate, parseDate: this.props.parseDate, value: this.props.invoice.createdAt }),
+                            React__default.createElement(DateInput, { formatDate: this.props.formatDate, parseDate: this.props.parseDate, value: this.props.invoice.dueAt }))),
+                    React__default.createElement(FlexRow, { flex: 2, style: { borderTop: '3px solid #cccccc', marginLeft: 5, paddingTop: 10 } },
+                        React__default.createElement(FlexColumn, { flex: 1 },
+                            React__default.createElement(FlexRow, { style: { height: 30, alignItems: 'center' } }, t('paymentMethod')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('bank')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('bankAccount')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('variableSymbol')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('constantSymbol'))),
+                        React__default.createElement(FlexColumn, { flex: 1, style: { fontWeight: 'bold' } },
+                            React__default.createElement(FlexRow, { style: { height: 30, alignItems: 'center' } },
+                                React__default.createElement(PaymentMethodSelect, { items: this.props.paymentMethods, activeItem: paymentMethod, onItemSelect: function (item) {
+                                        var clone = new Invoice(_this.props.invoice.clone);
+                                        clone.paymentMethod = item.id;
+                                        _this.onChange(clone);
+                                    }, itemRenderer: function (item, options) { return React__default.createElement(MenuItem, { key: item.id, text: item.title, onClick: options.handleClick }); } },
+                                    React__default.createElement(Button, { style: { marginLeft: -10, fontWeight: 'bold' }, minimal: true, rightIcon: "chevron-down", text: paymentMethod.title }))),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, "V\u00DAB, a.s."),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, "2121123456 / 1100"),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, this.props.invoice.code),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, "0308")))),
+                React__default.createElement(InvoiceItems, { invoice: this.props.invoice, onChange: this.onChange }),
+                React__default.createElement(FlexRow, null,
+                    React__default.createElement(FlexRow, { flex: 2, style: { marginTop: 12, alignItems: 'start' } },
+                        React__default.createElement(Button, { minimal: true, intent: "success", icon: "plus", text: t('newItem'), onClick: function () {
+                                var invoice = new Invoice(_this.props.invoice.clone);
+                                invoice.items.push(new InvoiceItem({ index: _this.props.invoice.items.length }));
+                                _this.onChange(invoice);
+                            } })),
+                    React__default.createElement(FlexColumn, { flex: 1, style: { paddingTop: 24 } },
+                        React__default.createElement(FlexRow, { flex: 1 },
+                            React__default.createElement(FlexColumn, { flex: 1 }, "Vat Recap"),
+                            React__default.createElement(FlexColumn, { style: { borderBottom: '3px solid black', textAlign: 'right', fontSize: 12 }, flex: 1 }, "RATE"),
+                            React__default.createElement(FlexColumn, { style: { borderBottom: '3px solid black', textAlign: 'right', fontSize: 12 }, flex: 1 }, "BASE"),
+                            React__default.createElement(FlexColumn, { style: { borderBottom: '3px solid black', textAlign: 'right', fontSize: 12 }, flex: 1 }, "VAT")),
+                        this.props.invoice.vats.map(function (vat, index) { return React__default.createElement(FlexRow, { key: "invoice-vat-" + index, flex: 1, style: { height: 24, alignItems: 'center' } },
+                            React__default.createElement(FlexColumn, { flex: 1 }),
+                            React__default.createElement(FlexColumn, { style: { textAlign: 'right' }, flex: 1 },
+                                vat.vat,
+                                "%"),
+                            React__default.createElement(FlexColumn, { style: { textAlign: 'right' }, flex: 1 }, _this.props.formatPrice(vat.base, _this.props.invoice.currency)),
+                            React__default.createElement(FlexColumn, { style: { textAlign: 'right' }, flex: 1 }, _this.props.formatPrice(vat.price, _this.props.invoice.currency))); }),
+                        React__default.createElement(FlexRow, { flex: 1, style: { height: 42, alignItems: 'center' } },
+                            React__default.createElement(FlexColumn, { flex: 1 }, "Total"),
+                            React__default.createElement(FlexColumn, { style: { borderTop: '3px solid black', textAlign: 'right', height: 32, justifyContent: 'center', fontSize: 18, backgroundColor: Colors.LIGHT_GRAY5 }, flex: 3 }, this.props.formatPrice(this.props.invoice.price, this.props.invoice.currency))))),
+                React__default.createElement(FlexRow, { style: { marginTop: 120 } },
+                    React__default.createElement(FlexColumn, { flex: 1 }),
+                    React__default.createElement(FlexColumn, { flex: 1, style: { textAlign: 'right' } },
+                        React__default.createElement("div", null, "......................................................."),
+                        React__default.createElement("div", null, "Podpis")))));
+    };
+    return InvoiceDocument;
+}(Component));
+
+var Offer = /** @class */ (function (_super) {
+    __extends(Offer, _super);
+    function Offer(data) {
+        var _this = _super.call(this, data) || this;
+        _this.validTill = data.validTill ? new Date(data.validTill) : new Date(_this.createdAt);
+        return _this;
+    }
+    return Offer;
+}(Invoice));
+
+___$insertStyle("/*\n * Copyright 2017 Palantir Technologies, Inc. All rights reserved.\n */\n.patterns-invoice-wrapper {\n  background-color: #ced9e0;\n  width: 100%;\n  max-height: calc(100vh - 46px);\n  overflow-y: scroll;\n}\n.patterns-invoice-wrapper .patterns-invoice-page {\n  background-color: white;\n  max-width: 90%;\n  min-height: 800px;\n  margin: 40px auto;\n  padding: 50px 50px;\n  box-shadow: 0 15px 15px 5px #ced9e0;\n}\n.patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input:hover, .patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input:disabled, .patterns-invoice-wrapper .patterns-invoice-page .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-invoice-wrapper .patterns-invoice-header {\n  height: 100px;\n  display: flex;\n  flex-direction: row;\n}\n.patterns-invoice-wrapper .patterns-invoice-logo {\n  flex: 1;\n}\n.patterns-invoice-wrapper .patterns-invoice-logo img {\n  max-height: 60px;\n}\n.patterns-invoice-wrapper .patterns-invoice-header-code {\n  text-align: right;\n  font-size: 36px;\n  font-weight: bold;\n}\n.patterns-invoice-wrapper .patterns-invoice-type {\n  text-align: right;\n  font-size: 12px;\n  font-weight: bold;\n  color: #8f8f8f;\n}\n.patterns-invoice-wrapper .patterns-invoice-item {\n  flex: 2;\n  border-top: 3px solid #cccccc;\n  padding-top: 10px;\n  margin-left: 5px;\n  flex-direction: column;\n}\n.patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input:hover, .patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input:disabled, .patterns-invoice-wrapper .patterns-invoice-item .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-invoice-wrapper .patterns-invoice-items {\n  margin-top: 50px;\n  flex-direction: column;\n  flex: 1;\n}\n.patterns-invoice-wrapper .patterns-invoice-items .bp3-popover-target {\n  width: 100%;\n}\n.patterns-invoice-wrapper .patterns-invoice-items .bp3-popover-target input {\n  text-align: right;\n}\n.patterns-invoice-wrapper .patterns-invoice-items .bp3-popover-target input[name=name] {\n  text-align: left;\n}\n.patterns-invoice-wrapper .patterns-invoice-item-row {\n  flex-direction: row;\n  display: flex;\n  flex: 1;\n  padding-top: 2px;\n  padding-bottom: 2px;\n}\n.patterns-invoice-wrapper .patterns-invoice-table-header {\n  font-size: 12px;\n  font-weight: normal;\n  color: black;\n}\n.patterns-invoice-wrapper .patterns-invoice-table-header-row {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 3px solid black;\n  padding-bottom: 6px;\n  margin-top: 24px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box {\n  flex: 2;\n  border-top: 3px solid #cccccc;\n  padding-top: 10px;\n  margin-left: 5px;\n  flex-direction: column;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input:hover, .patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input:disabled, .patterns-invoice-wrapper .patterns-invoice-address-box .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-header {\n  font-size: 12px;\n  text-transform: uppercase;\n  color: #d0d0d0;\n  font-weight: bold;\n  margin-bottom: 12px;\n  font-size: 14px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-name {\n  font-weight: bold;\n  font-size: 14px;\n  margin-bottom: 4px;\n  height: 36px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-other {\n  font-size: 14px;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-vat-label {\n  font-size: 14px;\n  line-height: 24px;\n  flex: 1;\n}\n.patterns-invoice-wrapper .patterns-invoice-address-box .patterns-invoice-address-box-vat-value {\n  font-size: 14px;\n  line-height: 24px;\n  font-weight: bold;\n  flex: 1;\n}");
+
+var DefaultPaymentMethods$1 = [
+    new PaymentMethod({ id: 'cash', title: 'Hotovosť' }),
+    new PaymentMethod({ id: 'card', title: 'Kartou' }),
+    new PaymentMethod({ id: 'transfer', title: 'Bankový prevod' }),
+    new PaymentMethod({ id: 'paypal', title: 'Paypal' })
+];
+var PaymentMethodSelect$1 = Select.ofType();
+var OfferDocument = /** @class */ (function (_super) {
+    __extends(OfferDocument, _super);
+    function OfferDocument(props) {
+        var _this = _super.call(this, props) || this;
+        _this.onChange = _this.onChange.bind(_this);
+        return _this;
+    }
+    OfferDocument.prototype.onChange = function (offer) {
+        offer.recalculate();
+        this.props.onChange(offer);
+    };
+    OfferDocument.prototype.render = function () {
+        var _this = this;
+        var paymentMethod = this.props.paymentMethods.find(function (method) { return method.id === _this.props.offer.paymentMethod; }) || DefaultPaymentMethods$1[2];
+        return React__default.createElement(Wrapper, null,
+            React__default.createElement(Page, null,
+                React__default.createElement(Header$1, null,
+                    React__default.createElement(Logo, null,
+                        React__default.createElement("img", { alt: "logo", src: this.props.logo })),
+                    React__default.createElement(FlexColumn, { style: { flex: 1 } },
+                        React__default.createElement(HeaderCode, null, this.props.offer.code || t('offer.new')),
+                        React__default.createElement(DocumentType, null, t('offer.documentType')))),
+                React__default.createElement(FlexRow, { style: { alignItems: 'flex-start' } },
+                    React__default.createElement(FlexColumn, { flex: 1, style: { justifyContent: 'flex-end', marginRight: 30 } }, "Obchodny\u0301 register OS Trnava Oddiel Sro, vloz\u030Cka c\u030C. 34375/T"),
+                    React__default.createElement(AddressBox, { key: "address-vendor", disabled: true, header: "DOD\u00C1VATE\u013D", contact: this.props.offer.company, onChange: function (contact) {
+                            var clone = new Offer(_this.props.offer.clone);
+                            clone.company = contact;
+                            _this.onChange(clone);
+                        }, fetch: function (query) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                            return [2 /*return*/, []];
+                        }); }); } }),
+                    React__default.createElement(AddressBox, { key: "address-customer", header: "ODBERATE\u013D", contact: this.props.offer.customer, onChange: function (contact) {
+                            var clone = new Offer(_this.props.offer.clone);
+                            clone.customer = contact;
+                            _this.onChange(clone);
+                        }, fetch: function (query) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
+                            return [2 /*return*/, []];
+                        }); }); } })),
+                React__default.createElement(FlexRow, { style: { marginTop: 24, paddingTop: 0, fontSize: 14, marginBottom: 24, alignItems: 'flex-start' } },
+                    React__default.createElement(FlexRow, { flex: 1, style: { borderTop: '3px solid #cccccc', paddingTop: 10, marginRight: 30 } },
+                        React__default.createElement(FlexColumn, { flex: 1 },
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('datePosted')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('dateDelivered')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('dateDue')))),
+                    React__default.createElement(FlexRow, { flex: 2, style: { borderTop: '3px solid #cccccc', paddingTop: 10 } },
+                        React__default.createElement(FlexColumn, { style: { marginLeft: 5, fontWeight: 'bold' } },
+                            React__default.createElement(DateInput, { formatDate: this.props.formatDate, parseDate: this.props.parseDate, value: this.props.offer.createdAt }),
+                            React__default.createElement(DateInput, { formatDate: this.props.formatDate, parseDate: this.props.parseDate, value: this.props.offer.createdAt }),
+                            React__default.createElement(DateInput, { formatDate: this.props.formatDate, parseDate: this.props.parseDate, value: this.props.offer.dueAt }))),
+                    React__default.createElement(FlexRow, { flex: 2, style: { borderTop: '3px solid #cccccc', marginLeft: 5, paddingTop: 10 } },
+                        React__default.createElement(FlexColumn, { flex: 1 },
+                            React__default.createElement(FlexRow, { style: { height: 30, alignItems: 'center' } }, t('paymentMethod')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('bank')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('bankAccount')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('variableSymbol')),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, t('constantSymbol'))),
+                        React__default.createElement(FlexColumn, { flex: 1, style: { fontWeight: 'bold' } },
+                            React__default.createElement(FlexRow, { style: { height: 30, alignItems: 'center' } },
+                                React__default.createElement(PaymentMethodSelect$1, { items: this.props.paymentMethods, activeItem: paymentMethod, onItemSelect: function (item) {
+                                        var clone = new Offer(_this.props.offer.clone);
+                                        clone.paymentMethod = item.id;
+                                        _this.onChange(clone);
+                                    }, itemRenderer: function (item, options) { return React__default.createElement(MenuItem, { key: item.id, text: item.title, onClick: options.handleClick }); } },
+                                    React__default.createElement(Button, { style: { marginLeft: -10, fontWeight: 'bold' }, minimal: true, rightIcon: "chevron-down", text: paymentMethod.title }))),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, "V\u00DAB, a.s."),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, "2121123456 / 1100"),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, this.props.offer.code),
+                            React__default.createElement(FlexRow, { style: { height: 24, alignItems: 'center' } }, "0308")))),
+                React__default.createElement(InvoiceItems, { invoice: this.props.offer, onChange: this.onChange }),
+                React__default.createElement(FlexRow, null,
+                    React__default.createElement(FlexRow, { flex: 2, style: { marginTop: 12, alignItems: 'start' } },
+                        React__default.createElement(Button, { minimal: true, intent: "success", icon: "plus", text: t('newItem'), onClick: function () {
+                                var offer = new Offer(_this.props.offer.clone);
+                                offer.items.push(new InvoiceItem({ index: _this.props.offer.items.length }));
+                                _this.onChange(offer);
+                            } })),
+                    React__default.createElement(FlexColumn, { flex: 1, style: { paddingTop: 24 } },
+                        React__default.createElement(FlexRow, { flex: 1 },
+                            React__default.createElement(FlexColumn, { flex: 1 }, "Vat Recap"),
+                            React__default.createElement(FlexColumn, { style: { borderBottom: '3px solid black', textAlign: 'right', fontSize: 12 }, flex: 1 }, "RATE"),
+                            React__default.createElement(FlexColumn, { style: { borderBottom: '3px solid black', textAlign: 'right', fontSize: 12 }, flex: 1 }, "BASE"),
+                            React__default.createElement(FlexColumn, { style: { borderBottom: '3px solid black', textAlign: 'right', fontSize: 12 }, flex: 1 }, "VAT")),
+                        this.props.offer.vats.map(function (vat, index) { return React__default.createElement(FlexRow, { key: "invoice-vat-" + index, flex: 1, style: { height: 24, alignItems: 'center' } },
+                            React__default.createElement(FlexColumn, { flex: 1 }),
+                            React__default.createElement(FlexColumn, { style: { textAlign: 'right' }, flex: 1 },
+                                vat.vat,
+                                "%"),
+                            React__default.createElement(FlexColumn, { style: { textAlign: 'right' }, flex: 1 }, _this.props.formatPrice(vat.base, _this.props.offer.currency)),
+                            React__default.createElement(FlexColumn, { style: { textAlign: 'right' }, flex: 1 }, _this.props.formatPrice(vat.price, _this.props.offer.currency))); }),
+                        React__default.createElement(FlexRow, { flex: 1, style: { height: 42, alignItems: 'center' } },
+                            React__default.createElement(FlexColumn, { flex: 1 }, "Total"),
+                            React__default.createElement(FlexColumn, { style: { borderTop: '3px solid black', textAlign: 'right', height: 32, justifyContent: 'center', fontSize: 18, backgroundColor: Colors.LIGHT_GRAY5 }, flex: 3 }, this.props.formatPrice(this.props.offer.price, this.props.offer.currency))))),
+                React__default.createElement(FlexRow, { style: { marginTop: 120 } },
+                    React__default.createElement(FlexColumn, { flex: 1 }),
+                    React__default.createElement(FlexColumn, { flex: 1, style: { textAlign: 'right' } },
+                        React__default.createElement("div", null, "......................................................."),
+                        React__default.createElement("div", null, "Podpis")))));
+    };
+    return OfferDocument;
+}(Component));
+
+var index = {
+    BaseModel: BaseModel,
+    Contact: Contact,
+    Currency: Currency,
+    Invoice: Invoice,
+    InvoiceItem: InvoiceItem,
+    Offer: Offer,
+    PaymentMethod: PaymentMethod
+};
+
+export { Alignment, ColumnType, Container, DataTable, FlexColumn, FlexRow, InvoiceDocument as Invoice, index as Models, OfferDocument as Offer, Toolbar, localeManager };
 //# sourceMappingURL=index.es.js.map
