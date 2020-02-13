@@ -62,7 +62,7 @@
     "@blueprintjs/select": "^3.11.2",
     "@types/lodash": "^4.14.149",
     "babel-preset-react-app": "^9.1.1",
-    "wh": "^4.17.15",
+    "lodash": "^4.17.15",
     "lodash.clonedeep": "^4.5.0"
   }
 }
