@@ -1,6 +1,6 @@
 {
   "name": "patterns-ui",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Patterns UI Kit",
   "main": "build/index.js",
   "module": "build/index.es.js",
@@ -62,7 +62,7 @@
     "@blueprintjs/select": "^3.11.2",
     "@types/lodash": "^4.14.149",
     "babel-preset-react-app": "^9.1.1",
-    "lodash": "^4.17.15",
+    "wh": "^4.17.15",
     "lodash.clonedeep": "^4.5.0"
   }
 }
