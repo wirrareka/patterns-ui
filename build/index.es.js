@@ -3797,6 +3797,7 @@ function AddressBox(_a) {
     var contact = _a.contact, header = _a.header, onChange = _a.onChange, fetch = _a.fetch, _b = _a.disabled, disabled = _b === void 0 ? false : _b;
     var _c = useState([]), results = _c[0], setResults = _c[1];
     var _d = useState(''), query = _d[0], setQuery = _d[1];
+    console.log('contact changed', contact);
     useEffect(function () {
         setQuery(contact.name.length > 0 ? contact.name : contact.fullName);
     }, [contact]);
@@ -3805,6 +3806,7 @@ function AddressBox(_a) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log('update', value);
                     clone = new Contact(contact.clone);
                     clone[field] = value;
                     if (!(field === 'name')) return [3 /*break*/, 2];
@@ -3814,18 +3816,19 @@ function AddressBox(_a) {
                     setResults(items);
                     _a.label = 2;
                 case 2:
-                    setQuery(value);
                     onChange(clone);
                     return [2 /*return*/];
             }
         });
     }); };
     var inputUpdate = function (evt) {
+        console.log('on input update');
         var clone = new Contact(contact.clone);
         clone[evt.currentTarget.name] = evt.currentTarget.value;
         onChange(clone);
     };
     var onSelect = function (contact) {
+        console.log('on select');
         var clone = new Contact(contact.clone);
         onChange(clone);
     };
@@ -4033,16 +4036,12 @@ var OfferDocument = /** @class */ (function (_super) {
                             var clone = new Offer(_this.props.offer.clone);
                             clone.company = contact;
                             _this.onChange(clone);
-                        }, fetch: function (query) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
-                            return [2 /*return*/, []];
-                        }); }); } }),
+                        }, fetch: this.props.fetch }),
                     React__default.createElement(AddressBox, { key: "address-customer", header: "ODBERATE\u013D", contact: this.props.offer.customer, onChange: function (contact) {
                             var clone = new Offer(_this.props.offer.clone);
                             clone.customer = contact;
                             _this.onChange(clone);
-                        }, fetch: function (query) { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
-                            return [2 /*return*/, []];
-                        }); }); } })),
+                        }, fetch: this.props.fetch })),
                 React__default.createElement(FlexRow, { style: { marginTop: 24, paddingTop: 0, fontSize: 14, marginBottom: 24, alignItems: 'flex-start' } },
                     React__default.createElement(FlexRow, { flex: 1, style: { borderTop: '3px solid #cccccc', paddingTop: 10, marginRight: 30 } },
                         React__default.createElement(FlexColumn, { flex: 1 },

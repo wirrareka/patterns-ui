@@ -31,6 +31,7 @@ interface Props {
   logo: string
   onChange: (offer: Offer) => void
   paymentMethods: PaymentMethod[]
+  fetch: (query: string) => Promise<Contact[]>
 }
 
 export default class OfferDocument extends Component<Props> {
@@ -72,7 +73,7 @@ export default class OfferDocument extends Component<Props> {
               clone.company = contact
               this.onChange(clone)
             }}
-            fetch={async (query: string) => []}
+            fetch={this.props.fetch}
           />
           <AddressBox
             key="address-customer"
@@ -83,7 +84,7 @@ export default class OfferDocument extends Component<Props> {
               clone.customer = contact
               this.onChange(clone)
             }}
-            fetch={async (query: string) => []}
+            fetch={this.props.fetch}
           />
         </Row>
 

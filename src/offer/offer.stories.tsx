@@ -77,5 +77,6 @@ export const AllFeatures = () => {
     logo={logo}
     paymentMethods={DefaultPaymentMethods}
     onChange={setOffer}
+    fetch={async query => [ customer ]}
   />
 }

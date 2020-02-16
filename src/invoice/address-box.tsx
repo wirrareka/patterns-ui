@@ -24,28 +24,31 @@ export default function AddressBox({ contact, header, onChange, fetch, disabled 
   const [ results, setResults ] = useState([] as Contact[])
   const [ query, setQuery ] = useState('')
 
+  console.log('contact changed', contact)
   useEffect(() => {
     setQuery(contact.name.length > 0 ? contact.name : contact.fullName)
   }, [ contact ])
 
   const update = async (field: ContactField, value: string) => {
+    console.log('update', value)
     const clone = new Contact(contact.clone)
     clone[field] = value
     if (field === 'name') {
       const items = await fetch(value)
       setResults(items)
     }
-    setQuery(value)
     onChange(clone)
   }
 
   const inputUpdate = (evt: any) => {
+    console.log('on input update')
     const clone = new Contact(contact.clone)
     clone[evt.currentTarget.name as ContactField] = evt.currentTarget.value
     onChange(clone)
   }
 
   const onSelect = (contact: Contact) => {
+    console.log('on select')
     const clone = new Contact(contact.clone)
     onChange(clone)
   }
@@ -69,7 +72,9 @@ export default function AddressBox({ contact, header, onChange, fetch, disabled 
             query={query}
             selectedItem={contact}
             onQueryChange={query => update('name', query)}
-            noResults={<MenuItem icon="plus" text="Nový klient"/>}
+            noResults={
+              <MenuItem icon="plus" text="Nový klient"/
+            >}
           />
           <Button
             minimal

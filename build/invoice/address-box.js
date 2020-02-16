@@ -46,6 +46,7 @@ export default function AddressBox(_a) {
     var contact = _a.contact, header = _a.header, onChange = _a.onChange, fetch = _a.fetch, _b = _a.disabled, disabled = _b === void 0 ? false : _b;
     var _c = useState([]), results = _c[0], setResults = _c[1];
     var _d = useState(''), query = _d[0], setQuery = _d[1];
+    console.log('contact changed', contact);
     useEffect(function () {
         setQuery(contact.name.length > 0 ? contact.name : contact.fullName);
     }, [contact]);
@@ -54,6 +55,7 @@ export default function AddressBox(_a) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    console.log('update', value);
                     clone = new Contact(contact.clone);
                     clone[field] = value;
                     if (!(field === 'name')) return [3 /*break*/, 2];
@@ -63,18 +65,19 @@ export default function AddressBox(_a) {
                     setResults(items);
                     _a.label = 2;
                 case 2:
-                    setQuery(value);
                     onChange(clone);
                     return [2 /*return*/];
             }
         });
     }); };
     var inputUpdate = function (evt) {
+        console.log('on input update');
         var clone = new Contact(contact.clone);
         clone[evt.currentTarget.name] = evt.currentTarget.value;
         onChange(clone);
     };
     var onSelect = function (contact) {
+        console.log('on select');
         var clone = new Contact(contact.clone);
         onChange(clone);
     };

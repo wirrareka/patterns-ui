@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import faker from 'faker';
-import logo from 'assets/patterns-logo.png';
+import logo from '../assets/patterns-logo.png';
 import Invoice, { DefaultPaymentMethods } from './invoice';
 import InvoiceModel from '../models/invoice';
 import Contact from '../models/contact';
 import { formatDate, parseDate, formatPrice } from '../common';
 import Currency from "../models/currency";
 export default {
-    title: "Invoice"
+    title: 'Invoice'
 };
 var company = new Contact({
     firstName: faker.name.firstName(),
