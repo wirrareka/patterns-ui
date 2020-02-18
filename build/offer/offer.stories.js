@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import React, { useState } from "react";
 import faker from 'faker';
-import logo from '../assets/patterns-logo.png';
+// import logo from '../assets/patterns-logo.png'
 import Offer, { DefaultPaymentMethods } from './offer';
 import OfferModel from '../models/offer';
 import Contact from '../models/contact';
@@ -98,7 +98,9 @@ var testOffer = new OfferModel({
 });
 export var AllFeatures = function () {
     var _a = useState(testOffer), offer = _a[0], setOffer = _a[1];
-    return React.createElement(Offer, { formatDate: formatDate, parseDate: parseDate, formatPrice: formatPrice, offer: offer, logo: logo, paymentMethods: DefaultPaymentMethods, onChange: setOffer, fetch: function (query) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
+    return React.createElement(Offer, { formatDate: formatDate, parseDate: parseDate, formatPrice: formatPrice, offer: offer, 
+        // logo={logo}
+        paymentMethods: DefaultPaymentMethods, onChange: setOffer, fetch: function (query) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
             return [2 /*return*/, [customer]];
         }); }); } });
 };

@@ -33,8 +33,9 @@ var Invoice = /** @class */ (function (_super) {
         return _this;
     }
     Invoice.prototype.recalculate = function () {
-        this.price = this.items.reduce(function (prev, next) { return prev += (next.line_price); }, 0) || 0;
-        this.price_with_vat = this.items.reduce(function (prev, next) { return prev += (next.line_price + next.vat_price); }, 0) || 0;
+        console.log('recalculate', this);
+        this.price = this.items.reduce(function (prev, next) { return prev + (next.line_price); }, 0) || 0;
+        this.price_with_vat = this.items.reduce(function (prev, next) { return prev + (next.line_price + next.vat_price); }, 0) || 0;
     };
     Object.defineProperty(Invoice.prototype, "vats", {
         get: function () {

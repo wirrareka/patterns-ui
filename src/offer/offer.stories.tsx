@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import faker from 'faker'
-import logo from '../assets/patterns-logo.png'
+// import logo from '../assets/patterns-logo.png'
 import Offer, { DefaultPaymentMethods } from './offer'
 import OfferModel from '../models/offer'
 import Contact from '../models/contact'
@@ -74,7 +74,7 @@ export const AllFeatures = () => {
     parseDate={parseDate}
     formatPrice={formatPrice}
     offer={offer}
-    logo={logo}
+    // logo={logo}
     paymentMethods={DefaultPaymentMethods}
     onChange={setOffer}
     fetch={async query => [ customer ]}

@@ -28,7 +28,7 @@ interface Props {
   parseDate: ParseDateType
   formatPrice: FormatPriceType
   invoice: Invoice
-  logo: string
+  logo?: string
   onChange: (invoice: Invoice) => void
   paymentMethods: PaymentMethod[]
 }
@@ -50,9 +50,9 @@ export default class InvoiceDocument extends Component<Props> {
     return <Wrapper>
       <Page>
         <Header>
-          <Logo>
+          { this.props.logo && <Logo>
             <img alt="logo" src={this.props.logo}/>
-          </Logo>
+          </Logo> }
           <Column style={{ flex: 1 }}>
             <HeaderCode>{ this.props.invoice.code || t('invoice.new') }</HeaderCode>
             <DocumentType>{ t('invoice.documentType') }</DocumentType>

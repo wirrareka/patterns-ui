@@ -31,8 +31,9 @@ export default class Invoice extends BaseModel {
   }
 
   recalculate() {
-    this.price = this.items.reduce((prev, next) => prev += (next.line_price), 0) || 0
-    this.price_with_vat = this.items.reduce((prev, next) => prev += (next.line_price + next.vat_price), 0) || 0
+    console.log('recalculate', this)
+    this.price = this.items.reduce(function (prev, next) { return prev + (next.line_price) }, 0) || 0;
+    this.price_with_vat = this.items.reduce(function (prev, next) { return prev + (next.line_price + next.vat_price) }, 0) || 0;
   }
 
   get vats() {

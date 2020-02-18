@@ -84,7 +84,7 @@ var InvoiceDocument = /** @class */ (function (_super) {
         return React.createElement(Wrapper, null,
             React.createElement(Page, null,
                 React.createElement(Header, null,
-                    React.createElement(Logo, null,
+                    this.props.logo && React.createElement(Logo, null,
                         React.createElement("img", { alt: "logo", src: this.props.logo })),
                     React.createElement(Column, { style: { flex: 1 } },
                         React.createElement(HeaderCode, null, this.props.invoice.code || t('invoice.new')),

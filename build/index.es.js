@@ -3658,8 +3658,9 @@ var Invoice = /** @class */ (function (_super) {
         return _this;
     }
     Invoice.prototype.recalculate = function () {
-        this.price = this.items.reduce(function (prev, next) { return prev += (next.line_price); }, 0) || 0;
-        this.price_with_vat = this.items.reduce(function (prev, next) { return prev += (next.line_price + next.vat_price); }, 0) || 0;
+        console.log('recalculate', this);
+        this.price = this.items.reduce(function (prev, next) { return prev + (next.line_price); }, 0) || 0;
+        this.price_with_vat = this.items.reduce(function (prev, next) { return prev + (next.line_price + next.vat_price); }, 0) || 0;
     };
     Object.defineProperty(Invoice.prototype, "vats", {
         get: function () {
@@ -3905,7 +3906,7 @@ var InvoiceDocument = /** @class */ (function (_super) {
         return React__default.createElement(Wrapper, null,
             React__default.createElement(Page, null,
                 React__default.createElement(Header$1, null,
-                    React__default.createElement(Logo, null,
+                    this.props.logo && React__default.createElement(Logo, null,
                         React__default.createElement("img", { alt: "logo", src: this.props.logo })),
                     React__default.createElement(FlexColumn, { style: { flex: 1 } },
                         React__default.createElement(HeaderCode, null, this.props.invoice.code || t('invoice.new')),
@@ -4025,7 +4026,7 @@ var OfferDocument = /** @class */ (function (_super) {
         return React__default.createElement(Wrapper, null,
             React__default.createElement(Page, null,
                 React__default.createElement(Header$1, null,
-                    React__default.createElement(Logo, null,
+                    this.props.logo && React__default.createElement(Logo, null,
                         React__default.createElement("img", { alt: "logo", src: this.props.logo })),
                     React__default.createElement(FlexColumn, { style: { flex: 1 } },
                         React__default.createElement(HeaderCode, null, this.props.offer.code || t('offer.new')),

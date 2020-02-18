@@ -111,7 +111,7 @@ const baseProps = {
       alignment: Alignment.Right,
       filterable: true,
       sortable: true,
-      format: (item: TestModel) => `${ item.revenue.toFixed(2) } €`
+      format: (item: TestModel) => <span>{ item.revenue.toFixed(2) } €}</span>
     },
     {
       id: 'registration_date',

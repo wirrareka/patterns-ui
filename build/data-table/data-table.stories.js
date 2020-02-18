@@ -139,7 +139,9 @@ var baseProps = {
             alignment: Alignment.Right,
             filterable: true,
             sortable: true,
-            format: function (item) { return item.revenue.toFixed(2) + " \u20AC"; }
+            format: function (item) { return React.createElement("span", null,
+                item.revenue.toFixed(2),
+                " \u20AC}"); }
         },
         {
             id: 'registration_date',

@@ -9,7 +9,7 @@ interface Props {
     parseDate: ParseDateType;
     formatPrice: FormatPriceType;
     invoice: Invoice;
-    logo: string;
+    logo?: string;
     onChange: (invoice: Invoice) => void;
     paymentMethods: PaymentMethod[];
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import faker from 'faker';
-import logo from '../assets/patterns-logo.png';
+// import logo from '../assets/patterns-logo.png'
 import Invoice, { DefaultPaymentMethods } from './invoice';
 import InvoiceModel from '../models/invoice';
 import Contact from '../models/contact';
@@ -61,6 +61,8 @@ var testInvoice = new InvoiceModel({
 });
 export var AllFeatures = function () {
     var _a = useState(testInvoice), invoice = _a[0], setInvoice = _a[1];
-    return React.createElement(Invoice, { formatDate: formatDate, parseDate: parseDate, formatPrice: formatPrice, invoice: invoice, logo: logo, paymentMethods: DefaultPaymentMethods, onChange: setInvoice });
+    return React.createElement(Invoice, { formatDate: formatDate, parseDate: parseDate, formatPrice: formatPrice, invoice: invoice, 
+        // logo={logo}
+        paymentMethods: DefaultPaymentMethods, onChange: setInvoice });
 };
 //# sourceMappingURL=invoice.stories.js.map

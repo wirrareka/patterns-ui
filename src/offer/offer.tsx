@@ -23,12 +23,12 @@ export const DefaultPaymentMethods = [
 
 const PaymentMethodSelect = Select.ofType<PaymentMethod>()
 
-interface Props {
+export interface Props {
   formatDate: FormatDateType
   parseDate: ParseDateType
   formatPrice: FormatPriceType
   offer: Offer
-  logo: string
+  logo?: string
   onChange: (offer: Offer) => void
   paymentMethods: PaymentMethod[]
   fetch: (query: string) => Promise<Contact[]>
@@ -51,9 +51,9 @@ export default class OfferDocument extends Component<Props> {
     return <Wrapper>
       <Page>
         <Header>
-          <Logo>
+          { this.props.logo && <Logo>
             <img alt="logo" src={this.props.logo}/>
-          </Logo>
+          </Logo> }
           <Column style={{ flex: 1 }}>
             <HeaderCode>{ this.props.offer.code || t('offer.new') }</HeaderCode>
             <DocumentType>{ t('offer.documentType') }</DocumentType>
