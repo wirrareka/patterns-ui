@@ -75,9 +75,10 @@
     border: 1px solid $light-gray3;
     box-shadow: none;
     padding-left: 12px;
-    margin-left: -12px;
-    margin-right: -12px;
-    width: calc(100% + 24px);
+    margin-left: 0;
+    margin-right: 0;
+    padding-right: 0;
+    width: 100%;
     flex: 1;
 
     textarea {
@@ -189,7 +190,7 @@
         text-align: right;
       }
 
-      input[name=name] {
+      input[name=code], input[name=name], input[name=note] {
         text-align: left;
       }
     }

@@ -64,7 +64,7 @@ var genCustomer = function () { return new Contact({
 var customer = genCustomer();
 var randomPrice = faker.commerce.price();
 var testInvoice = new Invoice({
-    code: 'O20201234',
+    code: 'I20201234',
     vendor: PatternApp.settings.company,
     customer: customer,
     currency: PatternApp.settings.currency,

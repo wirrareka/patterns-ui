@@ -136,7 +136,8 @@ var Toolbar = function (_a) {
 };
 
 var en = {
-    code: 'en',
+    _code: 'en',
+    code: 'Code',
     range_from: 'Since',
     range_to: 'Till',
     day: 'Day',
@@ -194,6 +195,8 @@ var en = {
     vendor: 'Vendor',
     customer: 'Customer',
     edit: 'Edit',
+    edit_code: 'Edit Code',
+    edit_note: 'Edit Note',
     title: 'Title',
     quantity: 'Quantity',
     vat: 'VAT',
@@ -210,7 +213,8 @@ var en = {
 };
 
 var sk = {
-    code: 'sk',
+    _code: 'sk',
+    code: 'Kód',
     range_from: 'Od',
     range_to: 'Do',
     day: 'Deň',
@@ -268,6 +272,8 @@ var sk = {
     vendor: 'Dodávateľ',
     customer: 'Zákazník',
     edit: 'Editovať',
+    edit_code: 'Editovať Kód',
+    edit_note: 'Editovať Poznámku',
     title: 'Názov',
     quantity: 'Množstvo',
     vat: 'DPH',
@@ -1798,7 +1804,7 @@ var DataTable = /** @class */ (function (_super) {
     return DataTable;
 }(React.Component));
 
-___$insertStyle("/*\n * Copyright 2017 Palantir Technologies, Inc. All rights reserved.\n */\n.patterns-item_document-wrapper {\n  background-color: #ced9e0;\n  width: 100%;\n  max-height: calc(100vh - 46px);\n  overflow-y: scroll;\n}\n.patterns-item_document-wrapper .patterns-contact-form-suggest {\n  font-size: 18px;\n}\n.patterns-item_document-wrapper .patterns-contact-form-suggest input {\n  font-size: 18px;\n}\n.patterns-item_document-wrapper .patterns-item_document-page {\n  background-color: white;\n  max-width: 90%;\n  min-height: 800px;\n  margin: 40px auto;\n  padding: 50px 50px;\n  box-shadow: 0 15px 15px 5px #ced9e0;\n}\n.patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input:hover, .patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input:disabled, .patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-item_document-wrapper .patterns-item-document-detail {\n  height: 24px;\n  align-items: center;\n}\n.patterns-item_document-wrapper .patterns-item-document-dates {\n  margin-top: 24px;\n  padding-top: 0;\n  font-size: 14pz;\n  margin-bottom: 24px;\n  align-items: flex-start;\n}\n.patterns-item_document-wrapper .patterns-item-document-dates-column {\n  border-top: 3px solid #e1e8ed;\n  padding-top: 10px;\n}\n.patterns-item_document-wrapper .patterns-item-document-detail-select {\n  height: 30px;\n  align-items: center;\n}\n.patterns-item_document-wrapper .patterns-item-document-note {\n  display: block;\n  border: 1px solid #e1e8ed;\n  box-shadow: none;\n  padding-left: 12px;\n  margin-left: -12px;\n  margin-right: -12px;\n  width: calc(100% + 24px);\n  flex: 1;\n}\n.patterns-item_document-wrapper .patterns-item-document-note textarea {\n  margin-right: 0;\n  padding-right: 0;\n}\n.patterns-item_document-wrapper .patterns-item-document-header-column {\n  text-align: right;\n  font-size: 12px;\n  text-transform: uppercase;\n}\n.patterns-item_document-wrapper .patterns-item-document-signature {\n  color: #8a9ba8;\n  text-transform: uppercase;\n  text-align: right;\n}\n.patterns-item_document-wrapper .bp3-form-group label.bp3-label {\n  font-size: 12px;\n  text-transform: uppercase;\n}\n.patterns-item_document-wrapper .patterns-item-document-header-column.bordered {\n  border-bottom: 3px solid #e1e8ed;\n}\n.patterns-item_document-wrapper .patterns-item-document-total {\n  border-top: 3px solid #e1e8ed;\n  text-align: right;\n  height: 32px;\n  justify-content: center;\n  font-size: 18px;\n  background-color: #f5f8fa;\n}\n.patterns-item_document-wrapper .patterns-item_document-header {\n  height: 100px;\n  display: flex;\n  flex-direction: row;\n}\n.patterns-item_document-wrapper .patterns-item_document-logo {\n  flex: 1;\n}\n.patterns-item_document-wrapper .patterns-item_document-logo img {\n  max-height: 60px;\n}\n.patterns-item_document-wrapper .patterns-item_document-header-code {\n  text-align: right;\n  font-size: 36px;\n  font-weight: bold;\n}\n.patterns-item_document-wrapper .patterns-item_document-type {\n  text-align: right;\n  font-size: 12px;\n  font-weight: bold;\n  color: #8f8f8f;\n  text-transform: uppercase;\n}\n.patterns-item_document-wrapper .patterns-item_document-item {\n  flex: 2;\n  border-top: 3px solid #cccccc;\n  padding-top: 10px;\n  margin-left: 5px;\n  flex-direction: column;\n}\n.patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input:hover, .patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input:disabled, .patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-item_document-wrapper .patterns-item_document-items {\n  margin-top: 50px;\n  flex-direction: column;\n  flex: 1;\n}\n.patterns-item_document-wrapper .patterns-item_document-items .bp3-popover-target {\n  width: 100%;\n}\n.patterns-item_document-wrapper .patterns-item_document-items .bp3-popover-target input {\n  text-align: right;\n}\n.patterns-item_document-wrapper .patterns-item_document-items .bp3-popover-target input[name=name] {\n  text-align: left;\n}\n.patterns-item_document-wrapper .patterns-item_document-item-row {\n  flex-direction: row;\n  display: flex;\n  flex: 1;\n  padding-top: 2px;\n  padding-bottom: 2px;\n}\n.patterns-item_document-wrapper .patterns-item_document-table-header {\n  font-size: 12px;\n  font-weight: normal;\n  color: black;\n  text-transform: uppercase;\n}\n.patterns-item_document-wrapper .patterns-item_document-table-header-row {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 3px solid #ced9e0;\n  padding-bottom: 6px;\n  margin-top: 24px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box {\n  flex: 2;\n  border-top: 3px solid #ced9e0;\n  padding-top: 10px;\n  margin-left: 5px;\n  flex-direction: column;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input:hover, .patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input:disabled, .patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-header {\n  font-size: 12px;\n  text-transform: uppercase;\n  color: #d0d0d0;\n  font-weight: bold;\n  margin-bottom: 12px;\n  font-size: 14px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-name {\n  font-weight: bold;\n  font-size: 14px;\n  margin-bottom: 4px;\n  height: 36px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-other {\n  font-size: 14px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-vat-label {\n  font-size: 14px;\n  line-height: 24px;\n  flex: 1;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-vat-value {\n  font-size: 14px;\n  line-height: 24px;\n  font-weight: bold;\n  flex: 1;\n}");
+___$insertStyle("/*\n * Copyright 2017 Palantir Technologies, Inc. All rights reserved.\n */\n.patterns-item_document-wrapper {\n  background-color: #ced9e0;\n  width: 100%;\n  max-height: calc(100vh - 46px);\n  overflow-y: scroll;\n}\n.patterns-item_document-wrapper .patterns-contact-form-suggest {\n  font-size: 18px;\n}\n.patterns-item_document-wrapper .patterns-contact-form-suggest input {\n  font-size: 18px;\n}\n.patterns-item_document-wrapper .patterns-item_document-page {\n  background-color: white;\n  max-width: 90%;\n  min-height: 800px;\n  margin: 40px auto;\n  padding: 50px 50px;\n  box-shadow: 0 15px 15px 5px #ced9e0;\n}\n.patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input:hover, .patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input:disabled, .patterns-item_document-wrapper .patterns-item_document-page .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-item_document-wrapper .patterns-item-document-detail {\n  height: 24px;\n  align-items: center;\n}\n.patterns-item_document-wrapper .patterns-item-document-dates {\n  margin-top: 24px;\n  padding-top: 0;\n  font-size: 14pz;\n  margin-bottom: 24px;\n  align-items: flex-start;\n}\n.patterns-item_document-wrapper .patterns-item-document-dates-column {\n  border-top: 3px solid #e1e8ed;\n  padding-top: 10px;\n}\n.patterns-item_document-wrapper .patterns-item-document-detail-select {\n  height: 30px;\n  align-items: center;\n}\n.patterns-item_document-wrapper .patterns-item-document-note {\n  display: block;\n  border: 1px solid #e1e8ed;\n  box-shadow: none;\n  padding-left: 12px;\n  margin-left: 0;\n  margin-right: 0;\n  padding-right: 0;\n  width: 100%;\n  flex: 1;\n}\n.patterns-item_document-wrapper .patterns-item-document-note textarea {\n  margin-right: 0;\n  padding-right: 0;\n}\n.patterns-item_document-wrapper .patterns-item-document-header-column {\n  text-align: right;\n  font-size: 12px;\n  text-transform: uppercase;\n}\n.patterns-item_document-wrapper .patterns-item-document-signature {\n  color: #8a9ba8;\n  text-transform: uppercase;\n  text-align: right;\n}\n.patterns-item_document-wrapper .bp3-form-group label.bp3-label {\n  font-size: 12px;\n  text-transform: uppercase;\n}\n.patterns-item_document-wrapper .patterns-item-document-header-column.bordered {\n  border-bottom: 3px solid #e1e8ed;\n}\n.patterns-item_document-wrapper .patterns-item-document-total {\n  border-top: 3px solid #e1e8ed;\n  text-align: right;\n  height: 32px;\n  justify-content: center;\n  font-size: 18px;\n  background-color: #f5f8fa;\n}\n.patterns-item_document-wrapper .patterns-item_document-header {\n  height: 100px;\n  display: flex;\n  flex-direction: row;\n}\n.patterns-item_document-wrapper .patterns-item_document-logo {\n  flex: 1;\n}\n.patterns-item_document-wrapper .patterns-item_document-logo img {\n  max-height: 60px;\n}\n.patterns-item_document-wrapper .patterns-item_document-header-code {\n  text-align: right;\n  font-size: 36px;\n  font-weight: bold;\n}\n.patterns-item_document-wrapper .patterns-item_document-type {\n  text-align: right;\n  font-size: 12px;\n  font-weight: bold;\n  color: #8f8f8f;\n  text-transform: uppercase;\n}\n.patterns-item_document-wrapper .patterns-item_document-item {\n  flex: 2;\n  border-top: 3px solid #cccccc;\n  padding-top: 10px;\n  margin-left: 5px;\n  flex-direction: column;\n}\n.patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input:hover, .patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input:disabled, .patterns-item_document-wrapper .patterns-item_document-item .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-item_document-wrapper .patterns-item_document-items {\n  margin-top: 50px;\n  flex-direction: column;\n  flex: 1;\n}\n.patterns-item_document-wrapper .patterns-item_document-items .bp3-popover-target {\n  width: 100%;\n}\n.patterns-item_document-wrapper .patterns-item_document-items .bp3-popover-target input {\n  text-align: right;\n}\n.patterns-item_document-wrapper .patterns-item_document-items .bp3-popover-target input[name=code], .patterns-item_document-wrapper .patterns-item_document-items .bp3-popover-target input[name=name], .patterns-item_document-wrapper .patterns-item_document-items .bp3-popover-target input[name=note] {\n  text-align: left;\n}\n.patterns-item_document-wrapper .patterns-item_document-item-row {\n  flex-direction: row;\n  display: flex;\n  flex: 1;\n  padding-top: 2px;\n  padding-bottom: 2px;\n}\n.patterns-item_document-wrapper .patterns-item_document-table-header {\n  font-size: 12px;\n  font-weight: normal;\n  color: black;\n  text-transform: uppercase;\n}\n.patterns-item_document-wrapper .patterns-item_document-table-header-row {\n  display: flex;\n  flex-direction: row;\n  border-bottom: 3px solid #ced9e0;\n  padding-bottom: 6px;\n  margin-top: 24px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box {\n  flex: 2;\n  border-top: 3px solid #ced9e0;\n  padding-top: 10px;\n  margin-left: 5px;\n  flex-direction: column;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group {\n  border: none;\n  margin: 0;\n  padding: 0;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input {\n  border: none;\n  box-shadow: none;\n  height: 24px;\n  line-height: 20px;\n  margin: 0 0 0 -6px;\n  padding: 0 0 0 6px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input:hover, .patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input:focus {\n  background-color: #e1e8ed;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input:disabled, .patterns-item_document-wrapper .patterns-item_document-address-box .bp3-input-group input.bp3-input.bp3-disabled {\n  color: black;\n  background-color: transparent;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-header {\n  font-size: 12px;\n  text-transform: uppercase;\n  color: #d0d0d0;\n  font-weight: bold;\n  margin-bottom: 12px;\n  font-size: 14px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-name {\n  font-weight: bold;\n  font-size: 14px;\n  margin-bottom: 4px;\n  height: 36px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-other {\n  font-size: 14px;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-vat-label {\n  font-size: 14px;\n  line-height: 24px;\n  flex: 1;\n}\n.patterns-item_document-wrapper .patterns-item_document-address-box .patterns-item_document-address-box-vat-value {\n  font-size: 14px;\n  line-height: 24px;\n  font-weight: bold;\n  flex: 1;\n}");
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -8637,6 +8643,11 @@ var rightRowProps = {
 };
 function InvoiceItemView(_a) {
     var currency = _a.currency, item = _a.item, onChange = _a.onChange, showVat = _a.showVat;
+    var onCodeChange = function (value) {
+        var clone = new DocumentItem(item.clone);
+        clone.code = value;
+        onChange(clone);
+    };
     var onNameChange = function (value) {
         var clone = new DocumentItem(item.clone);
         clone.name = value;
@@ -8667,29 +8678,34 @@ function InvoiceItemView(_a) {
         clone.recalculate();
         onChange(clone);
     };
-    return React__default.createElement(ItemDocumentItemRow, { key: "invoice-item-" + item.index },
-        React__default.createElement(FlexRow, { flex: 4, style: { textAlign: 'left', fontSize: 14 } },
-            React__default.createElement(core.InputGroup, { fill: true, placeholder: t('edit'), value: item.name, onChange: function (evt) { return onNameChange(evt.currentTarget.value); }, name: "name" })),
-        React__default.createElement(FlexRow, __assign({}, rightRowProps),
-            React__default.createElement(core.NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: t('edit'), value: item.price, onValueChange: onPriceChange }),
-            React__default.createElement(ItemDocumentCurrency, null, currency.symbol)),
-        React__default.createElement(FlexRow, __assign({}, rightRowProps),
-            React__default.createElement(core.NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: t('edit'), value: item.quantity, onValueChange: onQuantityChange }),
-            React__default.createElement(ItemDocumentCurrency, null, item.unit || 'ks')),
-        React__default.createElement(FlexRow, __assign({}, rightRowProps),
-            React__default.createElement(core.NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: t('edit'), value: item.linePrice, onValueChange: onLinePriceChange }),
-            React__default.createElement(ItemDocumentCurrency, null, currency.symbol)),
-        showVat &&
-            React__default.createElement(React__default.Fragment, null,
-                React__default.createElement(FlexRow, __assign({}, rightRowProps, { flex: 1 }),
-                    React__default.createElement(core.NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: t('edit'), value: item.vat, onValueChange: onVatChange }),
-                    React__default.createElement(ItemDocumentCurrency, null, "%")),
-                React__default.createElement(FlexRow, __assign({}, rightRowProps, { flex: 1 }),
-                    React__default.createElement(core.EditableText, { disabled: true, className: "align-right", placeholder: t('edit'), value: "" + instance.settings.format.price(item.vatPrice) }),
-                    React__default.createElement(ItemDocumentCurrency, null, currency.symbol)),
-                React__default.createElement(FlexRow, __assign({}, rightRowProps),
-                    React__default.createElement(core.EditableText, { disabled: true, className: "align-right", placeholder: t('edit'), value: "" + instance.settings.format.price(item.linePriceWithVat) }),
-                    React__default.createElement(ItemDocumentCurrency, null, currency.symbol))));
+    return React__default.createElement(FlexColumn, { flex: 1 },
+        React__default.createElement(ItemDocumentItemRow, { key: "invoice-item-" + item.index },
+            React__default.createElement(FlexRow, { flex: 6 },
+                React__default.createElement(core.InputGroup, { fill: true, placeholder: t('edit'), value: item.name, onChange: function (evt) { return onNameChange(evt.currentTarget.value); }, name: "name" })),
+            React__default.createElement(FlexRow, __assign({}, rightRowProps, { flex: 3 }),
+                React__default.createElement(core.NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: t('edit'), value: item.price, onValueChange: onPriceChange }),
+                React__default.createElement(ItemDocumentCurrency, null, currency.symbol)),
+            React__default.createElement(FlexRow, __assign({}, rightRowProps),
+                React__default.createElement(core.NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: t('edit'), value: item.quantity, onValueChange: onQuantityChange }),
+                React__default.createElement(ItemDocumentCurrency, null, item.unit || 'ks')),
+            React__default.createElement(FlexRow, __assign({}, rightRowProps, { flex: 3 }),
+                React__default.createElement(core.NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: t('edit'), value: item.linePrice, onValueChange: onLinePriceChange }),
+                React__default.createElement(ItemDocumentCurrency, null, currency.symbol)),
+            showVat &&
+                React__default.createElement(React__default.Fragment, null,
+                    React__default.createElement(FlexRow, __assign({}, rightRowProps, { flex: 2 }),
+                        React__default.createElement(core.NumericInput, { fill: true, buttonPosition: "none", className: "align-right", placeholder: t('edit'), value: item.vat, onValueChange: onVatChange }),
+                        React__default.createElement(ItemDocumentCurrency, null, "%")),
+                    React__default.createElement(FlexRow, __assign({}, rightRowProps, { flex: 2 }),
+                        React__default.createElement(core.EditableText, { disabled: true, className: "align-right", placeholder: t('edit'), value: "" + instance.settings.format.price(item.vatPrice) }),
+                        React__default.createElement(ItemDocumentCurrency, null, currency.symbol)),
+                    React__default.createElement(FlexRow, __assign({}, rightRowProps, { flex: 3 }),
+                        React__default.createElement(core.EditableText, { disabled: true, className: "align-right", placeholder: t('edit'), value: "" + instance.settings.format.price(item.linePriceWithVat) }),
+                        React__default.createElement(ItemDocumentCurrency, null, currency.symbol)))),
+        React__default.createElement(ItemDocumentItemRow, { key: "invoice-item-code-" + item.index },
+            React__default.createElement(FlexRow, { flex: 5 },
+                React__default.createElement(core.InputGroup, { fill: true, placeholder: t('edit_code'), value: item.code, onChange: function (evt) { return onCodeChange(evt.currentTarget.value); }, name: "code" })),
+            React__default.createElement(FlexRow, { flex: 12 })));
 }
 
 var DocumentItemsView = /** @class */ (function (_super) {
@@ -8734,21 +8750,24 @@ var DocumentItemsView = /** @class */ (function (_super) {
     DocumentItemsView.prototype.render = function () {
         return React__default.createElement(ItemDocumentItemsContainer, null,
             React__default.createElement(ItemDocumentItemsHeaderRow, null,
-                React__default.createElement(FlexColumn, { flex: 4 },
-                    React__default.createElement(ItemDocumentTableHeader, null, t('title'))),
-                React__default.createElement(FlexColumn, { flex: 2 },
+                React__default.createElement(FlexColumn, { flex: 6 },
+                    React__default.createElement(ItemDocumentTableHeader, null,
+                        t('title'),
+                        " / ",
+                        t('code'))),
+                React__default.createElement(FlexColumn, { flex: 3 },
                     React__default.createElement(ItemDocumentTableHeader, { align: "right" }, t('unitPriceNoVat'))),
                 React__default.createElement(FlexColumn, { flex: 2 },
                     React__default.createElement(ItemDocumentTableHeader, { align: "right" }, t('quantity'))),
-                React__default.createElement(FlexColumn, { flex: 2 },
+                React__default.createElement(FlexColumn, { flex: 3 },
                     React__default.createElement(ItemDocumentTableHeader, { align: "right" }, t('linePriceNoVat'))),
                 this.props.showVat &&
                     React__default.createElement(React__default.Fragment, null,
-                        React__default.createElement(FlexColumn, { flex: 1 },
-                            React__default.createElement(ItemDocumentTableHeader, { align: "right" }, t('vat'))),
-                        React__default.createElement(FlexColumn, { flex: 1 },
-                            React__default.createElement(ItemDocumentTableHeader, { align: "right" }, t('vatPrice'))),
                         React__default.createElement(FlexColumn, { flex: 2 },
+                            React__default.createElement(ItemDocumentTableHeader, { align: "right" }, t('vat'))),
+                        React__default.createElement(FlexColumn, { flex: 2 },
+                            React__default.createElement(ItemDocumentTableHeader, { align: "right" }, t('vatPrice'))),
+                        React__default.createElement(FlexColumn, { flex: 3 },
                             React__default.createElement(ItemDocumentTableHeader, { align: "right" }, t('linePriceWithVat'))))),
             this.renderItems());
     };

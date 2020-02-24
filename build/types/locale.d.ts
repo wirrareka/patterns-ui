@@ -57,6 +57,8 @@ export declare type Locale = {
     vendor: string;
     customer: string;
     edit: string;
+    edit_code: string;
+    edit_note: string;
     title: string;
     quantity: string;
     vat: string;

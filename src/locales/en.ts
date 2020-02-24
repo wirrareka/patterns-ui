@@ -1,7 +1,8 @@
 import { Locale } from "../types"
 
 export default {
-  code: 'en',
+  _code: 'en',
+  code: 'Code',
   range_from: 'Since',
   range_to: 'Till',
   day: 'Day',
@@ -59,6 +60,8 @@ export default {
   vendor: 'Vendor',
   customer: 'Customer',
   edit: 'Edit',
+  edit_code: 'Edit Code',
+  edit_note: 'Edit Note',
   title: 'Title',
   quantity: 'Quantity',
   vat: 'VAT',

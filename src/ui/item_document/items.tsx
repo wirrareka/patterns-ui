@@ -82,27 +82,27 @@ export default class DocumentItemsView<T extends ItemDocument> extends React.Com
   render() {
     return <ItemDocumentItemsContainer>
       <ItemDocumentItemsHeaderRow>
-        <Column flex={4}>
-          <ItemDocumentTableHeader>{t('title')}</ItemDocumentTableHeader>
+        <Column flex={6}>
+        <ItemDocumentTableHeader>{t('title')} / {t('code')}</ItemDocumentTableHeader>
         </Column>
-        <Column flex={2}>
+        <Column flex={3}>
           <ItemDocumentTableHeader align="right">{t('unitPriceNoVat')}</ItemDocumentTableHeader>
         </Column>
         <Column flex={2}>
           <ItemDocumentTableHeader align="right">{t('quantity')}</ItemDocumentTableHeader>
         </Column>
-        <Column flex={2}>
+        <Column flex={3}>
           <ItemDocumentTableHeader align="right">{t('linePriceNoVat')}</ItemDocumentTableHeader>
         </Column>
         { this.props.showVat &&
           <React.Fragment>
-            <Column flex={1}>
+            <Column flex={2}>
               <ItemDocumentTableHeader align="right">{t('vat')}</ItemDocumentTableHeader>
             </Column>
-            <Column flex={1}>
+            <Column flex={2}>
               <ItemDocumentTableHeader align="right">{t('vatPrice')}</ItemDocumentTableHeader>
             </Column>
-            <Column flex={2}>
+            <Column flex={3}>
               <ItemDocumentTableHeader align="right">{t('linePriceWithVat')}</ItemDocumentTableHeader>
             </Column>
           </React.Fragment>

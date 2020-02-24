@@ -1,5 +1,6 @@
 export default {
-    code: 'sk',
+    _code: 'sk',
+    code: 'Kód',
     range_from: 'Od',
     range_to: 'Do',
     day: 'Deň',
@@ -57,6 +58,8 @@ export default {
     vendor: 'Dodávateľ',
     customer: 'Zákazník',
     edit: 'Editovať',
+    edit_code: 'Editovať Kód',
+    edit_note: 'Editovať Poznámku',
     title: 'Názov',
     quantity: 'Množstvo',
     vat: 'DPH',

@@ -33,7 +33,7 @@ const customer = genCustomer()
 const randomPrice = faker.commerce.price()
 
 const testInvoice = new Invoice({
-  code: 'O20201234',
+  code: 'I20201234',
   vendor: PatternApp.settings.company,
   customer: customer,
   currency: PatternApp.settings.currency,
