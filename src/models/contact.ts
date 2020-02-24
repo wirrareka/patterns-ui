@@ -1,6 +1,9 @@
-import BaseModel from "./base_model"
+import BaseModel from './base_model'
+import { Contactable } from '../interfaces'
+import { deserializeString } from "../common"
 
-export default class Contact extends BaseModel {
+export default class Contact extends BaseModel implements Contactable {
+  code: string
   name: string
   street: string
   street2: string
@@ -10,34 +13,38 @@ export default class Contact extends BaseModel {
   email: string
   phone: string
   site: string
-  business_id: string
-  vat_id: string
-  vat_payer_id: string
   isActive: boolean
   note: string
   firstName: string
   lastName: string
-  fullName: string
+  businessId: string
+  vatId: string
+  vatPayerId: string
 
-  constructor(data: any) {
+  constructor(_data: any) {
+    const data = _data || {}
     super(data)
+    this.name = deserializeString(data.name)
+    this.street = deserializeString(data.street)
+    this.street2 = deserializeString(data.street2)
+    this.zip = deserializeString(data.zip)
+    this.city = deserializeString(data.city)
+    this.country = deserializeString(data.country)
+    this.email = deserializeString(data.email)
+    this.phone = deserializeString(data.phone)
+    this.site = deserializeString(data.site)
+    this.isActive = data.isActive || false
+    this.note = deserializeString(data.note)
+    this.firstName = deserializeString(data.firstName)
+    this.lastName = deserializeString(data.lastName)
 
-    this.name = data.name || ''
-    this.street = data.street || ''
-    this.street2 = data.street2 || ''
-    this.zip = data.zip || ''
-    this.city = data.city || ''
-    this.country = data.country || ''
-    this.email = data.email || ''
-    this.phone = data.phone || ''
-    this.site = data.site || ''
-    this.business_id = data.business_id || ''
-    this.vat_id = data.vat_id || ''
-    this.vat_payer_id = data.vat_payer_id || ''
-    this.isActive = data.isActive || ''
-    this.note = data.note || ''
-    this.firstName = data.firstName || ''
-    this.lastName = data.lastName || ''
-    this.fullName = data.fullName || [data.firstName, data.lastName].filter(f => f && f.length > 0).join(' ')
+    // VatAddressable
+    this.businessId = deserializeString(data.businessId)
+    this.vatId = deserializeString(data.vatId)
+    this.vatPayerId = deserializeString(data.vatPayerId)
+  }
+
+  get fullName() {
+    return [this.firstName, this.lastName].filter(f => f && f.length > 0).join(' ')
   }
 }

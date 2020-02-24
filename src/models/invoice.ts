@@ -1,50 +1,15 @@
-import BaseModel from './base_model'
-import Contact from './contact'
-import Currency from './currency'
-import InvoiceItem from './invoice-item'
+import ItemDocument from './item_document'
+import { deserializeDate, deserializeString } from '../common'
+import { Invoicable, VatSummarizable } from '../interfaces'
 
-export default class Invoice extends BaseModel {
-  code: string
-  company: Contact
-  customer: Contact
-  currency: Currency
-  price: number
-  price_with_vat: number
-  dueAt: Date
-  note: string
-  items: InvoiceItem[]
+export default class Invoice extends ItemDocument implements Invoicable {
+  dueDate: Date
   paymentMethod: string
 
-  constructor(data: any) {
+  constructor(_data: any) {
+    const data = _data || {}
     super(data)
-    this.code = data.code
-    this.currency = new Currency(data.currency || {})
-    this.company = new Contact(data.company || {})
-    this.customer = new Contact(data.customer || {})
-    this.price = data.price || 0
-    this.price_with_vat = data.price_with_vat || 0
-    this.dueAt = data.dueAt ? new Date(data.dueAt) : new Date(this.createdAt)
-    this.note = data.note || ''
-    this.items = (data.items || []).map((i: any) => new InvoiceItem(i))
-    this.paymentMethod = data.paymentMethod
-    this.recalculate()
-  }
-
-  recalculate() {
-    console.log('recalculate', this)
-    this.price = this.items.reduce(function (prev, next) { return prev + (next.line_price) }, 0) || 0;
-    this.price_with_vat = this.items.reduce(function (prev, next) { return prev + (next.line_price + next.vat_price) }, 0) || 0;
-  }
-
-  get vats() {
-    const vats = {} as any
-    this.items.forEach(item => {
-      if (!vats[`${item.vat}`]) {
-        vats[`${item.vat}`] = { base: item.line_price, price: item.vat_price }
-      } else {
-        vats[`${item.vat}`] += { base: item.line_price, price: item.vat_price }
-      }
-    })
-    return Object.keys(vats).map(vat => ({ vat, base: vats[vat].base, price: vats[vat].price }))
+    this.dueDate = deserializeDate(data.dueDate)
+    this.paymentMethod = deserializeString(data.paymentMethod)
   }
 }

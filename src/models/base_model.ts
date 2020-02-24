@@ -1,14 +1,17 @@
 import cloneDeep from 'lodash.clonedeep'
+import { deserializeDate } from '../common'
+import TimeStamped from '../interfaces/timestamped'
 
-export default class BaseModel {
+export default class BaseModel implements TimeStamped {
   id: string
   createdAt: Date
   updatedAt: Date
 
   constructor(_data: any) {
-    this.id = _data.id
-    this.createdAt = _data.createdAt ? new Date(_data.createdAt) : new Date()
-    this.updatedAt = _data.updatedAt ? new Date(_data.updatedAt) : new Date()
+    const data = _data || {}
+    this.id = data.id
+    this.createdAt = deserializeDate(data.createdAt)
+    this.updatedAt = deserializeDate(data.updatedAt)
   }
 
   get exists() : boolean {

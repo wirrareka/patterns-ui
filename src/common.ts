@@ -8,6 +8,9 @@ export const DateFormat = 'DD.MM.YYYY'
 export const DateTimeFormat = 'DD.MM.YYYY HH:mm'
 export const TimeFormat = 'hh:mm'
 
+export const deserializeDate = (date?: string | Date) => date ? new Date(date) : new Date()
+export const deserializeNumber = (number?: number) => number || 0
+export const deserializeString = (string?: string) => string || ''
 
 export const today = () => {
   const now = new Date()
@@ -46,7 +49,11 @@ export const formatDateTime = (date: string | Date) => {
 }
 
 export const formatPrice = (price: number, currency: Currency) => {
-  return `${(price || 0).toFixed(2)} ${currency.symbol}`
+  const elements = [ (price || 0).toFixed(2) ]
+  if (currency) {
+    elements.push(currency.symbol)
+  }
+  return elements.join(' ')
 }
 
 export const hasString = (string: string, minLength: number = 1) => {

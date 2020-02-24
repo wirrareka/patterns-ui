@@ -1,17 +1,23 @@
 import BaseModel from './base_model'
 import Contact from './contact'
 import Currency from './currency'
+import DocumentItem from './document_item'
 import Invoice from './invoice'
-import InvoiceItem from './invoice-item'
-import Offer from './offer'
-import PaymentMethod from './payment-method'
+import Order from './order'
+import PaymentMethod from './payment_method'
+import PriceQuote from './price_quote'
+import Return from './return'
+import ItemDocument from './item_document'
 
-export default {
+export {
   BaseModel,
   Contact,
   Currency,
+  DocumentItem,
   Invoice,
-  InvoiceItem,
-  Offer,
-  PaymentMethod
+  ItemDocument,
+  Order,
+  PaymentMethod,
+  PriceQuote,
+  Return
 }
