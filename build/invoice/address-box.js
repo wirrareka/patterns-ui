@@ -46,7 +46,6 @@ export default function AddressBox(_a) {
     var contact = _a.contact, header = _a.header, onChange = _a.onChange, fetch = _a.fetch, _b = _a.disabled, disabled = _b === void 0 ? false : _b;
     var _c = useState([]), results = _c[0], setResults = _c[1];
     var _d = useState(''), query = _d[0], setQuery = _d[1];
-    console.log('contact changed', contact);
     useEffect(function () {
         setQuery(contact.name.length > 0 ? contact.name : contact.fullName);
     }, [contact]);

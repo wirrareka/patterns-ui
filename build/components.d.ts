@@ -4,6 +4,7 @@ export interface Props {
 }
 export interface FlexProps extends Props {
     flex?: number;
+    className?: string;
 }
 export interface AlignProps extends Props {
     align?: "left" | "right" | "center";
@@ -12,7 +13,7 @@ export declare const Container: ({ children, style }: React.PropsWithChildren<Pr
     className: string;
     style: React.CSSProperties;
 }, HTMLElement>;
-export declare const FlexRow: ({ children, flex, style }: React.PropsWithChildren<FlexProps>) => React.DetailedReactHTMLElement<{
+export declare const FlexRow: ({ children, flex, style, className }: React.PropsWithChildren<FlexProps>) => React.DetailedReactHTMLElement<{
     className: string;
     style: {
         flex: number;
@@ -773,7 +774,7 @@ export declare const FlexRow: ({ children, flex, style }: React.PropsWithChildre
         vectorEffect?: import("csstype").VectorEffectProperty;
     };
 }, HTMLElement>;
-export declare const FlexColumn: ({ children, flex, style }: React.PropsWithChildren<FlexProps>) => React.DetailedReactHTMLElement<{
+export declare const FlexColumn: ({ children, flex, style, className }: React.PropsWithChildren<FlexProps>) => React.DetailedReactHTMLElement<{
     className: string;
     style: {
         flex: number;

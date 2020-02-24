@@ -118,7 +118,7 @@ var OfferDocument = /** @class */ (function (_super) {
                             React.createElement(Column, { style: { textAlign: 'right' }, flex: 1 }, _this.props.formatPrice(vat.price, _this.props.offer.currency))); }),
                         React.createElement(Row, { flex: 1, style: { height: 42, alignItems: 'center' } },
                             React.createElement(Column, { flex: 1 }, "Total"),
-                            React.createElement(Column, { style: { borderTop: '3px solid black', textAlign: 'right', height: 32, justifyContent: 'center', fontSize: 18, backgroundColor: Colors.LIGHT_GRAY5 }, flex: 3 }, this.props.formatPrice(this.props.offer.price, this.props.offer.currency))))),
+                            React.createElement(Column, { style: { borderTop: '3px solid black', textAlign: 'right', height: 32, justifyContent: 'center', fontSize: 18, backgroundColor: Colors.LIGHT_GRAY5 }, flex: 3 }, this.props.formatPrice(this.props.offer.price_with_vat, this.props.offer.currency))))),
                 React.createElement(Row, { style: { marginTop: 120 } },
                     React.createElement(Column, { flex: 1 }),
                     React.createElement(Column, { flex: 1, style: { textAlign: 'right' } },

@@ -1,9 +1,11 @@
 import cloneDeep from 'lodash.clonedeep';
+import { deserializeDate } from '../common';
 var BaseModel = /** @class */ (function () {
     function BaseModel(_data) {
-        this.id = _data.id;
-        this.createdAt = _data.createdAt ? new Date(_data.createdAt) : new Date();
-        this.updatedAt = _data.updatedAt ? new Date(_data.updatedAt) : new Date();
+        var data = _data || {};
+        this.id = data.id;
+        this.createdAt = deserializeDate(data.createdAt);
+        this.updatedAt = deserializeDate(data.updatedAt);
     }
     Object.defineProperty(BaseModel.prototype, "exists", {
         get: function () {

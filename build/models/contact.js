@@ -11,30 +11,40 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import BaseModel from "./base_model";
+import BaseModel from './base_model';
+import { deserializeString } from "../common";
 var Contact = /** @class */ (function (_super) {
     __extends(Contact, _super);
-    function Contact(data) {
-        var _this = _super.call(this, data) || this;
-        _this.name = data.name || '';
-        _this.street = data.street || '';
-        _this.street2 = data.street2 || '';
-        _this.zip = data.zip || '';
-        _this.city = data.city || '';
-        _this.country = data.country || '';
-        _this.email = data.email || '';
-        _this.phone = data.phone || '';
-        _this.site = data.site || '';
-        _this.business_id = data.business_id || '';
-        _this.vat_id = data.vat_id || '';
-        _this.vat_payer_id = data.vat_payer_id || '';
-        _this.isActive = data.isActive || '';
-        _this.note = data.note || '';
-        _this.firstName = data.firstName || '';
-        _this.lastName = data.lastName || '';
-        _this.fullName = data.fullName || [data.firstName, data.lastName].filter(function (f) { return f && f.length > 0; }).join(' ');
+    function Contact(_data) {
+        var _this = this;
+        var data = _data || {};
+        _this = _super.call(this, data) || this;
+        _this.name = deserializeString(data.name);
+        _this.street = deserializeString(data.street);
+        _this.street2 = deserializeString(data.street2);
+        _this.zip = deserializeString(data.zip);
+        _this.city = deserializeString(data.city);
+        _this.country = deserializeString(data.country);
+        _this.email = deserializeString(data.email);
+        _this.phone = deserializeString(data.phone);
+        _this.site = deserializeString(data.site);
+        _this.isActive = data.isActive || false;
+        _this.note = deserializeString(data.note);
+        _this.firstName = deserializeString(data.firstName);
+        _this.lastName = deserializeString(data.lastName);
+        // VatAddressable
+        _this.businessId = deserializeString(data.businessId);
+        _this.vatId = deserializeString(data.vatId);
+        _this.vatPayerId = deserializeString(data.vatPayerId);
         return _this;
     }
+    Object.defineProperty(Contact.prototype, "fullName", {
+        get: function () {
+            return [this.firstName, this.lastName].filter(function (f) { return f && f.length > 0; }).join(' ');
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Contact;
 }(BaseModel));
 export default Contact;

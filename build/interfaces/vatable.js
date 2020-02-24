@@ -1,0 +1,1 @@
+//# sourceMappingURL=vatable.js.map

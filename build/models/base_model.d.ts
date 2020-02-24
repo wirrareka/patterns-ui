@@ -1,4 +1,5 @@
-export default class BaseModel {
+import TimeStamped from '../interfaces/timestamped';
+export default class BaseModel implements TimeStamped {
     id: string;
     createdAt: Date;
     updatedAt: Date;

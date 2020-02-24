@@ -7,7 +7,7 @@ import '@blueprintjs/datetime/lib/css/blueprint-datetime.css'
 // automatically import all files ending in *.stories.js
 configure(
   [
-    require.context('../src', true, /(\.stories\.js$|.stories.tsx$)/),
+    require.context('../src/ui', true, /(\.stories\.js$|.stories.tsx$)/),
   ],
   module
 )

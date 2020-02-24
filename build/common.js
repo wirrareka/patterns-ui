@@ -4,6 +4,9 @@ export var DAY_MS = 1000 * 3600 * 24;
 export var DateFormat = 'DD.MM.YYYY';
 export var DateTimeFormat = 'DD.MM.YYYY HH:mm';
 export var TimeFormat = 'hh:mm';
+export var deserializeDate = function (date) { return date ? new Date(date) : new Date(); };
+export var deserializeNumber = function (number) { return number || 0; };
+export var deserializeString = function (string) { return string || ''; };
 export var today = function () {
     var now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate(), DEFAULT_HOUR, 0);
@@ -33,7 +36,11 @@ export var formatDateTime = function (date) {
     return moment(date).format(DateTimeFormat);
 };
 export var formatPrice = function (price, currency) {
-    return (price || 0).toFixed(2) + " " + currency.symbol;
+    var elements = [(price || 0).toFixed(2)];
+    if (currency) {
+        elements.push(currency.symbol);
+    }
+    return elements.join(' ');
 };
 export var hasString = function (string, minLength) {
     if (minLength === void 0) { minLength = 1; }

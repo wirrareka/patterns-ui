@@ -16,10 +16,22 @@ var Currency = /** @class */ (function (_super) {
     __extends(Currency, _super);
     function Currency(data) {
         var _this = _super.call(this, data) || this;
+        _this.code = data.code;
         _this.name = data.name;
         _this.symbol = data.symbol;
         return _this;
     }
+    Object.defineProperty(Currency, "euro", {
+        get: function () {
+            return new Currency({
+                code: 'eur',
+                name: 'Euro',
+                symbol: '€'
+            });
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Currency;
 }(BaseModel));
 export default Currency;

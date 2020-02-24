@@ -11,49 +11,19 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import BaseModel from './base_model';
-import Contact from './contact';
-import Currency from './currency';
-import InvoiceItem from './invoice-item';
+import ItemDocument from './item_document';
+import { deserializeDate, deserializeString } from '../common';
 var Invoice = /** @class */ (function (_super) {
     __extends(Invoice, _super);
-    function Invoice(data) {
-        var _this = _super.call(this, data) || this;
-        _this.code = data.code;
-        _this.currency = new Currency(data.currency || {});
-        _this.company = new Contact(data.company || {});
-        _this.customer = new Contact(data.customer || {});
-        _this.price = data.price || 0;
-        _this.price_with_vat = data.price_with_vat || 0;
-        _this.dueAt = data.dueAt ? new Date(data.dueAt) : new Date(_this.createdAt);
-        _this.note = data.note || '';
-        _this.items = (data.items || []).map(function (i) { return new InvoiceItem(i); });
-        _this.paymentMethod = data.paymentMethod;
-        _this.recalculate();
+    function Invoice(_data) {
+        var _this = this;
+        var data = _data || {};
+        _this = _super.call(this, data) || this;
+        _this.dueDate = deserializeDate(data.dueDate);
+        _this.paymentMethod = deserializeString(data.paymentMethod);
         return _this;
     }
-    Invoice.prototype.recalculate = function () {
-        console.log('recalculate', this);
-        this.price = this.items.reduce(function (prev, next) { return prev + (next.line_price); }, 0) || 0;
-        this.price_with_vat = this.items.reduce(function (prev, next) { return prev + (next.line_price + next.vat_price); }, 0) || 0;
-    };
-    Object.defineProperty(Invoice.prototype, "vats", {
-        get: function () {
-            var vats = {};
-            this.items.forEach(function (item) {
-                if (!vats["" + item.vat]) {
-                    vats["" + item.vat] = { base: item.line_price, price: item.vat_price };
-                }
-                else {
-                    vats["" + item.vat] += { base: item.line_price, price: item.vat_price };
-                }
-            });
-            return Object.keys(vats).map(function (vat) { return ({ vat: vat, base: vats[vat].base, price: vats[vat].price }); });
-        },
-        enumerable: true,
-        configurable: true
-    });
     return Invoice;
-}(BaseModel));
+}(ItemDocument));
 export default Invoice;
 //# sourceMappingURL=invoice.js.map
