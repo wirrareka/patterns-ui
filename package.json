@@ -11,7 +11,7 @@
     "build"
   ],
   "scripts": {
-    "build": "ENV=production rollup -c",
+    "build": "ENV=production rollup -c; tsc",
     "build-storybook": "build-storybook",
     "storybook": "start-storybook -p 6006",
     "test": "jest --watch",
@@ -47,6 +47,7 @@
     "jest": "^25.1.0",
     "rollup": "^1.31.0",
     "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-sass": "^1.2.2",
@@ -56,13 +57,13 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "@blueprintjs/core": "^3.23.1",
-    "@blueprintjs/datetime": "^3.15.2",
-    "@blueprintjs/icons": "^3.13.0",
-    "@blueprintjs/select": "^3.11.2",
+    "@react-pdf/renderer": "^1.6.8",
+    "@react-pdf/styled-components": "^1.4.0",
     "@types/lodash": "^4.14.149",
+    "@types/promise-queue": "^2.2.0",
     "babel-preset-react-app": "^9.1.1",
     "lodash": "^4.17.15",
-    "lodash.clonedeep": "^4.5.0"
+    "lodash.clonedeep": "^4.5.0",
+    "promise-queue": "^2.2.5"
   }
 }

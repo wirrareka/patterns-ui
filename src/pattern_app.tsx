@@ -1,9 +1,16 @@
 import { PatternSettings } from "./types"
 import { Currency, Contact, PaymentMethod } from './models'
 import { formatDate, parseDate, formatPrice } from './common'
+import Observable from "./observable"
 
-export class PatternApp {
+export class PatternApp extends Observable {
   public settings: PatternSettings
+
+  public Events = {
+    Confirm: 'confirm',
+    Success: 'notify-success',
+    Failure: 'notify-failure'
+  }
 
   configure(settings: PatternSettings) {
     const defaults = {
@@ -48,6 +55,18 @@ export class PatternApp {
   getPaymentMethod(code: string) {
     return this.settings.payment.methods.find(c => c.code === code) ||
       this.settings.payment.defaultMethod
+  }
+
+  confirm(title: string, description: string, action: React.ReactElement, icon?: string) {
+    this.notify(this.Events.Confirm, { title, description, action, icon })
+  }
+
+  success(message: string) {
+    this.notify(this.Events.Confirm, { message })
+  }
+
+  failure(message: string) {
+    this.notify(this.Events.Confirm, { message })
   }
 }
 

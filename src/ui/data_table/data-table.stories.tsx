@@ -1,5 +1,6 @@
 import React from "react"
 import DataTable from './data-table'
+import { Button, ButtonGroup, Popover, PopoverInteractionKind, Menu, MenuItem } from '@blueprintjs/core'
 import { Alignment, ColumnType, FetchResponse } from '../../types'
 import faker from 'faker'
 import _ from 'lodash'
@@ -64,7 +65,6 @@ const baseProps = {
   formatDate,
   parseDate,
   onItemSelect: (item) => {},
-  onSelectionChange: (selection) => {},
   detailRenderer: () => <div style={{ padding: 12 }}>Custom React Component to show item details</div>,
   fetch,
   columns: [
@@ -111,7 +111,7 @@ const baseProps = {
       alignment: Alignment.Right,
       filterable: true,
       sortable: true,
-      format: (item: TestModel) => <span>{ item.revenue.toFixed(2) } €}</span>
+      format: (item: TestModel) => <span>{ item.revenue.toFixed(2) } €</span>
     },
     {
       id: 'registration_date',
@@ -136,7 +136,54 @@ const style = {
   flexDirection: 'column'
 } as React.CSSProperties
 
-export const AllFeatures = () => <Container style={style}><TestTable { ...baseProps } /></Container>
+export const AllFeatures = () => {
+  const [selection, setSelection] = React.useState([] as TestModel[])
+  const [action, setAction] = React.useState('delete')
+
+  const trash = () => {
+    console.log('should delete', selection)
+  }
+
+  return <Container style={style}>
+    <TestTable
+      { ...baseProps }
+      onSelectionChange={setSelection}
+      actions={
+     <ButtonGroup>
+          { action === 'delete' && <Button
+            disabled={selection.length === 0}
+            text="Delete"
+            icon="trash"
+            small
+            style={{ height: 28, alignSelf: 'center' }}
+            onClick={trash}
+          /> }
+          { action === 'merge' && <Button
+            disabled={selection.length === 0}
+            text="Merge"
+            icon="link"
+            small
+            style={{ height: 28, alignSelf: 'center' }}
+            onClick={trash}
+          /> }
+          <Popover interactionKind={PopoverInteractionKind.CLICK}>
+            <Button
+              disabled={selection.length === 0}
+              icon="caret-down"
+              small
+              style={{ height: 28, alignSelf: 'center' }}
+              onClick={trash}
+            />
+            <Menu>
+              <MenuItem icon="trash" text="Delete" onClick={() => setAction('delete')} />
+              <MenuItem icon="link" text="Merge" onClick={() => setAction('merge')} />
+            </Menu>
+          </Popover>
+        </ButtonGroup>
+      }
+    />
+  </Container>
+}
 
 export const Sortable = () => <Container style={style}><TestTable { ...baseProps }
   columns={[

@@ -18,6 +18,7 @@ export default {
   starts_with: 'Začína na',
   ends_with: 'Končí na',
   per_page: 'na stranu',
+  page: 'strana',
   selection_none: 'žiadny výber',
   selection_one: 'vybraná',
   selection_few: 'vybrané',
@@ -74,5 +75,7 @@ export default {
   linePriceWithVat: 'CELKOM S DPH',
   signature: 'Podpis',
   total: 'Total',
-  note: 'Note'
+  note: 'Note',
+  delete: 'Zmazať',
+  cancel: 'Zrušiť'
 } as Locale

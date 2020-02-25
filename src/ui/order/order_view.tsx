@@ -23,6 +23,7 @@ export interface Props {
   fetch: (query: string) => Promise<Contact[]>
 }
 
+
 export default class OrderView extends Component<Props> {
   constructor(props: Props) {
     super(props)
@@ -60,7 +61,7 @@ export default class OrderView extends Component<Props> {
       <Column flex={4}></Column>
       <Column flex={2} className="patterns-item-document-header-column">{t('total')}</Column>
       <Column flex={4} className="patterns-item-document-total">
-        { PatternApp.format.price(PatternApp.settings.orders.showVat ? this.props.document.itemsTotal : this.props.document.itemsTotalWithVat, currency) }
+        { PatternApp.format.price(PatternApp.settings.orders.showVat ? this.props.document.itemsTotalWithVat : this.props.document.itemsTotal, currency) }
       </Column>
     </Row>
   }

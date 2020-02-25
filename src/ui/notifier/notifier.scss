@@ -1,0 +1,13 @@
+@import "~@blueprintjs/core/lib/scss/variables.scss";
+
+.patterns-notifier {
+  .bp3-toast-message {
+    align-self: center;
+
+    .patterns-notifier-message {
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+  }
+}

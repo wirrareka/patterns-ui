@@ -12,7 +12,7 @@ export default class DocumentItem extends BaseModel implements Indexable, Sellab
   linePrice: number
   linePriceWithVat: number
   price: number
-  currency: number
+  currency: string
   vat: number
   unit: string
 
@@ -24,7 +24,7 @@ export default class DocumentItem extends BaseModel implements Indexable, Sellab
     this.name = deserializeString(data.name)
     this.code = deserializeString(data.code)
     this.unit = deserializeString(data.unit)
-    this.currency = deserializeNumber(data.currency)
+    this.currency = deserializeString(data.currency)
     this.price = deserializeNumber(data.price)
     this.quantity = deserializeNumber(data.quantity)
     this.vat = deserializeNumber(data.vat)

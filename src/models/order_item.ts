@@ -10,7 +10,7 @@ export default class OrderItem extends BaseModel implements Indexable, Sellable 
   linePrice: number
   linePriceWithVat: number
   price: number
-  currency: number
+  currency: string
   vat: number
   unit: string
   index: number

@@ -37,6 +37,7 @@ interface Props<T> {
   formatDate: FormatDateType
   parseDate: ParseDateType
   locale?: string
+  actions?: React.ReactElement
 }
 
 interface State<T> {
@@ -187,7 +188,9 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
     })
     await this.setState({ selection })
     const items = this.getSelectedIds().map(id => this.state.items.find((item) => (item as any).id === id)!)
-    this.props.onSelectionChange(items)
+    if (this.props.onSelectionChange) {
+      this.props.onSelectionChange(items)
+    }
   }
 
   renderFilter(column: Column<T>) {
@@ -264,7 +267,9 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
                   state[_item.id] = evt.currentTarget.checked
                 })
                 await this.setState({ selection })
-                this.props.onSelectionChange(this.state.items.filter((item: any) => Object.keys(selection).filter(key => selection[key]).includes(item.id)))
+                if (this.props.onSelectionChange) {
+                  this.props.onSelectionChange(this.state.items.filter((item: any) => Object.keys(selection).filter(key => selection[key]).includes(item.id)))
+                }
               }}
             />
           </Cell>)
@@ -411,6 +416,7 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
   }
 
   render() {
+    console.log('rendering', this.props)
     return <Container>
       {this.renderHeader()}
       <Content>
@@ -421,8 +427,9 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
         <FlexRow flex={1}>
           <Button minimal={true} icon="refresh" onClick={() => this.fetch()}/>
           { this.formatSelection() }
+          <div className="patterns-data-table-pagination-actions">{ this.props.actions && this.props.actions }</div>
         </FlexRow>
-        <FlexColumn flex={4}>
+        <FlexColumn flex={2}>
           { this.renderPagination() }
         </FlexColumn>
         <FlexColumn flex={1}>
