@@ -14,6 +14,7 @@ interface Props<T> {
     formatDate: FormatDateType;
     parseDate: ParseDateType;
     locale?: string;
+    actions?: React.ReactElement;
 }
 interface State<T> {
     query: string;

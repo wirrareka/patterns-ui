@@ -16,6 +16,7 @@ export default {
     starts_with: 'Starts with',
     ends_with: 'Ends with',
     per_page: 'per page',
+    page: 'page',
     selection_none: 'No selection',
     selection_one: 'Selected',
     selection_few: 'Selected',
@@ -72,6 +73,8 @@ export default {
     linePriceWithVat: 'LINE PRICE with VAT',
     signature: 'Signature',
     total: 'Total',
-    note: 'Note'
+    note: 'Note',
+    delete: 'Delete',
+    cancel: 'Zrušiť'
 };
 //# sourceMappingURL=en.js.map

@@ -15,6 +15,7 @@ export declare type Locale = {
     starts_with: string;
     ends_with: string;
     per_page: string;
+    page: string;
     selection_none: string;
     selection_one: string;
     selection_few: string;
@@ -72,4 +73,6 @@ export declare type Locale = {
     signature: string;
     total: string;
     note: string;
+    delete: string;
+    cancel: string;
 };

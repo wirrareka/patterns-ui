@@ -57,7 +57,7 @@ var OrderView = /** @class */ (function (_super) {
         return React.createElement(Row, { flex: 1, style: { height: 42, alignItems: 'center' } },
             React.createElement(Column, { flex: 4 }),
             React.createElement(Column, { flex: 2, className: "patterns-item-document-header-column" }, t('total')),
-            React.createElement(Column, { flex: 4, className: "patterns-item-document-total" }, PatternApp.format.price(PatternApp.settings.orders.showVat ? this.props.document.itemsTotal : this.props.document.itemsTotalWithVat, currency)));
+            React.createElement(Column, { flex: 4, className: "patterns-item-document-total" }, PatternApp.format.price(PatternApp.settings.orders.showVat ? this.props.document.itemsTotalWithVat : this.props.document.itemsTotal, currency)));
     };
     OrderView.prototype.render = function () {
         var _this = this;

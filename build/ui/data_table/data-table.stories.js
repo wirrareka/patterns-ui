@@ -47,6 +47,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import React from "react";
 import DataTable from './data-table';
+import { Button, ButtonGroup, Popover, PopoverInteractionKind, Menu, MenuItem } from '@blueprintjs/core';
 import { Alignment, ColumnType } from '../../types';
 import faker from 'faker';
 import _ from 'lodash';
@@ -92,7 +93,6 @@ var baseProps = {
     formatDate: formatDate,
     parseDate: parseDate,
     onItemSelect: function (item) { },
-    onSelectionChange: function (selection) { },
     detailRenderer: function () { return React.createElement("div", { style: { padding: 12 } }, "Custom React Component to show item details"); },
     fetch: fetch,
     columns: [
@@ -141,7 +141,7 @@ var baseProps = {
             sortable: true,
             format: function (item) { return React.createElement("span", null,
                 item.revenue.toFixed(2),
-                " \u20AC}"); }
+                " \u20AC"); }
         },
         {
             id: 'registration_date',
@@ -164,8 +164,22 @@ var style = {
     display: 'flex',
     flexDirection: 'column'
 };
-export var AllFeatures = function () { return React.createElement(Container, { style: style },
-    React.createElement(TestTable, __assign({}, baseProps))); };
+export var AllFeatures = function () {
+    var _a = React.useState([]), selection = _a[0], setSelection = _a[1];
+    var _b = React.useState('delete'), action = _b[0], setAction = _b[1];
+    var trash = function () {
+        console.log('should delete', selection);
+    };
+    return React.createElement(Container, { style: style },
+        React.createElement(TestTable, __assign({}, baseProps, { onSelectionChange: setSelection, actions: React.createElement(ButtonGroup, null,
+                action === 'delete' && React.createElement(Button, { disabled: selection.length === 0, text: "Delete", icon: "trash", small: true, style: { height: 28, alignSelf: 'center' }, onClick: trash }),
+                action === 'merge' && React.createElement(Button, { disabled: selection.length === 0, text: "Merge", icon: "link", small: true, style: { height: 28, alignSelf: 'center' }, onClick: trash }),
+                React.createElement(Popover, { interactionKind: PopoverInteractionKind.CLICK },
+                    React.createElement(Button, { disabled: selection.length === 0, icon: "caret-down", small: true, style: { height: 28, alignSelf: 'center' }, onClick: trash }),
+                    React.createElement(Menu, null,
+                        React.createElement(MenuItem, { icon: "trash", text: "Delete", onClick: function () { return setAction('delete'); } }),
+                        React.createElement(MenuItem, { icon: "link", text: "Merge", onClick: function () { return setAction('merge'); } })))) })));
+};
 export var Sortable = function () { return React.createElement(Container, { style: style },
     React.createElement(TestTable, __assign({}, baseProps, { columns: [
             {

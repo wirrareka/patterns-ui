@@ -10,7 +10,7 @@ export default class DocumentItem extends BaseModel implements Indexable, Sellab
     linePrice: number;
     linePriceWithVat: number;
     price: number;
-    currency: number;
+    currency: string;
     vat: number;
     unit: string;
     constructor(_data: any);
