@@ -69,10 +69,16 @@ export declare type Locale = {
     vatRecap: string;
     unitPriceNoVat: string;
     linePriceNoVat: string;
+    unitPriceWithVat: string;
     linePriceWithVat: string;
     signature: string;
     total: string;
     note: string;
     delete: string;
     cancel: string;
+    issuedBy: string;
+    noResults: string;
+    pleaseWait: string;
+    phone: string;
+    site: string;
 };

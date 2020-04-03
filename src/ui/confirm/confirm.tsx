@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Classes, Dialog, NonIdealState } from '@blueprintjs/core'
+import { Button, Classes, Dialog, NonIdealState, IconName } from '@blueprintjs/core'
 import { FlexRow } from '../../components'
 import PatternApp from '../../pattern_app'
 import { t } from '../../locale_manager'
@@ -11,14 +11,16 @@ interface State {
   isOpen: boolean
   title?: string,
   description?: string,
-  action?: React.ReactElement
+  action?: React.ReactElement,
+  icon: IconName
 }
 
 export default class Confirm extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      isOpen: false
+      isOpen: false,
+      icon: 'help'
     }
     this.onConfirm = this.onConfirm.bind(this)
   }
@@ -43,7 +45,8 @@ export default class Confirm extends React.Component<Props, State> {
       isOpen: true,
       title: data.title,
       description: data.description,
-      action: data.action
+      action: data.action,
+      icon: data.icon || 'help'
     })
   }
 
@@ -53,7 +56,7 @@ export default class Confirm extends React.Component<Props, State> {
       onClose={() => this.setState({ isOpen: false })}>
       <div className={Classes.DIALOG_BODY}>
         <NonIdealState
-          icon="help"
+          icon={this.state.icon}
           title={this.state.title}
           description={this.state.description}
           action={

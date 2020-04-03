@@ -4,7 +4,7 @@ import { Document, Font, Page, Image, StyleSheet, Text, View  } from '@react-pdf
 import styled from '@react-pdf/styled-components'
 import { t } from '../locale_manager'
 import PatternApp from '../pattern_app'
-import { Currency, ItemDocument, Order, PaymentMethod } from '../models'
+import { Currency, NamedItemDocument, Order, PaymentMethod } from '../models'
 import ContactForm from './contact_form'
 
 Font.register({
@@ -74,32 +74,32 @@ const DocumentType = styled.Text`
 `
 
 const DefaultTextLabel = styled.Text`
-  font-size: 8px;
+  font-size: 9px;
   line-height: 1.3;
   font-family: "Oswald Light";
 `
 
 const DefaultTextValue = styled.Text`
-  font-size: 8px;
+  font-size: 9px;
   line-height: 1.3;
   font-family: "Oswald";
 `
 
 const DefaultText = styled.Text`
-  font-size: 8px;
+  font-size: 9px;
   line-height: 1.3;
   font-family: "Oswald Light";
 `
 
 const TableHeaderItem = styled.Text`
-  font-size: 7px;
+  font-size: 8px;
   text-transform: uppercase;
   font-family: "Oswald Medium";
   color: ${Colors.GRAY3};
 `
 
 const TableHeader = styled.Text`
-  font-size: 7px;
+  font-size: 8px;
   text-transform: uppercase;
   text-align: right;
   font-family: "Oswald Medium";
@@ -107,19 +107,17 @@ const TableHeader = styled.Text`
 `
 
 const TableCellItem = styled.Text`
-  font-size: 8px;
+  font-size: 9px;
   text-transform: uppercase;
   text-align: left;
   font-family: "Oswald";
 `
 
 const TableCell = styled.Text`
-  font-size: 8px;
+  font-size: 9px;
   text-align: right;
   font-family: "Oswald Light";
 `
-
-
 
 const styles = StyleSheet.create({
   page: {
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
 const PER_PAGE = 33
 
 interface Props {
-  document: Order
+  document: NamedItemDocument
 }
 
 export default function OrderPrinter({ document }: Props): ReactElement {
@@ -180,8 +178,6 @@ export default function OrderPrinter({ document }: Props): ReactElement {
   }
 
   const renderItems = (from: number, to: number) => {
-    console.log('from', from, 'to', to)
-
     return document.items.slice(from, to).map((item, index) => {
       const itemRow = <Row key={`item-${index}`}style={{ paddingLeft: '12mm', paddingRight: '12mm'}}>
         <Column style={{ flex: 6 }}>
@@ -218,7 +214,7 @@ export default function OrderPrinter({ document }: Props): ReactElement {
 
       if (item.code && item.code.length > 0) {
         itemRows.push(<Row key={`item-code-${index}`} style={{ paddingLeft: '12mm', paddingRight: '12mm'}}>
-          <TableCellItem style={{ fontFamily: 'Oswald', fontSize: 7, color: Colors.GRAY3 }}>
+          <TableCellItem style={{ fontFamily: 'Oswald', fontSize: 9, color: Colors.GRAY3 }}>
             { item.code }
           </TableCellItem>
         </Row>)
@@ -264,7 +260,7 @@ export default function OrderPrinter({ document }: Props): ReactElement {
       </Column>
       <Column style={{ flex: 7 }}>
         <Text style={{
-          fontSize: 10,
+          fontSize: 11,
           fontFamily: 'Oswald',
           textAlign: 'right',
           backgroundColor: Colors.LIGHT_GRAY4
@@ -280,11 +276,11 @@ export default function OrderPrinter({ document }: Props): ReactElement {
     return <Column>
       <Header>
         <Logo>
-          <Image src={PatternApp.settings.logo} style={{ width: '40mm' }}/>
+          <Image src={PatternApp.settings.logo} style={{ width: '40mm', marginTop: 10 }}/>
         </Logo>
-        <View style={{ flex: 2 }}>
-          <HeaderCode>{ document.code || t('order.new') }</HeaderCode>
-          <DocumentType>{ t('order.type') }</DocumentType>
+        <View style={{ flex: 4 }}>
+          <HeaderCode>{ document.name || t('order.new') }</HeaderCode>
+          <DocumentType>{ t('order.type') } { document.code || t('order.new') }</DocumentType>
         </View>
       </Header>
       <Contacts>
@@ -292,22 +288,22 @@ export default function OrderPrinter({ document }: Props): ReactElement {
           <Text></Text>
         </View>
         <View style={{ flex: 2, borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, marginRight: 20, paddingTop: 6 }}>
-          <Text style={{ fontSize: 8, fontWeight: 'bold', fontFamily: 'Oswald Medium', color: Colors.GRAY3 }}>
-            VENDOR
+          <Text style={{ fontSize: 9, fontWeight: 'bold', fontFamily: 'Oswald Medium', color: Colors.GRAY3 }}>
+            { t('vendor') }
           </Text>
-          <ContactForm contact={document.vendor}/>
+          <ContactForm contact={document.vendor} simple={false}/>
         </View>
         <View style={{ flex: 2, borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, paddingTop: 6 }}>
-          <Text style={{ fontSize: 8, fontWeight: 'bold', fontFamily: 'Oswald Medium', color: Colors.GRAY3 }}>
-            CUSTOMER
-            </Text>
-          <ContactForm contact={document.customer}/>
+          <Text style={{ fontSize: 9, fontWeight: 'bold', fontFamily: 'Oswald Medium', color: Colors.GRAY3 }}>
+            { t('customer') }
+          </Text>
+          <ContactForm contact={document.customer} simple={false}/>
         </View>
       </Contacts>
       <Contacts>
         <View style={{ flex: 1, borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, marginRight: 20, paddingTop: 6 }}>
-          <DefaultTextLabel>Date Posted</DefaultTextLabel>
-          <DefaultTextLabel>Delivery Date</DefaultTextLabel>
+          <DefaultTextLabel>{ t('datePosted') }</DefaultTextLabel>
+          <DefaultTextLabel>{ t('dateDelivered') }</DefaultTextLabel>
         </View>
         <View style={{ flex: 2, borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, marginRight: 20, paddingTop: 6 }}>
           <DefaultTextValue>{PatternApp.format.date(document.createdAt)}</DefaultTextValue>
@@ -315,13 +311,13 @@ export default function OrderPrinter({ document }: Props): ReactElement {
         </View>
         <View style={{ flex: 2, flexDirection: 'row',  borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, paddingTop: 6 }}>
           <View style={{ flex: 1, flexDirection: 'column' }}>
-            <DefaultTextLabel>Payment Method</DefaultTextLabel>
+            <DefaultTextLabel>{ t('paymentMethod') }</DefaultTextLabel>
             { paymentMethod.code === PaymentMethod.bankTransfer.code &&
               <React.Fragment>
-                <DefaultTextLabel>Bank</DefaultTextLabel>
-                <DefaultTextLabel>Bank Account</DefaultTextLabel>
-                <DefaultTextLabel>Variable Symbol</DefaultTextLabel>
-                <DefaultTextLabel>Constant Symbol</DefaultTextLabel>
+                <DefaultTextLabel>{ t('bank') }</DefaultTextLabel>
+                <DefaultTextLabel>{ t('bankAccount') }</DefaultTextLabel>
+                <DefaultTextLabel>{ t('variableSymbol') }</DefaultTextLabel>
+                <DefaultTextLabel>{ t('constantSymbol') }</DefaultTextLabel>
               </React.Fragment>
             }
           </View>
@@ -362,9 +358,10 @@ export default function OrderPrinter({ document }: Props): ReactElement {
         position: 'absolute'
       }}>
         <Column style={{ flex: 1 }}></Column>
-        <Column style={{ flex: 1 }} className="patterns-item-document-signature">
-          <DefaultText style={{ textAlign: 'right' }}>.......................................................</DefaultText>
-          <DefaultText style={{ textAlign: 'right', fontFamily: 'Oswald Light', fontSize: 7, textTransform: 'uppercase', colors: Colors.LIGHT_GRAY1 }}>{t('signature')}</DefaultText>
+        <Column style={{ flex: 1, justifyContent: 'right' }} className="patterns-item-document-signature">
+          <Image src={document.signature} style={{ width: '40mm' }}/>
+          <DefaultText style={{ textAlign: 'right', marginTop: -20 }}>.......................................................</DefaultText>
+          <DefaultText style={{ textAlign: 'right', fontFamily: 'Oswald Light', fontSize: 8, textTransform: 'uppercase', colors: Colors.LIGHT_GRAY1 }}>{t('signature')}</DefaultText>
         </Column>
       </Row>
     </React.Fragment>
@@ -377,50 +374,47 @@ export default function OrderPrinter({ document }: Props): ReactElement {
       { renderHeader(0) }
     </React.Fragment>
 
-    const footer = page => <View 
+
+    const footer = page => <View
       fixed
-      key={`footer-${page}`} 
-      style={{ 
+      key={`footer-${page}`}
+      style={{
         position: 'absolute',
-        bottom: '10mm', 
+        bottom: '10mm',
         width: '100vw',
-        fontSize: 8,
-        fontFamily: 'Oswald Light', 
+        fontSize: 9,
+        fontFamily: 'Oswald Light',
         flexDirection: 'row',
         display: 'flex',
         paddingLeft: '12mm',
         paddingRight: '12mm',
-      }}
-      render={(props) => {
-        console.log('pageNumber', props.pageNumber, 'totalPages', props)
-        return <React.Fragment>
-          <Text
-            style={{ flex: 1, textAlign: 'left' }}
-            key={`footer-page-company-${page}`}
-          >{ PatternApp.settings.company.name }
-          </Text>
+      }}>
+      <Text
+        style={{ flex: 1, textAlign: 'left' }}
+        key={`footer-page-company-${page}`}
+      >{ PatternApp.settings.company.name }
+      </Text>
 
-          <Text
-            style={{ flex: 1, textAlign: 'right' }}
-            key={`footer-page-${page}`}>
-            { `${t('page')} ${props.pageNumber} / ${getPages()}`}
-          </Text>
-        </React.Fragment>
-      }}
-    />
+      <Text
+        fixed
+        style={{ flex: 1, textAlign: 'right' }}
+        key={`footer-page-${page}`}
+        render={({ pageNumber, totalPages }) =>{
+          console.log('pag', pageNumber, 'total', totalPages)
+          return `${t('page')} ${pageNumber} / ${totalPages}`
+        }
+      }/>
+    </View>
+
 
     if (document.items.length <= 18) {
       // single page
-      pages.push(<Page size="A4" style={styles.page}>
+      pages.push(<Page key={`page-0`} size="A4" style={styles.page}>
         { head }
-        <View key={`items-header`} style={{ marginTop: '6mm' }}>
-          { renderHeader(0) }
-        </View>
         { renderItems(0, document.items.length) }
         { renderEnding(0) }
         { footer(0) }
       </Page>)
-
       return pages
     } else {
       // first page

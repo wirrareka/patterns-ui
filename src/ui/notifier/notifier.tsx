@@ -3,6 +3,7 @@ import { IconName, Toaster, Position, ProgressBar } from '@blueprintjs/core'
 
 import './notifier.scss'
 import { FlexColumn } from '../../components';
+import { t } from '../../locale_manager';
 
 export const PatternAppToaster = Toaster.create({
   className: "patterns-notifier",
@@ -22,7 +23,7 @@ export default class Notifier {
     return PatternAppToaster.show({
       message: <FlexColumn style={{ alignItems: 'center' }}>
         <ProgressBar intent="primary"/>
-        <div className="patterns-notifier-message">please wait</div>
+        <div className="patterns-notifier-message">{t('pleaseWait')}</div>
       </FlexColumn>,
       icon,
       intent: 'none',

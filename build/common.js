@@ -36,7 +36,16 @@ export var formatDateTime = function (date) {
     return moment(date).format(DateTimeFormat);
 };
 export var formatPrice = function (price, currency) {
-    var elements = [(price || 0).toFixed(2)];
+    var elements = [];
+    if (typeof price === 'number') {
+        elements.push((price || 0).toFixed(2));
+    }
+    else if (typeof price === 'string') {
+        elements.push((parseFloat(price)).toFixed(2));
+    }
+    else {
+        elements.push(price.round(2).getValue());
+    }
     if (currency) {
         elements.push(currency.symbol);
     }

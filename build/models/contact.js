@@ -38,6 +38,9 @@ var Contact = /** @class */ (function (_super) {
         _this.vatPayerId = deserializeString(data.vatPayerId);
         return _this;
     }
+    Contact.prototype.getName = function () {
+        return this.name || this.fullName;
+    };
     Object.defineProperty(Contact.prototype, "fullName", {
         get: function () {
             return [this.firstName, this.lastName].filter(function (f) { return f && f.length > 0; }).join(' ');

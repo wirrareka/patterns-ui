@@ -1,5 +1,6 @@
 import moment from 'moment'
 import Currency from './models/currency'
+import bigDecimal from 'js-big-decimal'
 
 export const DEFAULT_HOUR = 3
 export const DAY_MS = 1000 * 3600 * 24
@@ -48,11 +49,20 @@ export const formatDateTime = (date: string | Date) => {
   return moment(date).format(DateTimeFormat)
 }
 
-export const formatPrice = (price: number, currency: Currency) => {
-  const elements = [ (price || 0).toFixed(2) ]
+export const formatPrice = (price: bigDecimal | number | string, currency: Currency) => {
+  const elements = []
+  if (typeof price === 'number') {
+    elements.push((price || 0).toFixed(2))
+  } else if (typeof price === 'string') {
+    elements.push((parseFloat(price)).toFixed(2))
+  } else {
+    elements.push(price.round(2).getValue())
+  }
+
   if (currency) {
     elements.push(currency.symbol)
   }
+
   return elements.join(' ')
 }
 

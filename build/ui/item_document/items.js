@@ -33,10 +33,13 @@ var DocumentItemsView = /** @class */ (function (_super) {
     DocumentItemsView.prototype.change = function (item) {
         var items = this.props.document.items.map(function (item) { return new DocumentItem(item.clone); });
         items.splice(item.index, 1, item);
+        // reindex
+        items.forEach(function (item, index) { return item.index = index; });
         this.props.onChange(items);
     };
     DocumentItemsView.prototype.trash = function (item) {
         var items = this.props.document.items.map(function (item) { return new DocumentItem(item.clone); });
+        console.log('trashing item with index', item.index);
         items.splice(item.index, 1);
         this.props.onChange(items);
     };
@@ -46,14 +49,19 @@ var DocumentItemsView = /** @class */ (function (_super) {
         items.forEach(function (item, index) { return item.index = index; });
         this.props.onChange(items);
     };
+    DocumentItemsView.prototype.lock = function (item) {
+        item.vatTotalOnly = !item.vatTotalOnly;
+        this.change(item);
+    };
     DocumentItemsView.prototype.renderItems = function () {
         var _this = this;
         var currency = PatternApp.getCurrency(this.props.document.currency);
         return this.props.document.items.map(function (item, index) {
             return React.createElement("div", { key: "item-document-item-" + index, style: { flex: 1 } },
                 React.createElement(Popover, { key: "document-item-popover-" + index, interactionKind: PopoverInteractionKind.HOVER, position: PopoverPosition.RIGHT },
-                    React.createElement(ItemRow, { currency: currency, item: item, onChange: _this.change, showVat: _this.props.showVat }),
+                    React.createElement(ItemRow, { free: _this.props.free || false, currency: currency, editableCode: _this.props.editableCode, item: item, onChange: _this.change, showVat: _this.props.showVat }),
                     React.createElement(ButtonGroup, null,
+                        React.createElement(Button, { minimal: true, intent: "none", icon: item.vatTotalOnly ? "unlock" : "lock", onClick: function () { return _this.lock(item); } }),
                         React.createElement(Button, { minimal: true, intent: "danger", icon: "trash", onClick: function () { return _this.trash(item); } }),
                         React.createElement(Button, { minimal: true, intent: "none", icon: "duplicate", onClick: function () { return _this.duplicate(item); } }))));
         });
@@ -66,20 +74,32 @@ var DocumentItemsView = /** @class */ (function (_super) {
                         t('title'),
                         " / ",
                         t('code'))),
-                React.createElement(Column, { flex: 3 },
-                    React.createElement(ItemDocumentTableHeader, { align: "right" }, t('unitPriceNoVat'))),
-                React.createElement(Column, { flex: 2 },
-                    React.createElement(ItemDocumentTableHeader, { align: "right" }, t('quantity'))),
-                React.createElement(Column, { flex: 3 },
-                    React.createElement(ItemDocumentTableHeader, { align: "right" }, t('linePriceNoVat'))),
-                this.props.showVat &&
+                !this.props.free && React.createElement(React.Fragment, null,
+                    React.createElement(Column, { flex: 2 },
+                        React.createElement(ItemDocumentTableHeader, { align: "right" }, t('unitPriceNoVat'))),
+                    React.createElement(Column, { flex: 2 },
+                        React.createElement(ItemDocumentTableHeader, { align: "right" }, t('unitPriceWithVat'))),
+                    React.createElement(Column, { flex: 2 },
+                        React.createElement(ItemDocumentTableHeader, { align: "right" }, t('quantity'))),
+                    React.createElement(Column, { flex: 3 },
+                        React.createElement(ItemDocumentTableHeader, { align: "right" }, t('linePriceNoVat')))),
+                !this.props.free && this.props.showVat &&
                     React.createElement(React.Fragment, null,
                         React.createElement(Column, { flex: 2 },
                             React.createElement(ItemDocumentTableHeader, { align: "right" }, t('vat'))),
                         React.createElement(Column, { flex: 2 },
                             React.createElement(ItemDocumentTableHeader, { align: "right" }, t('vatPrice'))),
                         React.createElement(Column, { flex: 3 },
-                            React.createElement(ItemDocumentTableHeader, { align: "right" }, t('linePriceWithVat'))))),
+                            React.createElement(ItemDocumentTableHeader, { align: "right" }, t('linePriceWithVat')))),
+                this.props.free && React.createElement(React.Fragment, null,
+                    React.createElement(Column, { flex: 2 },
+                        React.createElement(ItemDocumentTableHeader, { align: "right" })),
+                    React.createElement(Column, { flex: 3 },
+                        React.createElement(ItemDocumentTableHeader, { align: "right" })),
+                    React.createElement(Column, { flex: 2 },
+                        React.createElement(ItemDocumentTableHeader, { align: "right" })),
+                    React.createElement(Column, { flex: 3 },
+                        React.createElement(ItemDocumentTableHeader, { align: "right" }, t('linePriceWithVat'))))),
             this.renderItems());
     };
     return DocumentItemsView;

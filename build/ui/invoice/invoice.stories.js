@@ -36,10 +36,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import React, { useState } from "react";
 import faker from 'faker';
-// import logo from '../assets/patterns-logo.png'
 import { Contact, Currency, Invoice, PaymentMethod } from '../../models';
 import InvoiceView from './invoice_view';
 import PatternApp from "../../demo_app";
+import { FlexColumn, Toolbar } from "../../components";
+import { BlobProvider, PDFViewer } from "@react-pdf/renderer";
+import InvoicePrinter from "../../printers/invoice_printer";
+import { Button } from "@blueprintjs/core";
+import signature from '../../assets/signature.png';
+import logo from '../../assets/patterns-logo.png';
 export default {
     title: "Invoice"
 };
@@ -71,15 +76,21 @@ var testInvoice = new Invoice({
     price: randomPrice,
     price_with_vat: randomPrice * 1.2,
     dueAt: faker.date.future(),
-    note: faker.random.words(),
+    note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ipsum risus, lacinia ut elit in, egestas laoreet nunc. Vivamus mollis consequat velit, et pulvinar nulla molestie at.\n  Quisque sit amet nunc in arcu euismod scelerisque. Suspendisse id imperdiet augue, elementum accumsan libero. Nulla tincidunt erat libero, eu ornare nisi aliquet id. Nulla in felis accumsan\n  risus molestie consectetur. Maecenas vel sapien euismod, tempus est quis, posuere massa. Aenean eget Cnibus lacus, et venenatis augue. jras scelerisque volutpat nisl, ut rutrum xusto\n  pellentesque eu. Vestibulum ut Cnibus massa. Vestibulum eGcitur eu massa vitae sollicitudin. Nulla aliquam ultricies odio, sed facilisis nunc porttitor ac. Nulla aliquet mattis neque et\n  porta. Etiam tempus dolor at erat aliquam sagittis. Praesent pharetra dolor nec tempor elementum.",
     items: [],
     datePosted: faker.date.past(),
     paymentMethods: [PaymentMethod.cash, PaymentMethod.bankTransfer],
-    dueDate: faker.date.future()
+    dueDate: faker.date.future(),
+    signature: signature,
+    logo: logo
 });
 export var AllFeatures = function () {
     var _a = useState(testInvoice), invoice = _a[0], setInvoice = _a[1];
-    return React.createElement(InvoiceView, { logo: PatternApp.settings.logo, document: invoice, onChange: function (property, value) {
+    return React.createElement(InvoiceView, { editableCode: false, fetchNames: function (query) { return __awaiter(void 0, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, []];
+            });
+        }); }, logo: PatternApp.settings.logo, signature: PatternApp.settings.signature, document: invoice, onChange: function (property, value) {
             var clone = new Invoice(invoice.clone);
             clone[property] = value;
             setInvoice(clone);
@@ -88,5 +99,27 @@ export var AllFeatures = function () {
                 return [2 /*return*/, [customer, genCustomer(), genCustomer(), genCustomer()]];
             });
         }); } });
+};
+export var Print = function () {
+    var _a = useState(testInvoice), invoice = _a[0], setInvoice = _a[1];
+    return React.createElement(FlexColumn, { flex: 1 },
+        React.createElement(Toolbar, null,
+            React.createElement(BlobProvider, { document: React.createElement(InvoicePrinter, { document: invoice }) }, function (_a) {
+                var blob = _a.blob, url = _a.url, loading = _a.loading, error = _a.error;
+                console.log('url', url, 'loading', loading);
+                return React.createElement(Button, { icon: "print", text: "Print", onClick: function () {
+                        var data = window.URL.createObjectURL(blob);
+                        var link = document.createElement('a');
+                        link.href = data;
+                        link.download = "file.pdf";
+                        link.click();
+                        setTimeout(function () {
+                            // For Firefox it is necessary to delay revoking the ObjectURL
+                            window.URL.revokeObjectURL(data);
+                        }, 100);
+                    }, minimal: true, small: true, style: { height: 28, alignSelf: 'center' } });
+            })),
+        React.createElement(PDFViewer, { style: { height: '100vh' } },
+            React.createElement(InvoicePrinter, { document: invoice })));
 };
 //# sourceMappingURL=invoice.stories.js.map

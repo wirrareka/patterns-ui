@@ -1,7 +1,7 @@
-import ItemDocument from './item_document'
+import NamedItemDocument from './item_document'
 import { deserializeDate } from '../common'
 
-export default class PriceQuote extends ItemDocument {
+export default class PriceQuote extends NamedItemDocument {
   validTill: Date
 
   constructor(_data: any) {

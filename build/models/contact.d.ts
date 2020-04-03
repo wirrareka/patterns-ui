@@ -1,7 +1,6 @@
 import BaseModel from './base_model';
-import { Contactable } from '../interfaces';
-export default class Contact extends BaseModel implements Contactable {
-    code: string;
+import { Contactable, Nameable } from '../interfaces';
+export default class Contact extends BaseModel implements Contactable, Nameable {
     name: string;
     street: string;
     street2: string;
@@ -19,5 +18,6 @@ export default class Contact extends BaseModel implements Contactable {
     vatId: string;
     vatPayerId: string;
     constructor(_data: any);
+    getName(): string;
     get fullName(): string;
 }

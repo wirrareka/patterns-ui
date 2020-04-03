@@ -12,40 +12,59 @@ import { FlexColumn as Column, FlexRow as Row } from '../../components'
 
 import ItemsView from '../item_document/items'
 import ContactForm from '../item_document/contact_form'
+import Named from '../../interfaces/named'
+import InvoicePrinter from '../../printers/invoice_printer'
 
 const PaymentMethodSelect = Select.ofType<PaymentMethod>()
 const InvoiceItemsView = ItemsView.ofType<Invoice>()
+const NamedSelect = Select.ofType<Named>()
 
 export interface Props {
+  editableCode: boolean
   document: Invoice
   logo?: string
+  signature?: string
   onChange: <K extends keyof Invoice>(property: K, value: Invoice[K]) => void
-  fetch: (query: string) => Promise<Contact[]>
+  fetch: (query: string) => Promise<Contact[]>,
+  fetchNames: (query: string) => Promise<Named[]>
 }
 
-export default class InvoiceView extends Component<Props> {
+export interface State {
+  people: Named[]
+}
+
+export default class InvoiceView extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
+
+    this.state = {
+      people: []
+    }
+  }
+
+  componentDidMount() {
+    this.props.fetch(this.props.document.customer.name || '')
+    this.props.fetchNames(this.props.document.issuedBy || '')
   }
 
   renderVatRecap(currency: Currency) {
-    const header = this.props.document.vats.length > 0 ? 
+    const header = this.props.document.vats.length > 0 ?
       <Row flex={1} style={{ paddingTop: 24 }}>
-        <Column flex={4}></Column>
-        <Column flex={2} className="patterns-item-document-header-column">{t('vatRecap')}</Column>
-        <Column flex={1} className="patterns-item-document-header-column bordered">{t('vat')}</Column>
-        <Column flex={1} className="patterns-item-document-header-column bordered">{t('vatBase')}</Column>
-        <Column flex={2} className="patterns-item-document-header-column bordered">{t('vatValue')}</Column>
+        <Column flex={11}></Column>
+        <Column flex={3} className="patterns-item-document-header-column">{t('vatRecap')}</Column>
+        <Column flex={2} className="patterns-item-document-header-column bordered">{t('vat')}</Column>
+        <Column flex={2} className="patterns-item-document-header-column bordered">{t('vatBase')}</Column>
+        <Column flex={3} className="patterns-item-document-header-column bordered">{t('vatValue')}</Column>
       </Row>
       :
       null
 
-    const rows = this.props.document.vats.map((vat, index) => 
+    const rows = this.props.document.vats.map((vat, index) =>
       <Row key={`invoice-vat-${index}`} flex={1} style={{ height: 24, alignItems: 'center' }}>
-        <Column flex={6}></Column>
-        <Column style={{ textAlign: 'right' }} flex={1}>{ vat.vat }%</Column>
-        <Column style={{ textAlign: 'right' }} flex={1}>{ PatternApp.format.price(vat.base, currency) }</Column>
-        <Column style={{ textAlign: 'right' }} flex={2}>{ PatternApp.format.price(vat.price, currency) }</Column>
+        <Column flex={14}></Column>
+        <Column style={{ textAlign: 'right' }} flex={2}>{ vat.vat } %</Column>
+        <Column style={{ textAlign: 'right' }} flex={2}>{ PatternApp.format.price(vat.base, currency) }</Column>
+        <Column style={{ textAlign: 'right' }} flex={3}>{ PatternApp.format.price(vat.price, currency) }</Column>
       </Row>
     )
 
@@ -57,12 +76,10 @@ export default class InvoiceView extends Component<Props> {
 
   renderTotal(currency: Currency) {
     return <Row flex={1} style={{ height: 42, alignItems: 'center' }}>
-      <Column flex={4}></Column>
-      <Column flex={2} className="patterns-item-document-header-column">{t('total')}</Column>
-      <Column flex={4} className="patterns-item-document-total">
-        { PatternApp.format.price(PatternApp.settings.invoices.showVat ? 
-          this.props.document.itemsTotal : this.props.document.itemsTotalWithVat, 
-          currency) }
+      <Column flex={11}></Column>
+      <Column flex={3} className="patterns-item-document-header-column">{t('total')}</Column>
+      <Column flex={7} className="patterns-item-document-total">
+        { PatternApp.format.price(PatternApp.settings.invoices.showVat ? this.props.document.itemsTotalWithVat : this.props.document.itemsTotal, currency) }
       </Column>
     </Row>
   }
@@ -72,13 +89,22 @@ export default class InvoiceView extends Component<Props> {
     const currency = PatternApp.getCurrency(this.props.document.currency)
 
     return <Wrapper>
-      <Page>
+      <Page style={{ padding: '12mm' }}>
         <Header>
           <Logo>
             { this.props.logo && <img alt="logo" src={this.props.logo}/> }
           </Logo>
-          <Column style={{ flex: 1 }}>
-            <HeaderCode>{ this.props.document.code || t('invoice.new') }</HeaderCode>
+          <Column flex={4} style={{ flex: 4 }}>
+            <HeaderCode>
+              <InputGroup
+                fill
+                disabled
+                defaultValue={ this.props.document.code }
+                // value={this.props.document.name || t('invoice.new')}
+                // onChange={(evt: any) => this.props.onChange('name', evt.currentTarget.value)}
+                className="patterns-item_document-header-name"
+              />
+            </HeaderCode>
             <DocumentType>{ t('invoice.type') }</DocumentType>
           </Column>
         </Header>
@@ -116,6 +142,7 @@ export default class InvoiceView extends Component<Props> {
         <Row className="patterns-item-document-dates">
           <Row flex={1} className="patterns-item-document-dates-column" style={{ marginRight: 30 }}>
             <Column flex={1}>
+              <Row className="patterns-item-document-detail-select">{ t('issuedBy') }</Row>
               <Row className="patterns-item-document-detail">{ t('datePosted') }</Row>
               <Row className="patterns-item-document-detail">{ t('dateDelivered') }</Row>
               <Row className="patterns-item-document-detail">{ t('dateDue') }</Row>
@@ -123,6 +150,20 @@ export default class InvoiceView extends Component<Props> {
           </Row>
           <Row flex={2} className="patterns-item-document-dates-column">
             <Column style={{ marginLeft: 5, fontWeight: 'bold' }}>
+              <NamedSelect
+                className="patterns-item-document-select-offset"
+                items={this.state.people}
+                itemRenderer={(item, options) => <MenuItem key={`patterns-item-document-issued-${item.id}`} text={item.name} onClick={options.handleClick} />}
+                onItemSelect={async item => {
+                  await this.props.onChange('issuedBy', item.name)
+                  await this.props.onChange('issuedById', item.id)
+                }}
+                onQueryChange={async query => {
+                  const people = await this.props.fetchNames(query)
+                  this.setState({ people })
+                }}>
+                <Button minimal text={this.props.document.issuedBy} rightIcon="chevron-down" />
+              </NamedSelect>
               <DateInput
                 formatDate={PatternApp.format.date}
                 parseDate={PatternApp.format.parseDate}
@@ -148,7 +189,7 @@ export default class InvoiceView extends Component<Props> {
               <Row className="patterns-item-document-detail-select">
                 { t('paymentMethod') }
               </Row>
-              { paymentMethod.code === PaymentMethod.bankTransfer.code && 
+              { paymentMethod.code === PaymentMethod.bankTransfer.code &&
                 <React.Fragment>
                   <Row className="patterns-item-document-detail">
                     { t('bank') }
@@ -156,12 +197,14 @@ export default class InvoiceView extends Component<Props> {
                   <Row className="patterns-item-document-detail">
                     { t('bankAccount') }
                   </Row>
-                  <Row className="patterns-item-document-detail">
-                    { t('variableSymbol') }
-                  </Row>
-                  <Row className="patterns-item-document-detail">
-                    { t('constantSymbol') }
-                  </Row>
+                  { PatternApp.settings.invoices.showSymbols && <React.Fragment>
+                    <Row className="patterns-item-document-detail">
+                      { t('variableSymbol') }
+                    </Row>
+                    <Row className="patterns-item-document-detail">
+                      { t('constantSymbol') }
+                    </Row>
+                  </React.Fragment>}
                 </React.Fragment>
               }
             </Column>
@@ -178,7 +221,7 @@ export default class InvoiceView extends Component<Props> {
                   <Button style={{ marginLeft: -10, fontWeight: 'bold' }} minimal rightIcon="chevron-down" text={paymentMethod.title}/>
                 </PaymentMethodSelect>
               </Row>
-              { paymentMethod.code === PaymentMethod.bankTransfer.code && 
+              { paymentMethod.code === PaymentMethod.bankTransfer.code &&
                 <React.Fragment>
                   <Row className="patterns-item-document-detail">
                     { PatternApp.settings.bank.name }
@@ -186,12 +229,14 @@ export default class InvoiceView extends Component<Props> {
                   <Row className="patterns-item-document-detail">
                     { PatternApp.settings.bank.account }
                   </Row>
-                  <Row className="patterns-item-document-detail">
-                    { this.props.document.code }
-                  </Row>
-                  <Row className="patterns-item-document-detail">
-                    0308
-                  </Row>
+                  { PatternApp.settings.invoices.showSymbols && <React.Fragment>
+                    <Row className="patterns-item-document-detail">
+                      { this.props.document.code }
+                    </Row>
+                    <Row className="patterns-item-document-detail">
+                      0308
+                    </Row>
+                  </React.Fragment>}
                 </React.Fragment>
               }
             </Column>
@@ -199,6 +244,7 @@ export default class InvoiceView extends Component<Props> {
         </Row>
 
         <InvoiceItemsView
+          editableCode={this.props.editableCode}
           showVat={PatternApp.settings.invoices.showVat}
           document={this.props.document}
           onChange={items => this.props.onChange('items', items)}
@@ -218,11 +264,11 @@ export default class InvoiceView extends Component<Props> {
               }}
             />
           </Row>
-          <Column flex={10} style={{ paddingTop: 24 }}>
-            { PatternApp.settings.invoices.showVat && this.renderVatRecap(currency) }
-            { this.renderTotal(currency) }
-          </Column>
+          <Row flex={10} style={{ paddingTop: 24 }}>
+          </Row>
         </Row>
+        { PatternApp.settings.invoices.showVat && this.renderVatRecap(currency) }
+        { this.renderTotal(currency) }
         <Row flex={1} style={{ paddingTop: 48 }}>
           <ControlGroup fill style={{ flex: 1 }}>
             <FormGroup label={t('note')}>
@@ -238,7 +284,8 @@ export default class InvoiceView extends Component<Props> {
         <Row style={{ marginTop: 120 }}>
           <Column flex={1}></Column>
           <Column flex={1} className="patterns-item-document-signature">
-            <div>.......................................................</div>
+            { this.props.signature && <img alt="logo" src={this.props.signature}/> }
+            <div className="dots">.......................................................</div>
             <div>{t('signature')}</div>
           </Column>
         </Row>

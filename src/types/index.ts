@@ -1,11 +1,12 @@
 import Currency from '../models/currency'
+import bigDecimal from 'js-big-decimal'
 
 export { PatternSettings } from './pattern_settings'
 export { Locale } from './locale'
 
 export type FormatDateType = (date: Date) => string
 export type ParseDateType = (date: string) => Date
-export type FormatPriceType = (price: number, currency?: Currency) => string
+export type FormatPriceType = (price: bigDecimal | number, currency?: Currency) => string
 
 export type Selection = { [id: string]: boolean }
 

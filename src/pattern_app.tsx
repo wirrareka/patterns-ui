@@ -12,6 +12,16 @@ export class PatternApp extends Observable {
     Failure: 'notify-failure'
   }
 
+  constructor() {
+    super()
+    this.configure = this.configure.bind(this)
+    this.getCurrency = this.getCurrency.bind(this)
+    this.getPaymentMethod = this.getPaymentMethod.bind(this)
+    this.confirm = this.confirm.bind(this)
+    this.success = this.success.bind(this)
+    this.failure = this.failure.bind(this)
+  }
+
   configure(settings: PatternSettings) {
     const defaults = {
       name: '',

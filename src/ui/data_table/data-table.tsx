@@ -65,7 +65,7 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
       pageSize: 50,
       total: 0,
       sort: this.props.columns[0].id,
-      sortDir: 'asc',
+      sortDir: this.props.sortDir,
       items: [],
       loading: false,
       selection: {},
@@ -416,7 +416,6 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
   }
 
   render() {
-    console.log('rendering', this.props)
     return <Container>
       {this.renderHeader()}
       <Content>
@@ -426,10 +425,12 @@ export default class DataTable<T> extends Component<Props<T>, State<T>> {
       <Toolbar>
         <FlexRow flex={1}>
           <Button minimal={true} icon="refresh" onClick={() => this.fetch()}/>
-          { this.formatSelection() }
-          <div className="patterns-data-table-pagination-actions">{ this.props.actions && this.props.actions }</div>
+          { this.props.multiple && this.formatSelection() }
+          { this.props.multiple &&
+            <div className="patterns-data-table-pagination-actions">{ this.props.actions && this.props.actions }</div>
+          }
         </FlexRow>
-        <FlexColumn flex={2}>
+        <FlexColumn style={{ width: 600 }}>
           { this.renderPagination() }
         </FlexColumn>
         <FlexColumn flex={1}>

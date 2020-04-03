@@ -17,12 +17,18 @@ import Observable from "./observable";
 var PatternApp = /** @class */ (function (_super) {
     __extends(PatternApp, _super);
     function PatternApp() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super.call(this) || this;
         _this.Events = {
             Confirm: 'confirm',
             Success: 'notify-success',
             Failure: 'notify-failure'
         };
+        _this.configure = _this.configure.bind(_this);
+        _this.getCurrency = _this.getCurrency.bind(_this);
+        _this.getPaymentMethod = _this.getPaymentMethod.bind(_this);
+        _this.confirm = _this.confirm.bind(_this);
+        _this.success = _this.success.bind(_this);
+        _this.failure = _this.failure.bind(_this);
         return _this;
     }
     PatternApp.prototype.configure = function (settings) {

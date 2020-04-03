@@ -11,7 +11,18 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import ItemDocument from './item_document';
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+import NamedItemDocument from './named_item_document';
 import Return from './return';
 import { deserializeNumber } from '../common';
 var Order = /** @class */ (function (_super) {
@@ -22,25 +33,18 @@ var Order = /** @class */ (function (_super) {
         _this.returnCosts = deserializeNumber(data.returnCosts);
         return _this;
     }
-    Object.defineProperty(Order.prototype, "itemsTotal", {
-        get: function () {
-            return this.items.reduce(function (total, item) { return total += item.linePrice; }, 0);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Order.prototype, "itemsTotalWithVat", {
-        get: function () {
-            return this.items.reduce(function (total, item) { return total += item.linePriceWithVat; }, 0);
-        },
-        enumerable: true,
-        configurable: true
-    });
     Order.prototype.recalculate = function () {
         _super.prototype.recalculate.call(this);
         this.returnCosts = this.returns.reduce(function (costs, next) { return costs += next.costs; }, 0);
     };
+    Object.defineProperty(Order.prototype, "json", {
+        get: function () {
+            return __assign(__assign({}, this._json), { returns: this.returns, returnCosts: this.returnCosts });
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Order;
-}(ItemDocument));
+}(NamedItemDocument));
 export default Order;
 //# sourceMappingURL=order.js.map

@@ -21,7 +21,8 @@ var Confirm = /** @class */ (function (_super) {
     function Confirm(props) {
         var _this = _super.call(this, props) || this;
         _this.state = {
-            isOpen: false
+            isOpen: false,
+            icon: 'help'
         };
         _this.onConfirm = _this.onConfirm.bind(_this);
         return _this;
@@ -43,14 +44,15 @@ var Confirm = /** @class */ (function (_super) {
             isOpen: true,
             title: data.title,
             description: data.description,
-            action: data.action
+            action: data.action,
+            icon: data.icon || 'help'
         });
     };
     Confirm.prototype.render = function () {
         var _this = this;
         return React.createElement(Dialog, { isOpen: this.state.isOpen, onClose: function () { return _this.setState({ isOpen: false }); } },
             React.createElement("div", { className: Classes.DIALOG_BODY },
-                React.createElement(NonIdealState, { icon: "help", title: this.state.title, description: this.state.description, action: React.createElement(FlexRow, null,
+                React.createElement(NonIdealState, { icon: this.state.icon, title: this.state.title, description: this.state.description, action: React.createElement(FlexRow, null,
                         React.createElement(Button, { icon: "cross", text: t('cancel'), minimal: true, style: { marginRight: 12 }, onClick: function () { return _this.setState({ isOpen: false }); } }),
                         React.createElement("div", { onClick: function (evt) { return _this.setState({ isOpen: false }); } }, this.state.action)) })));
     };

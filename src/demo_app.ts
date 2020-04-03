@@ -3,6 +3,8 @@ import PatternApp from './pattern_app'
 import { Contact, Currency, PaymentMethod } from './models'
 import { formatDate, formatPrice, parseDate } from './common'
 import logo from './assets/patterns-logo.png'
+import signature from './assets/signature.png'
+import { localeManager } from './locale_manager'
 
 const company = new Contact({
   firstName: faker.name.firstName(),
@@ -26,6 +28,7 @@ const company = new Contact({
 PatternApp.configure({
   name: 'Patterns Demo',
   logo,
+  signature,
   bank: {
     name: 'SecretBank inc.',
     code: '123456',
@@ -47,10 +50,12 @@ PatternApp.configure({
     price: formatPrice
   },
   invoices: {
-    showVat: true
+    showVat: true,
+    showSymbols: false
   },
   orders: {
-    showVat: true
+    showVat: true,
+    showSymbols: false
   }
 })
 

@@ -1,9 +1,8 @@
 import BaseModel from './base_model'
-import { Contactable } from '../interfaces'
+import { Contactable, Nameable } from '../interfaces'
 import { deserializeString } from "../common"
 
-export default class Contact extends BaseModel implements Contactable {
-  code: string
+export default class Contact extends BaseModel implements Contactable, Nameable {
   name: string
   street: string
   street2: string
@@ -42,6 +41,10 @@ export default class Contact extends BaseModel implements Contactable {
     this.businessId = deserializeString(data.businessId)
     this.vatId = deserializeString(data.vatId)
     this.vatPayerId = deserializeString(data.vatPayerId)
+  }
+
+  getName() {
+    return this.name || this.fullName
   }
 
   get fullName() {

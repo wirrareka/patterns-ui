@@ -39,13 +39,20 @@ export default class ContactForm extends React.Component<Props, State> {
 
   renderSuggestItem(contact, options) {
     return <MenuItem
-      key={`contact-${this.props.contact.id}`}
-      text={this.props.contact.name.length > 0 ? contact.name : contact.fullName}
+      key={`contact-${contact.id}`}
+      text={contact.getName()}
       onClick={options.handleClick}
     />
   }
 
   renderSuggest() {
+    const newItem = (click: (evt: React.MouseEvent) => void) => <MenuItem
+      intent="success"
+      icon="plus"
+      text="Nový klient"
+      onClick={click}
+    />
+
     return <Row>
       <ContactSuggest
         fill
@@ -53,11 +60,17 @@ export default class ContactForm extends React.Component<Props, State> {
         items={this.state.results}
         inputValueRenderer={contact => contact.name || contact.fullName}
         itemRenderer={this.renderSuggestItem}
-        onItemSelect={this.props.onReplace}
+        onItemSelect={item => this.props.onReplace(item)}
         query={this.state.query}
         selectedItem={this.props.contact}
-        onQueryChange={query => this.props.onChange('name', query)}
-        noResults={ <MenuItem icon="plus" text="Nový klient"/> }
+        createNewItemFromQuery={(query) => new Contact({ name: query })}
+        createNewItemRenderer={(query, active, handleClick) => newItem(handleClick)}
+        noResults={ <MenuItem text={t('noResults')}/> }
+        onQueryChange={async query => {
+          await this.setState({ query })
+          const results = await this.props.fetch(query)
+          await this.setState({ results })
+        }}
       />
       <Button
         minimal

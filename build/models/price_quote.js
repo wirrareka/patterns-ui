@@ -11,7 +11,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import ItemDocument from './item_document';
+import NamedItemDocument from './item_document';
 import { deserializeDate } from '../common';
 var PriceQuote = /** @class */ (function (_super) {
     __extends(PriceQuote, _super);
@@ -23,6 +23,6 @@ var PriceQuote = /** @class */ (function (_super) {
         return _this;
     }
     return PriceQuote;
-}(ItemDocument));
+}(NamedItemDocument));
 export default PriceQuote;
 //# sourceMappingURL=price_quote.js.map

@@ -61,7 +61,7 @@
   }
 
   .patterns-item-document-dates-column {
-    border-top: 3px solid $light-gray3; 
+    border-top: 3px solid $light-gray3;
     padding-top: 10px;
   }
 
@@ -69,7 +69,7 @@
     height: 30px;
     align-items: center;
   }
-  
+
   .patterns-item-document-note {
     display: block;
     border: 1px solid $light-gray3;
@@ -97,9 +97,20 @@
     color: $gray3;
     text-transform: uppercase;
     text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    div.dots {
+      margin-top: -30px;
+    }
+  
+    img {
+      width: 200px;
+    }
   }
 
-  .bp3-form-group { 
+  .bp3-form-group {
     label.bp3-label {
       font-size: 12px;
       text-transform: uppercase;
@@ -111,8 +122,8 @@
   }
 
   .patterns-item-document-total {
-    border-top: 3px solid $light-gray3; 
-    text-align: right; 
+    border-top: 3px solid $light-gray3;
+    text-align: right;
     height: 32px;
     justify-content: center;
     font-size: 18px;
@@ -127,15 +138,29 @@
 
   .patterns-item_document-logo {
     flex: 1;
+    padding-top: 14px;
+
     img {
-      max-height: 60px;
+      max-width: 100%;
     }
   }
 
-  .patterns-item_document-header-code {
+  .patterns-item_document-header-name,
+  .patterns-item_document-header-name.bp3-input-group input.bp3-input {
     text-align: right;
     font-size: 36px;
     font-weight: bold;
+    height: 52px;
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+  .patterns-item_document-header-name.bp3-input-group input.bp3-input {
+    margin-right: -10px;
+  }
+
+  .patterns-item-document-select-offset {
+    margin-left: -10px;
   }
 
   .patterns-item_document-type {
@@ -282,5 +307,9 @@
       font-weight: bold;
       flex: 1;
     }
+  }
+
+  .faded {
+    opacity: 0.15;
   }
 }

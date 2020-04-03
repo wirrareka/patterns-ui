@@ -9,6 +9,7 @@ export declare class PatternApp extends Observable {
         Success: string;
         Failure: string;
     };
+    constructor();
     configure(settings: PatternSettings): void;
     get format(): {
         date: import("./types").FormatDateType;

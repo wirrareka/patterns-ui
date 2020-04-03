@@ -12,6 +12,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import BaseModel from './base_model';
+import bigDecimal from 'js-big-decimal';
 var OrderItem = /** @class */ (function (_super) {
     __extends(OrderItem, _super);
     function OrderItem(data) {
@@ -19,10 +20,10 @@ var OrderItem = /** @class */ (function (_super) {
         _this.name = data.name || '';
         _this.code = data.code || '';
         _this.quantity = data.quantity || 0;
-        _this.unitPriceWithVat = data.unitPriceWithVat || 0;
-        _this.linePrice = data.linePrice;
-        _this.linePriceWithVat = data.linePriceWithVat;
-        _this.price = data.price;
+        _this.unitPriceWithVat = new bigDecimal(data.unitPriceWithVat);
+        _this.linePrice = new bigDecimal(data.linePrice);
+        _this.linePriceWithVat = new bigDecimal(data.linePriceWithVat);
+        _this.price = new bigDecimal(data.price);
         _this.currency = data.currency;
         _this.vat = data.vat;
         _this.unit = data.unit;

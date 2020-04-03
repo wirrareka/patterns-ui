@@ -69,12 +69,18 @@ export default {
     vatBase: 'VAT Base',
     vatValue: 'VAT Value',
     unitPriceNoVat: 'UNIT PRICE ex VAT',
+    unitPriceWithVat: 'UNIT PRICE w VAT',
     linePriceNoVat: 'LINE PRICE ex VAT',
     linePriceWithVat: 'LINE PRICE with VAT',
     signature: 'Signature',
     total: 'Total',
     note: 'Note',
     delete: 'Delete',
-    cancel: 'Zrušiť'
+    cancel: 'Zrušiť',
+    issuedBy: 'Issued By',
+    noResults: 'No Results',
+    pleaseWait: 'Plaase Wait',
+    phone: 'Phone',
+    site: 'Website'
 };
 //# sourceMappingURL=en.js.map

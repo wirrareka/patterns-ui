@@ -12,6 +12,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 import BaseModel from './base_model';
+import bigDecimal from 'js-big-decimal';
 var InvoiceItem = /** @class */ (function (_super) {
     __extends(InvoiceItem, _super);
     function InvoiceItem(data) {
@@ -23,19 +24,19 @@ var InvoiceItem = /** @class */ (function (_super) {
         _this.item_description = data.item_description || '';
         _this.unit_id = data.unit_id || '';
         _this.unit_code = data.unit_code || '';
-        _this.unit_price = data.unit_price || 0;
-        _this.line_price = data.line_price || 0;
+        _this.unit_price = new bigDecimal(data.unit_price);
+        _this.line_price = new bigDecimal(data.line_price);
         _this.quantity = data.quantity || 0;
         _this.vat = data.vat || 0;
-        _this.vat_price = data.vat_price || 0;
-        _this.price_with_vat = data.price_with_vat || 0;
+        _this.vat_price = new bigDecimal(data.vat_price);
+        _this.price_with_vat = new bigDecimal(data.price_with_vat);
         _this.note = data.note || '';
         return _this;
     }
     InvoiceItem.prototype.recalculate = function () {
-        this.line_price = this.unit_price * this.quantity;
-        this.vat_price = this.line_price * (this.vat / 100);
-        this.price_with_vat = this.line_price + this.vat_price;
+        this.line_price = this.unit_price.multiply(new bigDecimal(this.quantity));
+        this.vat_price = this.line_price.multiply(new bigDecimal(this.vat).divide(new bigDecimal(100), 3));
+        this.price_with_vat = this.line_price.multiply(this.vat_price);
     };
     return InvoiceItem;
 }(BaseModel));

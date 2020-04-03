@@ -1,11 +1,54 @@
 import Orderable from '../interfaces/orderable';
-import ItemDocument from './item_document';
+import NamedItemDocument from './named_item_document';
 import Return from './return';
-export default class Order extends ItemDocument implements Orderable {
+export default class Order extends NamedItemDocument implements Orderable {
     returns: Return[];
     returnCosts: number;
     constructor(data: any);
-    get itemsTotal(): number;
-    get itemsTotalWithVat(): number;
     recalculate(): void;
+    get json(): {
+        returns: Return[];
+        returnCosts: number;
+        code: string;
+        note: string;
+        state: string;
+        items: {
+            id: string;
+            index: number;
+            name: string;
+            code: string;
+            unit: string;
+            quantity: number;
+            price: string;
+            unitPriceWithVat: string;
+            vatPrice: string;
+            linePrice: string;
+            linePriceWithVat: string;
+            currency: string;
+            vat: number;
+            vatTotalOnly: boolean;
+            createdAt: Date;
+            updatedAt: Date;
+            custom1: string;
+            custom2: string;
+            custom3: string;
+            custom4: string;
+        }[];
+        vendor: import("./contact").default;
+        customer: import("./contact").default;
+        currency: string;
+        paymentMethod: string;
+        total: string;
+        totalWithVat: string;
+        shippingDate: Date;
+        deliveryDate: Date;
+        shippingPrice: string;
+        shippingPriceWithVat: string;
+        shippingService: string;
+        shippingReference: string;
+        weight: number;
+        issuedBy: string;
+        issuedById: string;
+        signature: string;
+    };
 }

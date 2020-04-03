@@ -2,6 +2,7 @@ import React from 'react';
 import { Toaster, Position, ProgressBar } from '@blueprintjs/core';
 import './notifier.scss';
 import { FlexColumn } from '../../components';
+import { t } from '../../locale_manager';
 export var PatternAppToaster = Toaster.create({
     className: "patterns-notifier",
     position: Position.TOP,
@@ -21,7 +22,7 @@ var Notifier = /** @class */ (function () {
         return PatternAppToaster.show({
             message: React.createElement(FlexColumn, { style: { alignItems: 'center' } },
                 React.createElement(ProgressBar, { intent: "primary" }),
-                React.createElement("div", { className: "patterns-notifier-message" }, "please wait")),
+                React.createElement("div", { className: "patterns-notifier-message" }, t('pleaseWait'))),
             icon: icon,
             intent: 'none',
             timeout: 0

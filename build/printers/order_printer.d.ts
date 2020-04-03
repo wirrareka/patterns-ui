@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
-import { Order } from '../models';
+import { NamedItemDocument } from '../models';
 interface Props {
-    document: Order;
+    document: NamedItemDocument;
 }
 export default function OrderPrinter({ document }: Props): ReactElement;
 export {};

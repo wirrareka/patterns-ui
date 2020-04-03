@@ -32,7 +32,7 @@ export default {
     dateDue: 'Dátum splatnosti',
     paymentMethod: 'Spôsob úhrady',
     bank: 'Banka',
-    bankAccount: 'Číslo účtu',
+    bankAccount: 'IBAN',
     variableSymbol: 'Variabilný symbol',
     constantSymbol: 'Konštantný symbol',
     newItem: 'Nová položka',
@@ -69,12 +69,18 @@ export default {
     vatRecap: 'Rekapitulácia DPH',
     vatValue: 'Hodnota DPH',
     unitPriceNoVat: 'JEDN. CENA BEZ DPH',
+    unitPriceWithVat: 'JEDN. CENA s DPH',
     linePriceNoVat: 'CELKOM BEZ DPH',
     linePriceWithVat: 'CELKOM S DPH',
     signature: 'Podpis',
     total: 'Total',
     note: 'Note',
     delete: 'Zmazať',
-    cancel: 'Zrušiť'
+    cancel: 'Zrušiť',
+    issuedBy: 'Vystavil',
+    noResults: 'Žiadne výsledky',
+    pleaseWait: 'Prosím čakajte',
+    phone: 'Telefón',
+    site: 'Web'
 };
 //# sourceMappingURL=sk.js.map

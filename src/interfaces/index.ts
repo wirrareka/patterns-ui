@@ -2,6 +2,8 @@ import Contactable from './contactable'
 import Indexable from './indexable'
 import Invoicable from './invoicable'
 import ItemDocumentable from './item_documentable'
+import Nameable from './nameable'
+import Named from './named'
 import Notable from './notable'
 import Returnable from './returnable'
 import Sellable from './sellable'
@@ -14,6 +16,8 @@ export {
   Indexable,
   Invoicable,
   ItemDocumentable,
+  Nameable,
+  Named,
   Notable,
   Returnable,
   Sellable,

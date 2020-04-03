@@ -1,4 +1,5 @@
 import BaseModel from './base_model'
+import bigDecimal from 'js-big-decimal'
 
 export default class InvoiceItem extends BaseModel {
   invoice_id: string
@@ -8,12 +9,12 @@ export default class InvoiceItem extends BaseModel {
   item_description: string
   unit_id: string
   unit_code: string
-  unit_price: number
-  line_price: number
+  unit_price: bigDecimal
+  line_price: bigDecimal
   quantity: number
   vat: number
-  vat_price: number
-  price_with_vat: number
+  vat_price: bigDecimal
+  price_with_vat: bigDecimal
   note: string
 
   constructor(data: any) {
@@ -25,18 +26,18 @@ export default class InvoiceItem extends BaseModel {
     this.item_description = data.item_description || ''
     this.unit_id = data.unit_id || ''
     this.unit_code = data.unit_code || ''
-    this.unit_price = data.unit_price || 0
-    this.line_price = data.line_price || 0
+    this.unit_price = new bigDecimal(data.unit_price)
+    this.line_price = new bigDecimal(data.line_price)
     this.quantity = data.quantity || 0
     this.vat = data.vat || 0
-    this.vat_price = data.vat_price || 0
-    this.price_with_vat = data.price_with_vat || 0
+    this.vat_price = new bigDecimal(data.vat_price)
+    this.price_with_vat = new bigDecimal(data.price_with_vat)
     this.note = data.note || ''
   }
 
   recalculate() {
-    this.line_price = this.unit_price * this.quantity
-    this.vat_price = this.line_price * (this.vat / 100)
-    this.price_with_vat = this.line_price + this.vat_price
+    this.line_price = this.unit_price.multiply(new bigDecimal(this.quantity))
+    this.vat_price = this.line_price.multiply(new bigDecimal(this.vat).divide(new bigDecimal(100), 3))
+    this.price_with_vat = this.line_price.multiply(this.vat_price)
   }
 }

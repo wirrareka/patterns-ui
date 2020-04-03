@@ -1,10 +1,11 @@
 /// <reference types="react" />
 import Currency from '../models/currency';
+import bigDecimal from 'js-big-decimal';
 export { PatternSettings } from './pattern_settings';
 export { Locale } from './locale';
 export declare type FormatDateType = (date: Date) => string;
 export declare type ParseDateType = (date: string) => Date;
-export declare type FormatPriceType = (price: number, currency?: Currency) => string;
+export declare type FormatPriceType = (price: bigDecimal | number, currency?: Currency) => string;
 export declare type Selection = {
     [id: string]: boolean;
 };

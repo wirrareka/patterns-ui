@@ -6,6 +6,7 @@ import { FormatDateType, ParseDateType, FormatPriceType } from '../types'
 export type PatternSettings = {
   name: string
   logo: string
+  signature: string
   bank: {
     name: string
     code: string
@@ -28,8 +29,10 @@ export type PatternSettings = {
   },
   invoices: {
     showVat: boolean
+    showSymbols: boolean
   },
   orders: {
     showVat: boolean
+    showSymbols: boolean
   }
 }

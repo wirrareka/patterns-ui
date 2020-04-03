@@ -79,7 +79,7 @@ var DataTable = /** @class */ (function (_super) {
             pageSize: 50,
             total: 0,
             sort: _this.props.columns[0].id,
-            sortDir: 'asc',
+            sortDir: _this.props.sortDir,
             items: [],
             loading: false,
             selection: {},
@@ -400,7 +400,6 @@ var DataTable = /** @class */ (function (_super) {
     };
     DataTable.prototype.render = function () {
         var _this = this;
-        console.log('rendering', this.props);
         return React.createElement(Container, null,
             this.renderHeader(),
             React.createElement(Content, null,
@@ -409,9 +408,10 @@ var DataTable = /** @class */ (function (_super) {
             React.createElement(Toolbar, null,
                 React.createElement(FlexRow, { flex: 1 },
                     React.createElement(Button, { minimal: true, icon: "refresh", onClick: function () { return _this.fetch(); } }),
-                    this.formatSelection(),
-                    React.createElement("div", { className: "patterns-data-table-pagination-actions" }, this.props.actions && this.props.actions)),
-                React.createElement(FlexColumn, { flex: 2 }, this.renderPagination()),
+                    this.props.multiple && this.formatSelection(),
+                    this.props.multiple &&
+                        React.createElement("div", { className: "patterns-data-table-pagination-actions" }, this.props.actions && this.props.actions)),
+                React.createElement(FlexColumn, { style: { width: 600 } }, this.renderPagination()),
                 React.createElement(FlexColumn, { flex: 1 }, "\u00A0")));
     };
     return DataTable;

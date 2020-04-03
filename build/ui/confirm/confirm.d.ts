@@ -1,4 +1,5 @@
 import React from 'react';
+import { IconName } from '@blueprintjs/core';
 interface Props {
 }
 interface State {
@@ -6,6 +7,7 @@ interface State {
     title?: string;
     description?: string;
     action?: React.ReactElement;
+    icon: IconName;
 }
 export default class Confirm extends React.Component<Props, State> {
     constructor(props: Props);

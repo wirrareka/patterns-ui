@@ -33,13 +33,13 @@ var Column = styled.View(templateObject_4 || (templateObject_4 = __makeTemplateO
 var Row = styled.View(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  display: flex;\n  flex-direction: row;\n"], ["\n  display: flex;\n  flex-direction: row;\n"])));
 var HeaderCode = styled.Text(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  text-align: right;\n  font-size: 22px;\n  font-weight: bold;\n  font-family: \"Oswald\";\n"], ["\n  text-align: right;\n  font-size: 22px;\n  font-weight: bold;\n  font-family: \"Oswald\";\n"])));
 var DocumentType = styled.Text(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n  text-align: right;\n  font-size: 10px;\n  font-weight: bold;\n  color: ", ";\n  text-transform: uppercase;\n  font-family: \"Oswald Medium\";\n"], ["\n  text-align: right;\n  font-size: 10px;\n  font-weight: bold;\n  color: ", ";\n  text-transform: uppercase;\n  font-family: \"Oswald Medium\";\n"])), Colors.GRAY3);
-var DefaultTextLabel = styled.Text(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  font-size: 8px;\n  line-height: 1.3;\n  font-family: \"Oswald Light\";\n"], ["\n  font-size: 8px;\n  line-height: 1.3;\n  font-family: \"Oswald Light\";\n"])));
-var DefaultTextValue = styled.Text(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  font-size: 8px;\n  line-height: 1.3;\n  font-family: \"Oswald\";\n"], ["\n  font-size: 8px;\n  line-height: 1.3;\n  font-family: \"Oswald\";\n"])));
-var DefaultText = styled.Text(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  font-size: 8px;\n  line-height: 1.3;\n  font-family: \"Oswald Light\";\n"], ["\n  font-size: 8px;\n  line-height: 1.3;\n  font-family: \"Oswald Light\";\n"])));
-var TableHeaderItem = styled.Text(templateObject_11 || (templateObject_11 = __makeTemplateObject(["\n  font-size: 7px;\n  text-transform: uppercase;\n  font-family: \"Oswald Medium\";\n  color: ", ";\n"], ["\n  font-size: 7px;\n  text-transform: uppercase;\n  font-family: \"Oswald Medium\";\n  color: ", ";\n"])), Colors.GRAY3);
-var TableHeader = styled.Text(templateObject_12 || (templateObject_12 = __makeTemplateObject(["\n  font-size: 7px;\n  text-transform: uppercase;\n  text-align: right;\n  font-family: \"Oswald Medium\";\n  color: ", ";\n"], ["\n  font-size: 7px;\n  text-transform: uppercase;\n  text-align: right;\n  font-family: \"Oswald Medium\";\n  color: ", ";\n"])), Colors.GRAY3);
-var TableCellItem = styled.Text(templateObject_13 || (templateObject_13 = __makeTemplateObject(["\n  font-size: 8px;\n  text-transform: uppercase;\n  text-align: left;\n  font-family: \"Oswald\";\n"], ["\n  font-size: 8px;\n  text-transform: uppercase;\n  text-align: left;\n  font-family: \"Oswald\";\n"])));
-var TableCell = styled.Text(templateObject_14 || (templateObject_14 = __makeTemplateObject(["\n  font-size: 8px;\n  text-align: right;\n  font-family: \"Oswald Light\";\n"], ["\n  font-size: 8px;\n  text-align: right;\n  font-family: \"Oswald Light\";\n"])));
+var DefaultTextLabel = styled.Text(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n  font-size: 9px;\n  line-height: 1.3;\n  font-family: \"Oswald Light\";\n"], ["\n  font-size: 9px;\n  line-height: 1.3;\n  font-family: \"Oswald Light\";\n"])));
+var DefaultTextValue = styled.Text(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n  font-size: 9px;\n  line-height: 1.3;\n  font-family: \"Oswald\";\n"], ["\n  font-size: 9px;\n  line-height: 1.3;\n  font-family: \"Oswald\";\n"])));
+var DefaultText = styled.Text(templateObject_10 || (templateObject_10 = __makeTemplateObject(["\n  font-size: 9px;\n  line-height: 1.3;\n  font-family: \"Oswald Light\";\n"], ["\n  font-size: 9px;\n  line-height: 1.3;\n  font-family: \"Oswald Light\";\n"])));
+var TableHeaderItem = styled.Text(templateObject_11 || (templateObject_11 = __makeTemplateObject(["\n  font-size: 8px;\n  text-transform: uppercase;\n  font-family: \"Oswald Medium\";\n  color: ", ";\n"], ["\n  font-size: 8px;\n  text-transform: uppercase;\n  font-family: \"Oswald Medium\";\n  color: ", ";\n"])), Colors.GRAY3);
+var TableHeader = styled.Text(templateObject_12 || (templateObject_12 = __makeTemplateObject(["\n  font-size: 8px;\n  text-transform: uppercase;\n  text-align: right;\n  font-family: \"Oswald Medium\";\n  color: ", ";\n"], ["\n  font-size: 8px;\n  text-transform: uppercase;\n  text-align: right;\n  font-family: \"Oswald Medium\";\n  color: ", ";\n"])), Colors.GRAY3);
+var TableCellItem = styled.Text(templateObject_13 || (templateObject_13 = __makeTemplateObject(["\n  font-size: 9px;\n  text-transform: uppercase;\n  text-align: left;\n  font-family: \"Oswald\";\n"], ["\n  font-size: 9px;\n  text-transform: uppercase;\n  text-align: left;\n  font-family: \"Oswald\";\n"])));
+var TableCell = styled.Text(templateObject_14 || (templateObject_14 = __makeTemplateObject(["\n  font-size: 9px;\n  text-align: right;\n  font-family: \"Oswald Light\";\n"], ["\n  font-size: 9px;\n  text-align: right;\n  font-family: \"Oswald Light\";\n"])));
 var styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
@@ -84,7 +84,6 @@ export default function OrderPrinter(_a) {
         return rows < 37 ? 1 : (Math.floor(perPager) === perPager ? perPager + 1 : Math.floor(perPager) + 2);
     };
     var renderItems = function (from, to) {
-        console.log('from', from, 'to', to);
         return document.items.slice(from, to).map(function (item, index) {
             var itemRow = React.createElement(Row, { key: "item-" + index, style: { paddingLeft: '12mm', paddingRight: '12mm' } },
                 React.createElement(Column, { style: { flex: 6 } },
@@ -112,7 +111,7 @@ export default function OrderPrinter(_a) {
             itemRows.push(itemRow);
             if (item.code && item.code.length > 0) {
                 itemRows.push(React.createElement(Row, { key: "item-code-" + index, style: { paddingLeft: '12mm', paddingRight: '12mm' } },
-                    React.createElement(TableCellItem, { style: { fontFamily: 'Oswald', fontSize: 7, color: Colors.GRAY3 } }, item.code)));
+                    React.createElement(TableCellItem, { style: { fontFamily: 'Oswald', fontSize: 9, color: Colors.GRAY3 } }, item.code)));
             }
             return React.createElement(React.Fragment, { key: "item-fragment-" + index }, itemRows);
         });
@@ -154,7 +153,7 @@ export default function OrderPrinter(_a) {
                 React.createElement(TableHeader, { style: { marginRight: 6 } }, t('total'))),
             React.createElement(Column, { style: { flex: 7 } },
                 React.createElement(Text, { style: {
-                        fontSize: 10,
+                        fontSize: 11,
                         fontFamily: 'Oswald',
                         textAlign: 'right',
                         backgroundColor: Colors.LIGHT_GRAY4
@@ -165,35 +164,38 @@ export default function OrderPrinter(_a) {
         return React.createElement(Column, null,
             React.createElement(Header, null,
                 React.createElement(Logo, null,
-                    React.createElement(Image, { src: PatternApp.settings.logo, style: { width: '40mm' } })),
-                React.createElement(View, { style: { flex: 2 } },
-                    React.createElement(HeaderCode, null, document.code || t('order.new')),
-                    React.createElement(DocumentType, null, t('order.type')))),
+                    React.createElement(Image, { src: PatternApp.settings.logo, style: { width: '40mm', marginTop: 10 } })),
+                React.createElement(View, { style: { flex: 4 } },
+                    React.createElement(HeaderCode, null, document.name || t('order.new')),
+                    React.createElement(DocumentType, null,
+                        t('order.type'),
+                        " ",
+                        document.code || t('order.new')))),
             React.createElement(Contacts, null,
                 React.createElement(View, { style: { flex: 1, marginRight: 20 } },
                     React.createElement(Text, null)),
                 React.createElement(View, { style: { flex: 2, borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, marginRight: 20, paddingTop: 6 } },
-                    React.createElement(Text, { style: { fontSize: 8, fontWeight: 'bold', fontFamily: 'Oswald Medium', color: Colors.GRAY3 } }, "VENDOR"),
-                    React.createElement(ContactForm, { contact: document.vendor })),
+                    React.createElement(Text, { style: { fontSize: 9, fontWeight: 'bold', fontFamily: 'Oswald Medium', color: Colors.GRAY3 } }, t('vendor')),
+                    React.createElement(ContactForm, { contact: document.vendor, simple: false })),
                 React.createElement(View, { style: { flex: 2, borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, paddingTop: 6 } },
-                    React.createElement(Text, { style: { fontSize: 8, fontWeight: 'bold', fontFamily: 'Oswald Medium', color: Colors.GRAY3 } }, "CUSTOMER"),
-                    React.createElement(ContactForm, { contact: document.customer }))),
+                    React.createElement(Text, { style: { fontSize: 9, fontWeight: 'bold', fontFamily: 'Oswald Medium', color: Colors.GRAY3 } }, t('customer')),
+                    React.createElement(ContactForm, { contact: document.customer, simple: false }))),
             React.createElement(Contacts, null,
                 React.createElement(View, { style: { flex: 1, borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, marginRight: 20, paddingTop: 6 } },
-                    React.createElement(DefaultTextLabel, null, "Date Posted"),
-                    React.createElement(DefaultTextLabel, null, "Delivery Date")),
+                    React.createElement(DefaultTextLabel, null, t('datePosted')),
+                    React.createElement(DefaultTextLabel, null, t('dateDelivered'))),
                 React.createElement(View, { style: { flex: 2, borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, marginRight: 20, paddingTop: 6 } },
                     React.createElement(DefaultTextValue, null, PatternApp.format.date(document.createdAt)),
                     React.createElement(DefaultTextValue, null, PatternApp.format.date(document.deliveryDate))),
                 React.createElement(View, { style: { flex: 2, flexDirection: 'row', borderTopWidth: 2, borderColor: Colors.LIGHT_GRAY3, paddingTop: 6 } },
                     React.createElement(View, { style: { flex: 1, flexDirection: 'column' } },
-                        React.createElement(DefaultTextLabel, null, "Payment Method"),
+                        React.createElement(DefaultTextLabel, null, t('paymentMethod')),
                         paymentMethod.code === PaymentMethod.bankTransfer.code &&
                             React.createElement(React.Fragment, null,
-                                React.createElement(DefaultTextLabel, null, "Bank"),
-                                React.createElement(DefaultTextLabel, null, "Bank Account"),
-                                React.createElement(DefaultTextLabel, null, "Variable Symbol"),
-                                React.createElement(DefaultTextLabel, null, "Constant Symbol"))),
+                                React.createElement(DefaultTextLabel, null, t('bank')),
+                                React.createElement(DefaultTextLabel, null, t('bankAccount')),
+                                React.createElement(DefaultTextLabel, null, t('variableSymbol')),
+                                React.createElement(DefaultTextLabel, null, t('constantSymbol')))),
                     React.createElement(View, { style: { flex: 1, flexDirection: 'column' } },
                         React.createElement(DefaultTextValue, null, paymentMethod.title),
                         paymentMethod.code === PaymentMethod.bankTransfer.code &&
@@ -221,9 +223,10 @@ export default function OrderPrinter(_a) {
                     position: 'absolute'
                 } },
                 React.createElement(Column, { style: { flex: 1 } }),
-                React.createElement(Column, { style: { flex: 1 }, className: "patterns-item-document-signature" },
-                    React.createElement(DefaultText, { style: { textAlign: 'right' } }, "......................................................."),
-                    React.createElement(DefaultText, { style: { textAlign: 'right', fontFamily: 'Oswald Light', fontSize: 7, textTransform: 'uppercase', colors: Colors.LIGHT_GRAY1 } }, t('signature')))));
+                React.createElement(Column, { style: { flex: 1, justifyContent: 'right' }, className: "patterns-item-document-signature" },
+                    React.createElement(Image, { src: document.signature, style: { width: '40mm' } }),
+                    React.createElement(DefaultText, { style: { textAlign: 'right', marginTop: -20 } }, "......................................................."),
+                    React.createElement(DefaultText, { style: { textAlign: 'right', fontFamily: 'Oswald Light', fontSize: 8, textTransform: 'uppercase', colors: Colors.LIGHT_GRAY1 } }, t('signature')))));
     };
     var renderPages = function () {
         var pages = [];
@@ -234,23 +237,23 @@ export default function OrderPrinter(_a) {
                 position: 'absolute',
                 bottom: '10mm',
                 width: '100vw',
-                fontSize: 8,
+                fontSize: 9,
                 fontFamily: 'Oswald Light',
                 flexDirection: 'row',
                 display: 'flex',
                 paddingLeft: '12mm',
                 paddingRight: '12mm',
-            }, render: function (props) {
-                console.log('pageNumber', props.pageNumber, 'totalPages', props);
-                return React.createElement(React.Fragment, null,
-                    React.createElement(Text, { style: { flex: 1, textAlign: 'left' }, key: "footer-page-company-" + page }, PatternApp.settings.company.name),
-                    React.createElement(Text, { style: { flex: 1, textAlign: 'right' }, key: "footer-page-" + page }, t('page') + " " + props.pageNumber + " / " + getPages()));
-            } }); };
+            } },
+            React.createElement(Text, { style: { flex: 1, textAlign: 'left' }, key: "footer-page-company-" + page }, PatternApp.settings.company.name),
+            React.createElement(Text, { fixed: true, style: { flex: 1, textAlign: 'right' }, key: "footer-page-" + page, render: function (_a) {
+                    var pageNumber = _a.pageNumber, totalPages = _a.totalPages;
+                    console.log('pag', pageNumber, 'total', totalPages);
+                    return t('page') + " " + pageNumber + " / " + totalPages;
+                } })); };
         if (document.items.length <= 18) {
             // single page
-            pages.push(React.createElement(Page, { size: "A4", style: styles.page },
+            pages.push(React.createElement(Page, { key: "page-0", size: "A4", style: styles.page },
                 head,
-                React.createElement(View, { key: "items-header", style: { marginTop: '6mm' } }, renderHeader(0)),
                 renderItems(0, document.items.length),
                 renderEnding(0),
                 footer(0)));
